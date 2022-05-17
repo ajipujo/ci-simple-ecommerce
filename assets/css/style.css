@@ -1,0 +1,8 @@
+.carousel-home .carousel-item-home {
+    max-height:300px;
+}
+
+.carousel-item-home img {
+    object-fit:cover;
+    max-height:300px;
+}
