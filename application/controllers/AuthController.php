@@ -10,8 +10,19 @@ class AuthController extends CI_Controller
 		$this->load->model('user_model');
 	}
 
+	function authorized() {
+		if ($this->session->userdata('loggedIn')) {
+			if ($this->session->userdata('user')['role_id'] == 3) {
+				redirect('frontcontroller/index');
+			} else {
+				redirect('admincontroller/index');
+			}
+		}
+	}
+
 	public function login()
 	{
+		$this->authorized();
 		$data = [
 			'title' => 'Login',
 			'page' => 'authpage/login'
@@ -21,6 +32,7 @@ class AuthController extends CI_Controller
 
 	public function register()
 	{
+		$this->authorized();
 		$data = [
 			'title' => 'Register',
 			'page' => 'authpage/register'
@@ -30,14 +42,53 @@ class AuthController extends CI_Controller
 
 	public function logout()
 	{
+		$this->session->unset_userdata('loggedIn');
+		$this->session->unset_userdata('user');
 		redirect('frontcontroller/index');
 	}
 
 	public function authlogin()
 	{
-		$email = htmlspecialchars($this->input->post('email'));
-		$password = htmlspecialchars($this->input->post('password'));
-		var_dump($email, $password);
+		$this->authorized();
+		$this->form_validation->set_rules('email', 'Username', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect('/authcontroller/login');
+		} else {
+			$email = htmlspecialchars($this->input->post('email'));
+			$password = htmlspecialchars($this->input->post('password'));
+			
+			$data['email'] = $email;
+
+			$user = $this->user_model->getUserByEmail($data);
+
+			if (!$user) {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Email tidak terdaftar']);
+				redirect('/authcontroller/login');
+			} else {
+				$password_validity = password_verify($password, $user['password']);
+				if ($password_validity) {
+					if ($user['is_active'] != 1) {
+						$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'User sudah tidak aktif']);
+						redirect('/authcontroller/login');
+					} else {
+						$userdata = [
+							'id' => $user['id'],
+							'name' => $user['name'],
+							'role_id' => $user['role_id'],
+						];
+						$this->session->set_userdata('user', $userdata);
+						$this->session->set_userdata('loggedIn', true);
+						redirect('/');
+					}
+				} else {
+					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Email/Password tidak sesuai']);
+					redirect('/authcontroller/login');
+				}
+			}
+		}
 	}
 
 	public function authregister()
@@ -62,7 +113,7 @@ class AuthController extends CI_Controller
 
 			$user = $this->user_model->getUserByEmail($data);
 
-			if (count($user) > 0) {
+			if ($user) {
 				$this->session->set_flashdata('message', ['status' => 'warning', 'text' => 'Email already registered']);
 				redirect('/authcontroller/register');
 			} else {
@@ -71,7 +122,7 @@ class AuthController extends CI_Controller
 					'email' => $email,
 					'password' => password_hash($password, PASSWORD_DEFAULT),
 					'is_active' => 1,
-					'role' => 3,
+					'role_id' => 3,
 					'created_at' => date('Y-m-d H:i:s'),
 					'updated_at' => date('Y-m-d H:i:s')
 				];

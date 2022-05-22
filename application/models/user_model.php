@@ -1,10 +1,13 @@
 <?php
 
 class user_model extends CI_Model {
-	public function getUserByEmail($data) {
+	public function getUserByEmail($data, $roleId = 0) {
 		$this->db->where('email', $data['email']);
+		if ($roleId) {
+			$this->db->where('role_id', $roleId);
+		}
 		$query = $this->db->get('users');
-		return $query->result();
+		return $query->row_array();
 	}
 
 	public function saveUser($data) {
