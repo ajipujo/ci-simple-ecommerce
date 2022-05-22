@@ -30,9 +30,12 @@
 					<input type="password" name="password" class="form-control" id="password" placeholder="your password...">
 					<?php echo form_error('password'); ?>
 				</div>
-				<div class="d-grid gap-2">
+				<div class="d-grid gap-2 mb-2">
 					<button id="btnRegister" class="btn btn-primary" type="submit">Submit</button>
 					<a class="btn btn-outline-secondary" href="<?= site_url('/authcontroller/login') ?>">Sign In</a>
+				</div>
+				<div class="col-12 d-flex justify-content-center">
+					<a href="<?= site_url('/') ?>">Kembali ke halaman utama</a>
 				</div>
 			</form>
 		</div>

@@ -7,6 +7,7 @@ class FrontController extends CI_Controller {
 
 	public function index() {
 		$data = [
+			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
 			'page' => 'frontpage/index'
 		];
 		$this->load->view('frontpage/layouts/master', $data);

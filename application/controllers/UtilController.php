@@ -14,4 +14,8 @@ class UtilController extends CI_Controller {
 			echo 'Database connected as well';
 		}
 	}
+
+	public function home() {
+		redirect('frontcontroller/index');
+	}
 }

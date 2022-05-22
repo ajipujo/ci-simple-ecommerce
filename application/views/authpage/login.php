@@ -23,9 +23,12 @@
 					<label for="password" class="form-label">Password</label>
 					<input type="password" class="form-control" id="password" name="password" placeholder="your password...">
 				</div>
-				<div class="d-grid gap-2">
+				<div class="d-grid gap-2 mb-2">
 					<button type="submit" id="btnLogin" class="btn btn-primary">Submit</button>
 					<a class="btn btn-outline-secondary" href="<?= site_url('/authcontroller/register') ?>">Register</a>
+				</div>
+				<div class="col-12 d-flex justify-content-center">
+					<a href="<?= site_url('/') ?>">Kembali ke halaman utama</a>
 				</div>
 			</form>
 		</div>

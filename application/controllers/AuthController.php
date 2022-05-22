@@ -28,6 +28,11 @@ class AuthController extends CI_Controller
 		$this->load->view('authpage/layouts/master', $data);
 	}
 
+	public function logout()
+	{
+		redirect('frontcontroller/index');
+	}
+
 	public function authlogin()
 	{
 		$email = htmlspecialchars($this->input->post('email'));
