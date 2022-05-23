@@ -81,7 +81,11 @@ class AuthController extends CI_Controller
 						];
 						$this->session->set_userdata('user', $userdata);
 						$this->session->set_userdata('loggedIn', true);
-						redirect('/');
+						if ($user['role_id'] == 3) {
+							redirect('/');
+						} else {
+							redirect('/admincontroller/index');
+						}
 					}
 				} else {
 					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Email/Password tidak sesuai']);
