@@ -25,4 +25,26 @@ class FrontController extends CI_Controller {
 		];
 		$this->load->view('frontpage/layouts/master', $data);
 	}
+
+	public function produk_detail() {
+		$userdata = null;
+		if ($this->session->userdata('loggedIn')) {
+			$userdata = [
+				'loggedIn' => $this->session->userdata('loggedIn'),
+				'userdata' => $this->session->userdata('user')
+			];
+		}
+
+		$slug = $this->uri->segment(3);
+
+		$produk = $this->produk_model->getProdukBySlug($slug);
+
+		$data = [
+			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'page' => 'frontpage/produk',
+			'user' => $userdata,
+			'produk' => $produk
+		];
+		$this->load->view('frontpage/layouts/master', $data);
+	}
 }

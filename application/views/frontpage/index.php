@@ -61,7 +61,7 @@ $dummy = [
 						<div class="col-12 mb-3">
 							<span class="card-product-price fw-bold currency-format"><?= $item->harga ?></span>
 						</div>
-						<a href="#" class="stretched-link"></a>
+						<a href="<?= site_url('frontcontroller/produk_detail/'.$item->slug) ?>" class="stretched-link"></a>
 					</div>
 				</div>
 			</div>

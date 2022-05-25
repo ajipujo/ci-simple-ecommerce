@@ -50,6 +50,12 @@ if (isset($_SESSION['message'])) {
 							<input class="form-control" type="file" id="gambar" name="gambar">
 						</div>
 					</div>
+					<div class="col-md-12">
+						<div class="mb-3">
+							<label for="deskripsi" class="form-label">Deskripsi Produk</label>
+							<textarea name="deskripsi" id="deskripsi" rows="5" class="form-control"></textarea>
+						</div>
+					</div>
 				</div>
 				<div class="d-flex justify-content-end mt-3">
 					<button class="btn btn-outline-secondary me-2" type="submit">Kembali</button>
@@ -77,6 +83,9 @@ if (isset($_SESSION['message'])) {
 				required: true
 			},
 			gambar: {
+				required: true
+			},
+			deskripsi: {
 				required: true
 			},
 		},

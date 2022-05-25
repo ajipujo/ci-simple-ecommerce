@@ -45,7 +45,7 @@ if (isset($_SESSION['message'])) {
 							<td><span class="currency-format"><?= $item->harga ?></span></td>
 							<td><img src="<?= base_url('upload/produk/' . $item->gambar) ?>" alt="<?= $item->name ?>" width="100"></td>
 							<td>
-								<a href="<?= site_url('/admincontroller/form_produk/' . $item->id) ?>" class="btn btn-primary btn-sm">Edit</a>
+								<a href="<?= site_url('/admincontroller/edit_produk/' . $item->slug) ?>" class="btn btn-primary btn-sm">Edit</a>
 								<form action="<?= site_url('/admincontroller/delete_produk') ?>" method="post" class="d-inline">
 									<input type="hidden" name="id" value="<?= $item->id ?>">
 									<button type="submit" class="btn btn-danger btn-sm">Hapus</button>
