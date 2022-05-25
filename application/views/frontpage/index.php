@@ -47,19 +47,19 @@ $dummy = [
 ?>
 <div class="container py-3">
 	<div class="row">
-		<?php foreach ($dummy as $key => $item) { ?>
+		<?php foreach ($produk as $key => $item) { ?>
 			<div class="col-6 col-md-3">
 				<div class="card mb-3 card-product">
-					<img class="card-img-top-custom" src="<?= $item['image'] ?>" alt="...">
+					<img class="card-img-top-custom" src="<?= base_url('/upload/produk/'.$item->gambar) ?>" alt="...">
 					<div class="card-body">
 						<div class="col-12 mb-2">
-							<span class="card-product-stock text-danger">Stok tersisa <?= $item['stok'] ?></span>
+							<span class="card-product-stock text-danger">Stok tersisa <?= $item->stok ?></span>
 						</div>
 						<div class="col-12 mb-2">
-							<span class="card-product-title two-line-text"><?= $item['name'] ?></span>
+							<span class="card-product-title two-line-text"><?= $item->name ?></span>
 						</div>
 						<div class="col-12 mb-3">
-							<span class="card-product-price fw-bold currency-format"><?= $item['price'] ?></span>
+							<span class="card-product-price fw-bold currency-format"><?= $item->harga ?></span>
 						</div>
 						<a href="#" class="stretched-link"></a>
 					</div>

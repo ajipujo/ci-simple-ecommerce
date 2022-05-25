@@ -1,3 +1,20 @@
+<?php
+if (isset($_SESSION['message'])) {
+?>
+	<div class="container my-4">
+
+		<div class="alert alert-<?= isset($_SESSION['message']['status']) ? $_SESSION['message']['status'] : 'success' ?> alert-dismissible fade show" role="alert">
+			<div>
+				<?= isset($_SESSION['message']['text']) ? $_SESSION['message']['text'] : '' ?>
+			</div>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</div>
+
+<?php
+}
+?>
+
 <div class="container my-4">
 	<div class="card">
 		<div class="card-body">
@@ -7,7 +24,7 @@
 				</div>
 			</div>
 			<hr>
-			<form action="<?= site_url('/admincontroller/saveproduk') ?>" id="formProduk" method="POST" enctype="multipart/form-data">
+			<form action="<?= site_url('/admincontroller/save_produk') ?>" id="formProduk" method="POST" enctype="multipart/form-data">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="mb-3">
