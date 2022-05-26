@@ -1,5 +1,7 @@
 .DS_Store
 
+generate_db.bat
+
 application/cache/*
 !application/cache/index.html
 

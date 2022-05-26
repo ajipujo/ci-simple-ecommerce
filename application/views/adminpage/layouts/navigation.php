@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
 	<div class="container">
-		<a class="navbar-brand fw-bold text-success" href="#">VavaPedia</a>
+		<a class="navbar-brand fw-bold text-success" href="<?= site_url('admincontroller/index') ?>">VavaPedia</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -21,8 +21,14 @@
 						<li><a class="dropdown-item" href="#">Bukti Pembayaran</a></li>
 					</ul>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" aria-current="page" href="#">Manajemen User</a>
+				<li class="nav-item dropdown <?= $title == 'Manajemen User' ? 'active' : '' ?>">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Manajemen User
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="#">Admin</a></li>
+						<li><a class="dropdown-item" href="#">Customer</a></li>
+					</ul>
 				</li>
 			</ul>
 			<ul class="navbar-nav mb-2 mb-lg-0">

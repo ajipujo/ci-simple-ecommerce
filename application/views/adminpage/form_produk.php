@@ -38,10 +38,16 @@ if (isset($_SESSION['message'])) {
 							<input type="text" class="form-control" id="harga" name="harga">
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-3">
 						<div class="mb-3">
 							<label for="stok" class="form-label">Stok Produk</label>
 							<input type="text" class="form-control" id="stok" name="stok">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="mb-3">
+							<label for="satuan" class="form-label">Satuan</label>
+							<input type="text" class="form-control" id="satuan" name="satuan">
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -86,6 +92,9 @@ if (isset($_SESSION['message'])) {
 				required: true
 			},
 			deskripsi: {
+				required: true
+			},
+			satuan: {
 				required: true
 			},
 		},

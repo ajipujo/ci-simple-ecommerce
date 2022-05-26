@@ -1,35 +1,29 @@
--- phpMyAdmin SQL Dump
--- version 4.8.5
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.16  Distrib 10.1.38-MariaDB, for Win64 (AMD64)
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 25 Bulan Mei 2022 pada 14.15
--- Versi server: 10.1.38-MariaDB
--- Versi PHP: 7.3.2
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: db_penjualan_iva
+-- ------------------------------------------------------
+-- Server version	10.1.38-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Database: `db_penjualan_iva`
+-- Table structure for table `products`
 --
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `products`
---
-
+DROP TABLE IF EXISTS `products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   `slug` varchar(500) NOT NULL,
   `harga` int(11) NOT NULL DEFAULT '0',
@@ -38,48 +32,58 @@ CREATE TABLE `products` (
   `deskripsi` text NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data untuk tabel `products`
+-- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `slug`, `harga`, `stok`, `gambar`, `deskripsi`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(5, 'Deskmate Gaming | 300 x 100 cm', 'deskmate-gaming-300-x-100-cm', 450000, 60, 'produk-puAL5Uw4yF-1653473448.jpeg', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus laboriosam adipisci natus numquam tempora cum, sit quas exercitationem accusantium explicabo odit quod, deleniti consequatur porro aliquam. Commodi officiis rerum adipisci.', NULL, '2022-05-25 12:10:48', '2022-05-25 12:10:48');
-
--- --------------------------------------------------------
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (5,'Deskmate Gaming | 300 x 100 cm','deskmate-gaming-300-x-100-cm',450000,60,'produk-puAL5Uw4yF-1653473448.jpeg','Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus laboriosam adipisci natus numquam tempora cum, sit quas exercitationem accusantium explicabo odit quod, deleniti consequatur porro aliquam. Commodi officiis rerum adipisci.',NULL,'2022-05-25 12:10:48','2022-05-25 12:10:48');
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Struktur dari tabel `roles`
+-- Table structure for table `roles`
 --
 
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_nm` varchar(100) NOT NULL,
   `is_admin` int(11) NOT NULL DEFAULT '0',
   `deleted_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data untuk tabel `roles`
+-- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `role_nm`, `is_admin`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'superadmin', 1, NULL, '2022-05-19 00:00:00', '2022-05-19 00:00:00'),
-(2, 'marketing', 1, NULL, '2022-05-19 00:00:00', '2022-05-19 00:00:00'),
-(3, 'customer', 0, NULL, '2022-05-19 00:00:00', '2022-05-19 00:00:00');
-
--- --------------------------------------------------------
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'superadmin',1,NULL,'2022-05-19 00:00:00','2022-05-19 00:00:00'),(2,'marketing',1,NULL,'2022-05-19 00:00:00','2022-05-19 00:00:00'),(3,'customer',0,NULL,'2022-05-19 00:00:00','2022-05-19 00:00:00');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `role_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -87,63 +91,28 @@ CREATE TABLE `users` (
   `is_active` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `role_id`, `email`, `password`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(3, 'superuser', 1, 'superuser@iva.com', '$2y$10$jTTPiJDgIs1vZ2.vxMYT8.8QqNxpe/yRdAX70vtiw82ySZrhwqUAO', 1, '2022-05-19 16:10:44', '2022-05-19 16:10:44', NULL),
-(5, 'dummycustomer2', 3, 'dummycustomer2@iva.com', '$2y$10$tAamrtznyxoXjYLkP0SPO.t1kp7pi9cJsOI6xfqpACd0vMTEWq7Ui', 1, '2022-05-22 12:10:54', '2022-05-22 12:10:54', NULL),
-(6, 'Aji Pujo Hardiyanto', 3, 'ajipujo@iva.com', '$2y$10$WV7rbNCSlFZn.VF22KVjpOqLbdWsGhgrNpO.g0cd4azhclv3bktva', 1, '2022-05-23 18:01:57', '2022-05-23 18:01:57', NULL);
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (3,'superuser',1,'superuser@iva.com','$2y$10$jTTPiJDgIs1vZ2.vxMYT8.8QqNxpe/yRdAX70vtiw82ySZrhwqUAO',1,'2022-05-19 16:10:44','2022-05-19 16:10:44',NULL),(5,'dummycustomer2',3,'dummycustomer2@iva.com','$2y$10$tAamrtznyxoXjYLkP0SPO.t1kp7pi9cJsOI6xfqpACd0vMTEWq7Ui',1,'2022-05-22 12:10:54','2022-05-22 12:10:54',NULL),(6,'Aji Pujo Hardiyanto',3,'ajipujo@iva.com','$2y$10$WV7rbNCSlFZn.VF22KVjpOqLbdWsGhgrNpO.g0cd4azhclv3bktva',1,'2022-05-23 18:01:57','2022-05-23 18:01:57',NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Indexes for dumped tables
---
-
---
--- Indeks untuk tabel `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-05-25 22:15:44

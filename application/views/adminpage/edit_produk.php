@@ -29,20 +29,26 @@ if (isset($_SESSION['message'])) {
 					<div class="col-md-6">
 						<div class="mb-3">
 							<label for="name" class="form-label">Nama Produk</label>
-							<input type="text" class="form-control" id="name" name="name" value="<?= $produk['name'] ?>">
-							<input type="hidden" name="id" id="id" value="<?= $produk['id'] ?>">
+							<input type="text" class="form-control" id="name" name="name" value="<?= $produk->name ?>">
+							<input type="hidden" name="id" id="id" value="<?= $produk->id ?>">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="mb-3">
 							<label for="harga" class="form-label">Harga Produk</label>
-							<input type="text" class="form-control" id="harga" name="harga" value="<?= $produk['harga'] ?>">
+							<input type="text" class="form-control" id="harga" name="harga" value="<?= $produk->harga ?>">
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-3">
 						<div class="mb-3">
 							<label for="stok" class="form-label">Stok Produk</label>
-							<input type="text" class="form-control" id="stok" name="stok" value="<?= $produk['stok'] ?>">
+							<input type="text" class="form-control" id="stok" name="stok" value="<?= $produk->stok ?>">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="mb-3">
+							<label for="satuan" class="form-label">Satuan</label>
+							<input type="text" class="form-control" id="satuan" name="satuan" value="<?= $produk->satuan ?>">
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -50,14 +56,14 @@ if (isset($_SESSION['message'])) {
 							<label for="gambar" class="form-label">Gambar Produk</label>
 							<input class="form-control" type="file" id="gambar" name="gambar">
 							<div class="mt-2">
-								<span class="fw-bold">Download: </span><a href="<?= base_url('/upload/produk/'.$produk['gambar']) ?>"><?= $produk['gambar'] ?></a>
+								<span class="fw-bold">Download: </span><a href="<?= base_url('/upload/produk/'.$produk->gambar) ?>"><?= $produk->gambar ?></a>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="mb-3">
 							<label for="deskripsi" class="form-label">Deskripsi Produk</label>
-							<textarea name="deskripsi" id="deskripsi" rows="5" class="form-control"><?= $produk['deskripsi'] ?></textarea>
+							<textarea name="deskripsi" id="deskripsi" rows="5" class="form-control"><?= $produk->deskripsi ?></textarea>
 						</div>
 					</div>
 				</div>
@@ -74,7 +80,7 @@ if (isset($_SESSION['message'])) {
 	$("#btnRegister").click(function(e) {
 		e.preventDefault();
 		$("#formProduk").submit();
-	})
+	});
 	$("#formProduk").validate({
 		rules: {
 			name: {
@@ -87,6 +93,9 @@ if (isset($_SESSION['message'])) {
 				required: true
 			},
 			deskripsi: {
+				required: true
+			},
+			satuan: {
 				required: true
 			},
 		},

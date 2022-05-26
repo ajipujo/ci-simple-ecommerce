@@ -117,6 +117,7 @@ class AdminController extends CI_Controller
 		$this->form_validation->set_rules('stok', 'Stok', 'required');
 		$this->form_validation->set_rules('harga', 'Harga', 'required');
 		$this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
+		$this->form_validation->set_rules('satuan', 'Satuan', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
@@ -127,12 +128,19 @@ class AdminController extends CI_Controller
 			$harga = htmlspecialchars($this->input->post('harga'));
 			$stok = htmlspecialchars($this->input->post('stok'));
 			$deskripsi = htmlspecialchars($this->input->post('deskripsi'));
+			$satuan = htmlspecialchars($this->input->post('satuan'));
+
+			$old_produk = $this->produk_model->getProdukById($id);
+
+			// var_dump($old_produk);
+			// die;
 
 			$data = [
 				'name' => $name,
 				'harga' => $harga,
 				'stok' => $stok,
 				'deskripsi' => $deskripsi,
+				'satuan' => $satuan,
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 
@@ -147,19 +155,18 @@ class AdminController extends CI_Controller
 
 				if (!$this->upload->do_upload('gambar')) {
 					$data['error'] = $this->upload->display_errors();
-					var_dump($data['error']);
-					die;
+					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+					redirect($this->agent->referrer());
 				} else {
+					unlink(FCPATH . '/upload/produk/' . $old_produk->gambar);
 					$uploaded_data = $this->upload->data();
 					$data['gambar'] = $uploaded_data['file_name'];
 				}
 			}
 
-			// $this->produk_model->update($data);
+			$this->produk_model->update($data, $id);
 			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil diperbarui!']);
 			redirect('admincontroller/produk');
-			// var_dump($_FILES['gambar']['name']);
-			// die;
 		}
 	}
 
@@ -170,6 +177,7 @@ class AdminController extends CI_Controller
 		$this->form_validation->set_rules('stok', 'Stok', 'required');
 		$this->form_validation->set_rules('harga', 'Harga', 'required');
 		$this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
+		$this->form_validation->set_rules('satuan', 'Satuan', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
@@ -179,6 +187,7 @@ class AdminController extends CI_Controller
 			$harga = htmlspecialchars($this->input->post('harga'));
 			$stok = htmlspecialchars($this->input->post('stok'));
 			$deskripsi = htmlspecialchars($this->input->post('deskripsi'));
+			$satuan = htmlspecialchars($this->input->post('satuan'));
 
 			$config['upload_path']          = FCPATH . '/upload/produk/';
 			$config['allowed_types']        = 'gif|jpg|jpeg|png';
@@ -190,8 +199,8 @@ class AdminController extends CI_Controller
 
 			if (!$this->upload->do_upload('gambar')) {
 				$data['error'] = $this->upload->display_errors();
-				var_dump($data['error']);
-				die;
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => $data['error']]);
+				redirect('/admincontroller/form_produk');
 			} else {
 				$uploaded_data = $this->upload->data();
 
@@ -200,6 +209,7 @@ class AdminController extends CI_Controller
 					'slug' => $this->createSlug($name),
 					'harga' => $harga,
 					'stok' => $stok,
+					'satuan' => $satuan,
 					'gambar' => $uploaded_data['file_name'],
 					'deskripsi' => $deskripsi,
 					'created_at' => date('Y-m-d H:i:s'),

@@ -15,7 +15,20 @@ class produk_model extends CI_Model {
 		$this->db->where('deleted_at', null);
 		$this->db->where('slug', $slug);
 		$query = $this->db->get('products');
-		return $query->row_array();
+		return $query->row();
+	}
+
+	public function getProdukById($id) {
+		$this->db->where('deleted_at', null);
+		$this->db->where('id', $id);
+		$query = $this->db->get('products');
+		return $query->row();
+	}
+
+	public function update($data, $id) {
+		$this->db->set($data);
+		$this->db->where('id', $id);
+		$this->db->update('products');
 	}
 
 	public function deleteProduk($id) {
