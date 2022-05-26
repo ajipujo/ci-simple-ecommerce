@@ -8,6 +8,7 @@ class AdminController extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->library('session');
 		$this->load->model('produk_model');
+		$this->load->model('user_model');
 		$this->load->library('user_agent');
 	}
 
@@ -168,6 +169,43 @@ class AdminController extends CI_Controller
 			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil diperbarui!']);
 			redirect('admincontroller/produk');
 		}
+	}
+
+	public function user_admin()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+		$users = $this->user_model->getUsersByAdminStatus();
+		$data = [
+			'title' => 'User Admin',
+			'page' => 'adminpage/user_admin',
+			'user' => $userdata,
+			'users' => $users
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function user_customer()
+	{
+		$this->isAuthenticated();
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+		$users = $this->user_model->getUsersByRoleId(3);
+		$data = [
+			'title' => 'User Admin',
+			'page' => 'adminpage/user_customer',
+			'user' => $userdata,
+			'users' => $users
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
 	}
 
 	public function save_produk()

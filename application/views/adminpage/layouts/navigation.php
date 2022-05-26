@@ -26,8 +26,8 @@
 						Manajemen User
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="#">Admin</a></li>
-						<li><a class="dropdown-item" href="#">Customer</a></li>
+						<li><a class="dropdown-item" href="<?= site_url('admincontroller/user_admin') ?>">Admin</a></li>
+						<li><a class="dropdown-item" href="<?= site_url('admincontroller/user_customer') ?>">Customer</a></li>
 					</ul>
 				</li>
 			</ul>

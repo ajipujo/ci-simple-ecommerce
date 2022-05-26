@@ -68,20 +68,20 @@ class AuthController extends CI_Controller
 				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Email tidak terdaftar']);
 				redirect('/authcontroller/login');
 			} else {
-				$password_validity = password_verify($password, $user['password']);
+				$password_validity = password_verify($password, $user->password);
 				if ($password_validity) {
-					if ($user['is_active'] != 1) {
+					if ($user->is_active != 1) {
 						$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'User sudah tidak aktif']);
 						redirect('/authcontroller/login');
 					} else {
 						$userdata = [
-							'id' => $user['id'],
-							'name' => $user['name'],
-							'role_id' => $user['role_id'],
+							'id' => $user->id,
+							'name' => $user->name,
+							'role_id' => $user->role_id,
 						];
 						$this->session->set_userdata('user', $userdata);
 						$this->session->set_userdata('loggedIn', true);
-						if ($user['role_id'] == 3) {
+						if ($user->role_id == 3) {
 							redirect('/');
 						} else {
 							redirect('/admincontroller/index');
