@@ -49,7 +49,7 @@ if (isset($_SESSION['message'])) {
 						</div>
 					</div>
 					<div class="d-flex justify-content-end mt-3">
-						<button class="btn btn-outline-secondary me-2" type="submit">Kembali</button>
+						<button class="btn btn-outline-secondary me-2" type="button">Kembali</button>
 						<button class="btn btn-primary" type="submit">Simpan</button>
 					</div>
 				</div>

@@ -9,6 +9,8 @@
 					<h5><?= $produk->name ?></h5>
 					<p><?= $produk->deskripsi ?></p>
 					<span class="h5 currency-format"><?= $produk->harga ?></span>
+					<span>/</span>
+					<span><?= $produk->satuan ?></span>
 					<div class="col-12 mt-3">
 						<button class="btn btn-primary"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>beli sekarang</button>
 					</div>

@@ -1,12 +1,12 @@
 /* Start - Carousel area styling */
 
 .carousel-home .carousel-item-home {
-    max-height:300px;
+	max-height: 300px;
 }
 
 .carousel-item-home img {
-    object-fit:cover;
-    max-height:300px;
+	object-fit: cover;
+	max-height: 300px;
 }
 
 /* End - Carousel area styling */
@@ -18,10 +18,10 @@
 }
 
 .card-img-top-custom {
-    width: 100%;
+	width: 100%;
 	max-height: 200px;
-    min-height: 200px;
-    object-fit: cover;
+	min-height: 200px;
+	object-fit: cover;
 }
 
 .card-product-stock {
