@@ -12,6 +12,16 @@ class user_model extends CI_Model
 		return $query->row();
 	}
 
+	public function getUserById($id)
+	{
+		$this->db->select('users.*, roles.role_nm, roles.is_admin');
+		$this->db->from('users');
+		$this->db->join('roles', 'roles.id = users.role_id');
+		$this->db->where('users.id', $id);
+		$query = $this->db->get();
+		return $query->row();
+	}
+
 	public function getUsersByRoleId($roleId)
 	{
 		$this->db->select('users.*, roles.role_nm');

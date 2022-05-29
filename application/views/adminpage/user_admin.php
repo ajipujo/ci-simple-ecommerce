@@ -23,7 +23,7 @@ if (isset($_SESSION['message'])) {
 					<span class="fw-bold">Daftar User Admin</span>
 				</div>
 				<div class="col-6 d-flex justify-content-end">
-					<a href="<?= site_url('/admincontroller/form_produk') ?>" class="btn btn-primary btn-sm">Tambah Admin (+)</a>
+					<a href="<?= site_url('/admincontroller/form_user') ?>" class="btn btn-primary btn-sm">Tambah Admin (+)</a>
 				</div>
 			</div>
 			<hr>
@@ -43,8 +43,14 @@ if (isset($_SESSION['message'])) {
 							<td><?= $user->role_nm ?></td>
 							<td><?= $user->is_active == 1 ? 'Active' : 'Non-active' ?></td>
 							<td>
-								<a href="<?= site_url('/admincontroller/form_edit_user/' . $user->id) ?>" class="btn btn-primary btn-sm">Edit</a>
-								<a href="<?= site_url('/admincontroller/delete_user/' . $user->id) ?>" class="btn btn-danger btn-sm">Hapus</a>
+								<form action="<?= site_url('/admincontroller/form_edit_user') ?>" method="post" class="d-inline">
+									<input type="hidden" name="id" value="<?= $user->id ?>">
+									<button type="submit" class="btn btn-primary btn-sm">Edit</button>
+								</form>
+								<form action="<?= site_url('/admincontroller/delete_user') ?>" method="post" class="d-inline">
+									<input type="hidden" name="id" value="<?= $user->id ?>">
+									<button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+								</form>
 							</td>
 						</tr>
 					<?php } ?>

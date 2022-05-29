@@ -69,7 +69,7 @@ if (isset($_SESSION['message'])) {
 				</div>
 				<div class="d-flex justify-content-end mt-3">
 					<button class="btn btn-outline-secondary me-2" type="submit">Kembali</button>
-					<button class="btn btn-primary" type="submit">Simpan</button>
+					<button class="btn btn-primary" type="submit" id="btnProduk">Simpan</button>
 				</div>
 			</form>
 		</div>
@@ -77,7 +77,7 @@ if (isset($_SESSION['message'])) {
 </div>
 
 <script>
-	$("#btnRegister").click(function(e) {
+	$("#btnProduk").click(function(e) {
 		e.preventDefault();
 		$("#formProduk").submit();
 	});

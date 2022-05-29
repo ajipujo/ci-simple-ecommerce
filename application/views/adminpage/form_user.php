@@ -20,52 +20,42 @@ if (isset($_SESSION['message'])) {
 		<div class="card-body">
 			<div class="row">
 				<div class="col-12">
-					<span class="fw-bold">Tambah Produk</span>
+					<span class="fw-bold">Tambah Admin</span>
 				</div>
 			</div>
 			<hr>
-			<form action="<?= site_url('/admincontroller/save_produk') ?>" id="formProduk" method="POST" enctype="multipart/form-data">
+			<form action="<?= site_url('/admincontroller/save_admin') ?>" method="POST">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="name" class="form-label">Nama Produk</label>
-							<input type="text" class="form-control" id="name" name="name">
+							<label for="name" class="form-label">Fullname</label>
+							<input type="text" class="form-control" id="name" name="name" placeholder="Must have at least 2 characters">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="harga" class="form-label">Harga Produk</label>
-							<input type="text" class="form-control" id="harga" name="harga">
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="mb-3">
-							<label for="stok" class="form-label">Stok Produk</label>
-							<input type="text" class="form-control" id="stok" name="stok">
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="mb-3">
-							<label for="satuan" class="form-label">Satuan</label>
-							<input type="text" class="form-control" id="satuan" name="satuan">
+							<label for="role" class="form-label">Role</label>
+							<select name="role" id="role" class="form-select">
+								<option value="2" selected>Marketing</option>
+							</select>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="gambar" class="form-label">Gambar Produk</label>
-							<input class="form-control" type="file" id="gambar" name="gambar">
+							<label for="email" class="form-label">Email</label>
+							<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
 						</div>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="deskripsi" class="form-label">Deskripsi Produk</label>
-							<textarea name="deskripsi" id="deskripsi" rows="5" class="form-control"></textarea>
+							<label for="password" class="form-label">Password</label>
+							<input type="password" class="form-control" id="password" name="password" placeholder="your password...">
 						</div>
 					</div>
-				</div>
-				<div class="d-flex justify-content-end mt-3">
-					<button class="btn btn-outline-secondary me-2" type="submit">Kembali</button>
-					<button class="btn btn-primary" type="submit" id="btnProduk">Simpan</button>
+					<div class="d-flex justify-content-end mt-3">
+						<button class="btn btn-outline-secondary me-2" type="submit">Kembali</button>
+						<button class="btn btn-primary" type="submit">Simpan</button>
+					</div>
 				</div>
 			</form>
 		</div>
@@ -73,7 +63,7 @@ if (isset($_SESSION['message'])) {
 </div>
 
 <script>
-	$("#btnProduk").click(function(e) {
+	$("#btnRegister").click(function(e) {
 		e.preventDefault();
 		$("#formProduk").submit();
 	})

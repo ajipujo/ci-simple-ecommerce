@@ -171,43 +171,6 @@ class AdminController extends CI_Controller
 		}
 	}
 
-	public function user_admin()
-	{
-		$this->isAuthenticated();
-		$userdata = [
-			'loggedIn' => $this->session->userdata('loggedIn'),
-			'userdata' => $this->session->userdata('user')
-		];
-		$users = $this->user_model->getUsersByAdminStatus();
-		$data = [
-			'title' => 'User Admin',
-			'page' => 'adminpage/user_admin',
-			'user' => $userdata,
-			'users' => $users
-		];
-
-		$this->load->view('adminpage/layouts/master', $data);
-	}
-
-	public function user_customer()
-	{
-		$this->isAuthenticated();
-		$this->isAuthenticated();
-		$userdata = [
-			'loggedIn' => $this->session->userdata('loggedIn'),
-			'userdata' => $this->session->userdata('user')
-		];
-		$users = $this->user_model->getUsersByRoleId(3);
-		$data = [
-			'title' => 'User Admin',
-			'page' => 'adminpage/user_customer',
-			'user' => $userdata,
-			'users' => $users
-		];
-
-		$this->load->view('adminpage/layouts/master', $data);
-	}
-
 	public function save_produk()
 	{
 		$this->isAuthenticated();
@@ -259,5 +222,137 @@ class AdminController extends CI_Controller
 				redirect('admincontroller/produk');
 			}
 		}
+	}
+
+	public function user_admin()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+		$users = $this->user_model->getUsersByAdminStatus();
+		$data = [
+			'title' => 'User Admin',
+			'page' => 'adminpage/user_admin',
+			'user' => $userdata,
+			'users' => $users
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function user_customer()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+		$users = $this->user_model->getUsersByRoleId(3);
+		$data = [
+			'title' => 'User Admin',
+			'page' => 'adminpage/user_customer',
+			'user' => $userdata,
+			'users' => $users
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function form_user()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+		$data = [
+			'title' => 'User Admin',
+			'page' => 'adminpage/form_user',
+			'user' => $userdata,
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function save_admin()
+	{
+		$this->isAuthenticated();
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('role', 'Role', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect('/admincontroller/form_user');
+		} else {
+			$email = htmlspecialchars($this->input->post('email'));
+			$password = htmlspecialchars($this->input->post('password'));
+			$role = htmlspecialchars($this->input->post('role'));
+			$name = htmlspecialchars($this->input->post('name'));
+
+			$data = [
+				'name' => $name,
+				'email' => $email,
+				'password' => $password,
+				'role' => $role
+			];
+
+			$existing_email = $this->user_model->getUserByEmail($data);
+
+			if ($existing_email) {
+				$this->session->set_flashdata('message', ['status' => 'warning', 'text' => 'Email already registered']);
+				redirect('/admincontroller/form_user');
+			} else {
+				$data = [
+					'name' => $name,
+					'email' => $email,
+					'password' => password_hash($password, PASSWORD_DEFAULT),
+					'is_active' => 1,
+					'role_id' => $role,
+					'created_at' => date('Y-m-d H:i:s'),
+					'updated_at' => date('Y-m-d H:i:s')
+				];
+
+				$this->user_model->saveUser($data);
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully registered']);
+				redirect('/admincontroller/user_admin');
+			}
+		}
+	}
+
+	public function form_edit_user()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+
+		$id = htmlspecialchars($this->input->post('id'));
+
+		if ($id) {
+			$userDtl = $this->user_model->getUserById($id);
+
+			$data = [
+				'title' => 'User Admin',
+				'page' => 'adminpage/form_edit_user',
+				'user' => $userdata,
+				'user_detail' => $userDtl
+			];
+
+			$this->load->view('adminpage/layouts/master', $data);
+		} else {
+			redirect('/admincontroller');
+		}
+	}
+
+	public function update_user()
+	{
+		$this->isAuthenticated();
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
 	}
 }
