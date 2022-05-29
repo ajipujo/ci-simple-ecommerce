@@ -331,13 +331,17 @@ class AdminController extends CI_Controller
 			'userdata' => $this->session->userdata('user')
 		];
 
-		$id = htmlspecialchars($this->input->post('id'));
+		$id = $this->uri->segment(3);
 
 		if ($id) {
 			$userDtl = $this->user_model->getUserById($id);
 
+			if (!$userDtl) {
+				redirect('admincontroller/');
+			}
+
 			$data = [
-				'title' => 'User Admin',
+				'title' => 'Update User',
 				'page' => 'adminpage/form_edit_user',
 				'user' => $userdata,
 				'user_detail' => $userDtl
@@ -354,5 +358,32 @@ class AdminController extends CI_Controller
 		$this->isAuthenticated();
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect($this->agent->referrer());
+		} else {
+			$id = htmlspecialchars($this->input->post('id'));
+			$email = htmlspecialchars($this->input->post('email'));
+			$name = htmlspecialchars($this->input->post('name'));
+			$role = htmlspecialchars($this->input->post('role'));
+			$no_hp = htmlspecialchars($this->input->post('no_hp'));
+			$alamat = htmlspecialchars($this->input->post('alamat'));
+
+			$data = [
+				'name' => $name,
+				'email' => $email,
+				'no_hp' => $no_hp,
+				'alamat' => $alamat
+			];
+
+			if ($role) {
+				$data['role_id'] = $role;
+			}
+
+			$this->user_model->updateUser($data, $id);
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully updated']);
+			redirect('/admincontroller/user_admin');
+		}
 	}
 }

@@ -29,7 +29,14 @@ if (isset($_SESSION['message'])) {
 					<div class="col-md-6">
 						<div class="mb-3">
 							<label for="name" class="form-label">Fullname</label>
+							<input type="hidden" name="id" id="id" value="<?= $user_detail->id ?>">
 							<input type="text" class="form-control" id="name" name="name" value="<?= $user_detail->name ?>" placeholder="Must have at least 2 characters">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-3">
+							<label for="email" class="form-label">Email</label>
+							<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="<?= $user_detail->email ?>">
 						</div>
 					</div>
 					<?php if ($user_detail->is_admin == 1) { ?>
@@ -41,13 +48,20 @@ if (isset($_SESSION['message'])) {
 								</select>
 							</div>
 						</div>
-					<?php } ?>
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="email" class="form-label">Email</label>
-							<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="<?= $user_detail->email ?>">
+					<?php } else { ?>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="no_hp" class="form-label">No. Handphone</label>
+								<input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= $user_detail->no_hp ?>" placeholder="085896452806">
+							</div>
 						</div>
-					</div>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="alamat" class="form-label">Alamat</label>
+								<input type="text" class="form-control" id="alamat" name="alamat" value="<?= $user_detail->alamat ?>" placeholder="Alamat">
+							</div>
+						</div>
+					<?php } ?>
 					<div class="d-flex justify-content-end mt-3">
 						<button class="btn btn-outline-secondary me-2" type="button">Kembali</button>
 						<button class="btn btn-primary" type="submit">Simpan</button>

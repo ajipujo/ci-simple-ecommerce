@@ -94,8 +94,6 @@ class FrontController extends CI_Controller
 		}
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
-		$this->form_validation->set_rules('no_hp', 'no_hp', 'required');
-		$this->form_validation->set_rules('alamat', 'alamat', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);

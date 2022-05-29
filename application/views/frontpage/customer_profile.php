@@ -74,12 +74,6 @@ if (isset($_SESSION['message'])) {
 			email: {
 				required: true
 			},
-			no_hp: {
-				required: true
-			},
-			alamat: {
-				required: true
-			},
 		},
 		highlight: function(element, errorClass, validClass) {
 			$(element).addClass('is-invalid').removeClass('is-valid');
