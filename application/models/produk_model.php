@@ -2,7 +2,11 @@
 
 class produk_model extends CI_Model {
 	public function save($data) {
-		$this->db->insert('products', $data);
+		if ($this->db->insert('products', $data)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function getProduk() {
@@ -28,12 +32,20 @@ class produk_model extends CI_Model {
 	public function update($data, $id) {
 		$this->db->set($data);
 		$this->db->where('id', $id);
-		$this->db->update('products');
+		if ($this->db->update('products')) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function deleteProduk($id) {
 		$this->db->set('deleted_at', date('Y-m-d H:i:s'));
 		$this->db->where('id', $id);
-		$this->db->update('products');
+		if ($this->db->update('products')) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

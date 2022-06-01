@@ -44,12 +44,21 @@ class user_model extends CI_Model
 
 	public function saveUser($data)
 	{
-		$this->db->insert('users', $data);
+		if ($this->db->insert('users', $data)) {
+			$insert_id = $this->db->insert_id();
+			return $insert_id;
+		} else {
+			return false;
+		}
 	}
 
 	public function updateUser($data, $id)
 	{
 		$this->db->where('id', $id);
-		$this->db->update('users', $data);
+		if ($this->db->update('users', $data)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

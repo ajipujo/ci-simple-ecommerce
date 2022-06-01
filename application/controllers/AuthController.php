@@ -131,10 +131,13 @@ class AuthController extends CI_Controller
 					'updated_at' => date('Y-m-d H:i:s')
 				];
 
-				// var_dump($data);
-				$this->user_model->saveUser($data);
-				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully registered']);
-				redirect('/authcontroller/login');
+				if ($this->user_model->saveUser($data)) {
+					$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully registered']);
+					redirect('/authcontroller/login');
+				} else {
+					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to register']);
+					redirect('/authcontroller/register');
+				}
 			}
 		}
 	}

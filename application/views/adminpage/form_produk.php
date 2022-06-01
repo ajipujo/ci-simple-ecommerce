@@ -63,6 +63,48 @@ if (isset($_SESSION['message'])) {
 						</div>
 					</div>
 				</div>
+				<div class="row mt-5">
+					<div class="col-6 d-flex align-items-center">
+						<span class="fw-bold">Varian Produk</span>
+					</div>
+					<div class="col-6 d-flex justify-content-end">
+						<span class="fw-bold">
+							<button type="button" class="btn btn-primary btn-sm" id="btnTambahVarian">Tambah Varian</button>
+						</span>
+					</div>
+				</div>
+				<hr>
+				<div id="varianContainer">
+					<div class="row" id="varian_container_0">
+						<div class="col-md-4">
+							<div class="mb-3">
+								<label for="varian_name_0" class="form-label">Nama Varian</label>
+								<input type="text" class="form-control" id="varian_name_0" name="varian_name[]">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								<label for="varian_gambar_0" class="form-label">Gambar Varian</label>
+								<input class="form-control" type="file" id="varian_gambar_0" name="varian_gambar[]">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-10">
+									<div class="mb-3">
+										<label for="varian_harga_0" class="form-label">Harga Varian</label>
+										<input type="text" class="form-control" id="varian_harga_0" name="varian_harga[]">
+									</div>
+								</div>
+								<div class="col-2 d-flex align-items-end">
+									<div class="mb-3">
+										<button type="button" onclick="deleteVarianForm(0)" class="btn btn-danger">X</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="d-flex justify-content-end mt-3">
 					<button class="btn btn-outline-secondary me-2" type="submit">Kembali</button>
 					<button class="btn btn-primary" type="submit" id="btnProduk">Simpan</button>
@@ -73,10 +115,75 @@ if (isset($_SESSION['message'])) {
 </div>
 
 <script>
+	let indexVarian = 0;
+
+	function addVarianForm() {
+		let components = `<div class="row" id="varian_container_` + indexVarian + `">
+						<div class="col-md-4">
+							<div class="mb-3">
+								<label for="varian_name_` + indexVarian + `" class="form-label">Nama Varian</label>
+								<input type="text" class="form-control" id="varian_name_` + indexVarian + `" name="varian_name[]">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								<label for="varian_gambar_` + indexVarian + `" class="form-label">Gambar Varian</label>
+								<input class="form-control" type="file" id="varian_gambar_` + indexVarian + `" name="varian_gambar[]">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-10">
+									<div class="mb-3">
+										<label for="varian_harga_` + indexVarian + `" class="form-label">Harga Varian</label>
+										<input type="text" class="form-control" id="varian_harga_` + indexVarian + `" name="varian_harga[]">
+									</div>
+								</div>
+								<div class="col-2 d-flex align-items-end">
+									<div class="mb-3">
+										<button type="button" onclick="deleteVarianForm(` + indexVarian + `)" class="btn btn-danger">X</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>`;
+
+		$('#varianContainer').append(components);
+	}
+
+	function deleteVarianForm(id) {
+		$('#varian_container_' + id).remove();
+	}
+
+	$("#btnTambahVarian").click(function(e) {
+		e.preventDefault();
+		indexVarian++;
+		addVarianForm();
+	})
+
 	$("#btnProduk").click(function(e) {
 		e.preventDefault();
+		$('input[name="varian_name[]"]').each(function() {
+			console.log(this);
+			$(this).rules('add', {
+				required: true
+			});
+		});
+		$('input[name="varian_gambar[]"]').each(function() {
+			console.log(this);
+			$(this).rules('add', {
+				required: true
+			});
+		});
+		$('input[name="varian_harga[]"]').each(function() {
+			console.log(this);
+			$(this).rules('add', {
+				required: true
+			});
+		});
 		$("#formProduk").submit();
 	})
+
 	$("#formProduk").validate({
 		rules: {
 			name: {

@@ -8,6 +8,7 @@ class AdminController extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->library('session');
 		$this->load->model('produk_model');
+		$this->load->model('produk_tipe_model');
 		$this->load->model('user_model');
 		$this->load->library('user_agent');
 	}
@@ -106,9 +107,13 @@ class AdminController extends CI_Controller
 	{
 		$this->isAuthenticated();
 		$id = $this->input->post('id');
-		$this->produk_model->deleteProduk($id);
-		$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil dihapus!']);
-		redirect('admincontroller/produk');
+		if ($this->produk_model->deleteProduk($id)) {
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil dihapus!']);
+			redirect('admincontroller/produk');
+		} else {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Data produk gagal dihapus!']);
+			redirect('admincontroller/produk');
+		}
 	}
 
 	public function update_produk()
@@ -165,15 +170,20 @@ class AdminController extends CI_Controller
 				}
 			}
 
-			$this->produk_model->update($data, $id);
-			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil diperbarui!']);
-			redirect('admincontroller/produk');
+			if ($this->produk_model->update($data, $id)) {
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil diperbarui!']);
+				redirect('admincontroller/produk');
+			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Data produk gagal diperbarui!']);
+				redirect($this->agent->referrer());
+			}
 		}
 	}
 
 	public function save_produk()
 	{
 		$this->isAuthenticated();
+
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('stok', 'Stok', 'required');
 		$this->form_validation->set_rules('harga', 'Harga', 'required');
@@ -217,9 +227,57 @@ class AdminController extends CI_Controller
 					'updated_at' => date('Y-m-d H:i:s')
 				];
 
-				$this->produk_model->save($data);
-				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil ditambahkan!']);
-				redirect('admincontroller/produk');
+				$id_produk = $this->produk_model->save($data);
+
+				if ($id_produk) {
+
+					$varian_name = $this->input->post('varian_name');
+					$varian_harga = $this->input->post('varian_harga');
+					$varian_gambar = $_FILES['varian_gambar'];
+
+					$cvarian = count($varian_name);
+
+					for ($i=0; $i < $cvarian; $i++) { 
+						$config['upload_path']          = FCPATH . '/upload/varian_produk/';
+						$config['allowed_types']        = 'gif|jpg|jpeg|png';
+						$config['file_name']            = 'varian_produk-' . $this->generateRandomString() . '-' . time();
+						$config['overwrite']            = true;
+						$config['max_size']             = 1024; // 1MB
+			
+						$_FILES['userfile']['name']= $varian_gambar['name'][$i];
+						$_FILES['userfile']['type']= $varian_gambar['type'][$i];
+						$_FILES['userfile']['tmp_name']= $varian_gambar['tmp_name'][$i];
+						$_FILES['userfile']['error']= $varian_gambar['error'][$i];
+						$_FILES['userfile']['size']= $varian_gambar['size'][$i]; 
+
+						$this->load->library('upload', $config);
+	
+						if (!$this->upload->do_upload()) {
+							$data['error'] = $this->upload->display_errors();
+							$this->session->set_flashdata('message', ['status' => 'danger', 'text' => $data['error']]);
+							redirect('/admincontroller/form_produk');
+						} else {
+							$uploaded_data = $this->upload->data();
+			
+							$data = [
+								'product_id' => $id_produk,
+								'name' => $varian_name[$i],
+								'harga' => $varian_harga[$i],
+								'gambar' => $uploaded_data['file_name'],
+								'created_at' => date('Y-m-d H:i:s'),
+								'updated_at' => date('Y-m-d H:i:s')
+							];
+	
+							$this->produk_tipe_model->save($data);
+						}
+					}
+
+					$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil ditambahkan!']);
+					redirect('admincontroller/produk');
+				} else {
+					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Data produk gagal ditambahkan!']);
+					redirect('admincontroller/form_produk');
+				}
 			}
 		}
 	}
@@ -316,9 +374,13 @@ class AdminController extends CI_Controller
 					'updated_at' => date('Y-m-d H:i:s')
 				];
 
-				$this->user_model->saveUser($data);
-				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully registered']);
-				redirect('/admincontroller/user_admin');
+				if ($this->user_model->saveUser($data)) {
+					$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully registered']);
+					redirect('/admincontroller/user_admin');
+				} else {
+					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to register']);
+					redirect('/admincontroller/form_user');
+				}
 			}
 		}
 	}
@@ -381,9 +443,13 @@ class AdminController extends CI_Controller
 				$data['role_id'] = $role;
 			}
 
-			$this->user_model->updateUser($data, $id);
-			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully updated']);
-			redirect('/admincontroller/user_admin');
+			if ($this->user_model->updateUser($data, $id)) {
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully updated']);
+				redirect('/admincontroller/user_admin');
+			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to update']);
+				redirect('/admincontroller/user_admin');
+			}
 		}
 	}
 }
