@@ -21,30 +21,6 @@
 		</button>
 	</div>
 </div>
-<?php
-
-$dummy = [
-	[
-		'name' => 'Headphone X | Premium & Gaming gear for PC | Comfortable & Lightweight',
-		'price' => '10000',
-		'image' => 'https://img.freepik.com/free-psd/headphone-brand-product-sale-facebook-cover-banner_161103-93.jpg?w=2000',
-		'stok' => 3
-	],
-	[
-		'name' => 'Cosmetic X',
-		'price' => '10000',
-		'image' => 'https://media.istockphoto.com/vectors/cosmetic-bottle-on-geometric-podium-mock-up-banner-vector-id1206770955?b=1&k=20&m=1206770955&s=612x612&w=0&h=xaAoBp7a0Swazwi-AZKp_iwq4Fk1moATudwPiSRfzkA=',
-		'stok' => 30
-	],
-	[
-		'name' => 'Dapur X',
-		'price' => '10000',
-		'image' => 'https://img.pikbest.com/01/76/00/51VpIkbEsTUMC.jpg-0.jpg!bw700',
-		'stok' => 50
-	],
-];
-
-?>
 <div class="container py-3">
 	<div class="row">
 		<?php foreach ($produk as $key => $item) { ?>
@@ -52,15 +28,15 @@ $dummy = [
 				<div class="card mb-3 card-product">
 					<img class="card-img-top-custom" src="<?= base_url('/upload/produk/'.$item->gambar) ?>" alt="...">
 					<div class="card-body">
-						<div class="col-12 mb-2">
+						<!-- <div class="col-12 mb-2">
 							<span class="card-product-stock text-danger">Stok tersisa <?= $item->stok ?></span>
-						</div>
+						</div> -->
 						<div class="col-12 mb-2">
 							<span class="card-product-title two-line-text"><?= $item->name ?></span>
 						</div>
-						<div class="col-12 mb-3">
+						<!-- <div class="col-12 mb-3">
 							<span class="card-product-price fw-bold currency-format"><?= $item->harga ?></span>
-						</div>
+						</div> -->
 						<a href="<?= site_url('frontcontroller/produk_detail/'.$item->slug) ?>" class="stretched-link"></a>
 					</div>
 				</div>

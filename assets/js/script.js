@@ -1,9 +1,13 @@
 $(function () {
+	activateCurrencyFormat();
+});
+
+function activateCurrencyFormat() {
 	$('.currency-format').each(function () {
 		let newFormat = formatRupiah($(this).text(), 'Rp. ');
 		$(this).text(newFormat);
 	})
-});
+}
 
 function formatRupiah(angka, prefix){
 	var number_string = angka.replace(/[^,\d]/g, '').toString(),

@@ -3,7 +3,7 @@
 class produk_model extends CI_Model {
 	public function save($data) {
 		if ($this->db->insert('products', $data)) {
-			return true;
+			return $this->db->insert_id();
 		} else {
 			return false;
 		}

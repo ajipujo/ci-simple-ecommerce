@@ -14,7 +14,7 @@
 /* Start - Card area styling */
 
 .card-product {
-	height: 360px;
+	height: 270px;
 }
 
 .card-img-top-custom {
@@ -37,3 +37,28 @@
 }
 
 /* End - Card area styling */
+
+/* HIDE RADIO */
+.radio-image {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* IMAGE STYLES */
+.radio-image + img {
+	cursor: pointer;
+}
+
+/* CHECKED STYLES */
+.radio-image:checked + img {
+	outline: 2px solid #f00;
+}
+
+.varian-image {
+	float: left;
+    width:  100px;
+    height: 100px;
+    object-fit: cover;
+}

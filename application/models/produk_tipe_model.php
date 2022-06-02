@@ -8,4 +8,11 @@ class produk_tipe_model extends CI_Model {
 			return false;
 		}
 	}
+
+	public function getVarianByProduk($id) {
+		$this->db->where('deleted_at', null);
+		$this->db->where('product_id', $id);
+		$query = $this->db->get('product_types');
+		return $query->result();
+	}
 }

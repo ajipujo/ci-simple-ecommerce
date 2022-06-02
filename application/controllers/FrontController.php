@@ -7,6 +7,7 @@ class FrontController extends CI_Controller
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->model('produk_model');
+		$this->load->model('produk_tipe_model');
 		$this->load->model('user_model');
 		$this->load->library('form_validation');
 		$this->load->library('user_agent');
@@ -45,6 +46,12 @@ class FrontController extends CI_Controller
 		$slug = $this->uri->segment(3);
 
 		$produk = $this->produk_model->getProdukBySlug($slug);
+		$varian = $this->produk_tipe_model->getVarianByProduk($produk->id);
+
+		$produk->product_types = $varian;
+
+		// var_dump($produk);
+		// die;
 
 		$data = [
 			'title' => 'Situs Jual Beli Termurah dan Terpercaya',

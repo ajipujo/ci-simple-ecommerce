@@ -207,6 +207,7 @@ class AdminController extends CI_Controller
 			$config['max_size']             = 1024; // 1MB
 
 			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
 
 			if (!$this->upload->do_upload('gambar')) {
 				$data['error'] = $this->upload->display_errors();
@@ -238,11 +239,11 @@ class AdminController extends CI_Controller
 					$cvarian = count($varian_name);
 
 					for ($i=0; $i < $cvarian; $i++) { 
-						$config['upload_path']          = FCPATH . '/upload/varian_produk/';
-						$config['allowed_types']        = 'gif|jpg|jpeg|png';
-						$config['file_name']            = 'varian_produk-' . $this->generateRandomString() . '-' . time();
-						$config['overwrite']            = true;
-						$config['max_size']             = 1024; // 1MB
+						$config2['upload_path']          = FCPATH . '/upload/varian_produk/';
+						$config2['allowed_types']        = 'gif|jpg|jpeg|png';
+						$config2['file_name']            = 'varian_produk-' . $this->generateRandomString() . '-' . time();
+						$config2['overwrite']            = true;
+						$config2['max_size']             = 1024; // 1MB
 			
 						$_FILES['userfile']['name']= $varian_gambar['name'][$i];
 						$_FILES['userfile']['type']= $varian_gambar['type'][$i];
@@ -250,8 +251,9 @@ class AdminController extends CI_Controller
 						$_FILES['userfile']['error']= $varian_gambar['error'][$i];
 						$_FILES['userfile']['size']= $varian_gambar['size'][$i]; 
 
-						$this->load->library('upload', $config);
-	
+						$this->load->library('upload', $config2);
+						$this->upload->initialize($config2);
+
 						if (!$this->upload->do_upload()) {
 							$data['error'] = $this->upload->display_errors();
 							$this->session->set_flashdata('message', ['status' => 'danger', 'text' => $data['error']]);
