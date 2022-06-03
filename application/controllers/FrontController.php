@@ -50,9 +50,6 @@ class FrontController extends CI_Controller
 
 		$produk->product_types = $varian;
 
-		// var_dump($produk);
-		// die;
-
 		$data = [
 			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
 			'page' => 'frontpage/produk',
@@ -136,54 +133,5 @@ class FrontController extends CI_Controller
 				redirect('authcontroller/login');
 			}
 		}
-	}
-
-	function searchForId($id, $array) {
-		foreach ($array as $item) {
-			if ($item->id === $id) {
-				return $item;
-			}
-		}
-		return null;
-	 }
-
-	public function dummy()
-	{
-		$dummy = $this->load->view('dummy.json', '', true); //this will load dummy.json
-		$dummy = json_decode($dummy);
-		$pemasukkan = $dummy->data->pemasukan;
-		$pengeluaran = $dummy->data->pengeluaran;
-
-		$allData = [];
-
-		$period = new DatePeriod(
-			new DateTime('2022-05-29'),
-			new DateInterval('P1D'),
-			new DateTime('2022-06-06')
-		);
-
-		foreach ($period as $key => $value) {
-			$data['tanggal'] = $value->format('Y-m-d');
-			$tmp_pemasukkan = [];
-			$tmp_pengeluaran = [];
-			foreach($pemasukkan as $transaksi) {
-				$dateFormatPemasukkan = date("Y-m-d", strtotime($transaksi->created_at));
-				if ($dateFormatPemasukkan == $value->format('Y-m-d')) {
-					$tmp_pemasukkan[] = $transaksi;
-				}
-			}
-			foreach($pengeluaran as $transaksi) {
-				$dateFormatPengeluaran = date("Y-m-d", strtotime($transaksi->tanggal_pengeluaran));
-				if ($dateFormatPengeluaran == $value->format('Y-m-d')) {
-					$tmp_pengeluaran[] = $transaksi;
-				}
-			}
-			$data['pemasukkan'] = count($tmp_pemasukkan);
-			$data['pengeluaran'] = count($tmp_pengeluaran);
-			array_push($allData, $data);
-		}
-
-		var_dump($allData);
-		die;
 	}
 }

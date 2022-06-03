@@ -93,6 +93,9 @@ class AdminController extends CI_Controller
 		];
 		$slug = $this->uri->segment(3);
 		$produk = $this->produk_model->getProdukBySlug($slug);
+		$varian = $this->produk_tipe_model->getVarianByProduk($produk->id);
+
+		$produk->product_types = $varian;
 
 		$data = [
 			'title' => 'Edit Produk',
@@ -107,9 +110,21 @@ class AdminController extends CI_Controller
 	{
 		$this->isAuthenticated();
 		$id = $this->input->post('id');
-		if ($this->produk_model->deleteProduk($id)) {
-			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil dihapus!']);
-			redirect('admincontroller/produk');
+		$old_produk = $this->produk_model->getProdukById($id);
+		if ($old_produk) {
+			unlink(FCPATH . '/upload/produk/' . $old_produk->gambar);
+			if ($this->produk_model->deleteProduk($id)) {
+				$varian = $this->produk_tipe_model->getVarianByProduk($id);
+				foreach($varian as $item) {
+					unlink(FCPATH . '/upload/varian_produk/' . $item->gambar);
+					$this->produk_tipe_model->deleteVarianById($item->id);
+				}
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil dihapus!']);
+				redirect('admincontroller/produk');
+			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Data produk gagal dihapus!']);
+				redirect('admincontroller/produk');
+			}
 		} else {
 			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Data produk gagal dihapus!']);
 			redirect('admincontroller/produk');
@@ -137,9 +152,6 @@ class AdminController extends CI_Controller
 			$satuan = htmlspecialchars($this->input->post('satuan'));
 
 			$old_produk = $this->produk_model->getProdukById($id);
-
-			// var_dump($old_produk);
-			// die;
 
 			$data = [
 				'name' => $name,
@@ -171,6 +183,97 @@ class AdminController extends CI_Controller
 			}
 
 			if ($this->produk_model->update($data, $id)) {
+				$varian_id = $this->input->post('varian_id');
+				$varian_name = $this->input->post('varian_name');
+				$varian_harga = $this->input->post('varian_harga');
+				$varian_gambar = $_FILES['varian_gambar'];
+
+				$cvarian = count($varian_name);
+
+				$config2['upload_path']          = FCPATH . '/upload/varian_produk/';
+				$config2['allowed_types']        = 'gif|jpg|jpeg|png';
+				$config2['file_name']            = 'varian_produk-' . $this->generateRandomString() . '-' . time();
+				$config2['overwrite']            = true;
+				$config2['max_size']             = 1024; // 1MB
+
+				for ($i = 0; $i < $cvarian; $i++) {
+					$id_varian = $varian_id[$i];
+					$data = [
+						'name' => $varian_name[$i],
+						'harga' => $varian_harga[$i],
+						'updated_at' => date('Y-m-d H:i:s')
+					];
+
+					if ($id_varian) {
+
+						$old_varian = $this->produk_tipe_model->getVarianById($id_varian);
+
+						if ($varian_gambar['name'][$i]) {
+							$_FILES['userfile']['name'] = $varian_gambar['name'][$i];
+							$_FILES['userfile']['type'] = $varian_gambar['type'][$i];
+							$_FILES['userfile']['tmp_name'] = $varian_gambar['tmp_name'][$i];
+							$_FILES['userfile']['error'] = $varian_gambar['error'][$i];
+							$_FILES['userfile']['size'] = $varian_gambar['size'][$i];
+
+							$this->load->library('upload', $config2);
+							$this->upload->initialize($config2);
+
+							if (!$this->upload->do_upload()) {
+								$data['error'] = $this->upload->display_errors();
+								$this->session->set_flashdata('message', ['status' => 'danger', 'text' => $data['error']]);
+								redirect($this->agent->referrer());
+							} else {
+								$uploaded_data = $this->upload->data();
+								unlink(FCPATH . '/upload/varian_produk/' . $old_varian->gambar);
+								$data['gambar'] = $uploaded_data['file_name'];
+							}
+						}
+
+						$this->produk_tipe_model->update($data, $id_varian);
+					} else {
+						$_FILES['userfile']['name'] = $varian_gambar['name'][$i];
+						$_FILES['userfile']['type'] = $varian_gambar['type'][$i];
+						$_FILES['userfile']['tmp_name'] = $varian_gambar['tmp_name'][$i];
+						$_FILES['userfile']['error'] = $varian_gambar['error'][$i];
+						$_FILES['userfile']['size'] = $varian_gambar['size'][$i];
+
+						$this->load->library('upload', $config2);
+						$this->upload->initialize($config2);
+
+						if (!$this->upload->do_upload()) {
+							$data['error'] = $this->upload->display_errors();
+							$this->session->set_flashdata('message', ['status' => 'danger', 'text' => $data['error']]);
+							redirect($this->agent->referrer());
+						} else {
+							$uploaded_data = $this->upload->data();
+
+							$data = [
+								'product_id' => $id,
+								'name' => $varian_name[$i],
+								'harga' => $varian_harga[$i],
+								'gambar' => $uploaded_data['file_name'],
+								'created_at' => date('Y-m-d H:i:s'),
+								'updated_at' => date('Y-m-d H:i:s')
+							];
+
+							$this->produk_tipe_model->save($data);
+						}
+					}
+				}
+
+				$varian_delete_datas = $this->input->post('varian_delete_datas');
+				if ($varian_delete_datas) {
+					$dataDelete = explode(',', $varian_delete_datas);
+				} else {
+					$dataDelete = [];
+				}
+
+				foreach($dataDelete as $id) {
+					$old_varian = $this->produk_tipe_model->getVarianById($id);
+					unlink(FCPATH . '/upload/varian_produk/' . $old_varian->gambar);
+					$this->produk_tipe_model->deleteVarianById($id);
+				}
+
 				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data produk berhasil diperbarui!']);
 				redirect('admincontroller/produk');
 			} else {
@@ -238,18 +341,18 @@ class AdminController extends CI_Controller
 
 					$cvarian = count($varian_name);
 
-					for ($i=0; $i < $cvarian; $i++) { 
+					for ($i = 0; $i < $cvarian; $i++) {
 						$config2['upload_path']          = FCPATH . '/upload/varian_produk/';
 						$config2['allowed_types']        = 'gif|jpg|jpeg|png';
 						$config2['file_name']            = 'varian_produk-' . $this->generateRandomString() . '-' . time();
 						$config2['overwrite']            = true;
 						$config2['max_size']             = 1024; // 1MB
-			
-						$_FILES['userfile']['name']= $varian_gambar['name'][$i];
-						$_FILES['userfile']['type']= $varian_gambar['type'][$i];
-						$_FILES['userfile']['tmp_name']= $varian_gambar['tmp_name'][$i];
-						$_FILES['userfile']['error']= $varian_gambar['error'][$i];
-						$_FILES['userfile']['size']= $varian_gambar['size'][$i]; 
+
+						$_FILES['userfile']['name'] = $varian_gambar['name'][$i];
+						$_FILES['userfile']['type'] = $varian_gambar['type'][$i];
+						$_FILES['userfile']['tmp_name'] = $varian_gambar['tmp_name'][$i];
+						$_FILES['userfile']['error'] = $varian_gambar['error'][$i];
+						$_FILES['userfile']['size'] = $varian_gambar['size'][$i];
 
 						$this->load->library('upload', $config2);
 						$this->upload->initialize($config2);
@@ -260,7 +363,7 @@ class AdminController extends CI_Controller
 							redirect('/admincontroller/form_produk');
 						} else {
 							$uploaded_data = $this->upload->data();
-			
+
 							$data = [
 								'product_id' => $id_produk,
 								'name' => $varian_name[$i],
@@ -269,7 +372,7 @@ class AdminController extends CI_Controller
 								'created_at' => date('Y-m-d H:i:s'),
 								'updated_at' => date('Y-m-d H:i:s')
 							];
-	
+
 							$this->produk_tipe_model->save($data);
 						}
 					}
