@@ -163,25 +163,28 @@ if (isset($_SESSION['message'])) {
 
 	$("#btnProduk").click(function(e) {
 		e.preventDefault();
+		let validateVarian = true;
 		$('input[name="varian_name[]"]').each(function() {
-			console.log(this);
-			$(this).rules('add', {
-				required: true
-			});
+			if (!$(this).val()) {
+				validateVarian = false;
+			}
 		});
 		$('input[name="varian_gambar[]"]').each(function() {
-			console.log(this);
-			$(this).rules('add', {
-				required: true
-			});
+			if (!$(this).val()) {
+				validateVarian = false;
+			}
 		});
 		$('input[name="varian_harga[]"]').each(function() {
-			console.log(this);
-			$(this).rules('add', {
-				required: true
-			});
+			if (!$(this).val()) {
+				validateVarian = false;
+			}
 		});
-		$("#formProduk").submit();
+
+		if (validateVarian === false) {
+			alert('Lengkapi form!');
+		} else {
+			$("#formProduk").submit();
+		}
 	})
 
 	$("#formProduk").validate({
