@@ -16,32 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `categories`
---
-
-DROP TABLE IF EXISTS `categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `categories`
---
-
-LOCK TABLES `categories` WRITE;
-/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `product_types`
 --
 
@@ -53,11 +27,12 @@ CREATE TABLE `product_types` (
   `product_id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `harga` int(11) NOT NULL,
+  `gambar` varchar(500) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +41,7 @@ CREATE TABLE `product_types` (
 
 LOCK TABLES `product_types` WRITE;
 /*!40000 ALTER TABLE `product_types` DISABLE KEYS */;
+INSERT INTO `product_types` VALUES (10,19,'varian 1',1000000,'varian_produk-jAym5zpZiW-1654139427.png',NULL,'2022-06-02 05:10:27','2022-06-02 05:10:27'),(11,19,'varian 2',1000000,'varian_produk-hfRkeHXFya-1654139427.png',NULL,'2022-06-02 05:10:27','2022-06-02 05:10:27'),(12,19,'varian 2',1000000,'varian_produk-zlbe9iwPjp-1654139427.jpg',NULL,'2022-06-02 05:10:27','2022-06-02 05:10:27'),(13,20,'varian 1',1000000,'varian_produk-WtXJmZdV3Y-1654145060.jpg',NULL,'2022-06-02 06:44:20','2022-06-02 06:44:20'),(14,20,'varian 2',1000000,'varian_produk-l4nw9paR2m-1654145060.jpg',NULL,'2022-06-02 06:44:20','2022-06-02 06:44:20'),(15,20,'varian 3',1000000,'varian_produk-TRo672jJVw-1654145060.jpg',NULL,'2022-06-02 06:44:21','2022-06-02 06:44:21'),(16,20,'varian 4',1000000,'varian_produk-X1HtAYzMcv-1654145061.jpg',NULL,'2022-06-02 06:44:21','2022-06-02 06:44:21'),(17,20,'varian 5',1000000,'varian_produk-QxvE1m6KNJ-1654145061.jpg',NULL,'2022-06-02 06:44:21','2022-06-02 06:44:21'),(18,21,'varian 1',1000000,'varian_produk-te8wg7uZxj-1654145864.jpg',NULL,'2022-06-02 06:57:44','2022-06-02 06:57:44'),(19,21,'varian 2',1000000,'varian_produk-yfNLqXm3xU-1654145864.jpg',NULL,'2022-06-02 06:57:44','2022-06-02 06:57:44'),(20,21,'varian 3',1000000,'varian_produk-oEZbVRYznU-1654145864.jpg',NULL,'2022-06-02 06:57:44','2022-06-02 06:57:44'),(21,21,'varian 4',1000000,'varian_produk-46OSWhx2FY-1654145864.jpg',NULL,'2022-06-02 06:57:44','2022-06-02 06:57:44'),(22,22,'varian 1',1000000,'varian_produk-2EQ4UyVpKw-1654157153.jpg',NULL,'2022-06-02 10:05:53','2022-06-03 11:16:47'),(23,22,'varian 2',1000000,'varian_produk-TXkQOYz6Wm-1654157153.jpg',NULL,'2022-06-02 10:05:53','2022-06-03 11:16:47'),(24,22,'varian 3',1000000,'varian_produk-iBNlQanjxA-1654157153.jpg',NULL,'2022-06-02 10:05:53','2022-06-03 11:16:47'),(25,22,'varian 4',1000000,'varian_produk-tP6pw2xQLK-1654157153.jpg',NULL,'2022-06-02 10:05:53','2022-06-03 11:16:47'),(26,23,'varian 1',1000000,'varian_produk-zEi5GeFNsn-1654157493.jpg',NULL,'2022-06-02 10:11:33','2022-06-02 10:11:33'),(27,23,'varian 2',1000000,'varian_produk-HLizGRNdAh-1654157493.jpg',NULL,'2022-06-02 10:11:33','2022-06-02 10:11:33'),(28,23,'varian 3',1000000,'varian_produk-u1CUhLBmiZ-1654157493.jpg',NULL,'2022-06-02 10:11:33','2022-06-02 10:11:33'),(29,23,'varian 4',1000000,'varian_produk-f5n2B6QqWP-1654157493.jpg',NULL,'2022-06-02 10:11:33','2022-06-02 10:11:33'),(30,23,'varian 5',1000000,'varian_produk-pNLyYVMgEl-1654157493.jpg',NULL,'2022-06-02 10:11:33','2022-06-02 10:11:33'),(34,27,'varian 1',1000000,'varian_produk-Tty1cDw6a4-1654221912.jpg',NULL,'2022-06-03 04:05:12','2022-06-03 04:05:12'),(35,27,'varian 2',1000000,'varian_produk-1C9vroVnU2-1654221912.jpg',NULL,'2022-06-03 04:05:12','2022-06-03 04:05:12'),(36,27,'varian 3',1000000,'varian_produk-ytQPDVIWuj-1654221912.jpg',NULL,'2022-06-03 04:05:12','2022-06-03 04:05:12'),(37,28,'varian 1',1000000,'varian_produk-q9jwYTP3Ho-1654222086.jpg',NULL,'2022-06-03 04:08:06','2022-06-03 04:08:06'),(38,28,'varian 2',1000000,'varian_produk-TEnePLdhR8-1654222086.jpg',NULL,'2022-06-03 04:08:06','2022-06-03 04:08:06'),(39,28,'varian 3',1000000,'varian_produk-ufSokHE6YL-1654222086.jpg',NULL,'2022-06-03 04:08:06','2022-06-03 04:08:06'),(40,28,'varian 4',1000000,'varian_produk-ZIDiL93h4f-1654222086.jpg',NULL,'2022-06-03 04:08:06','2022-06-03 04:08:06'),(41,28,'varian 5',1000000,'varian_produk-4OedAZ2wQ8-1654222086.jpg',NULL,'2022-06-03 04:08:06','2022-06-03 04:08:06'),(42,28,'varian 6',1000000,'varian_produk-Tq1yXOsRFg-1654222086.jpg',NULL,'2022-06-03 04:08:06','2022-06-03 04:08:06');
 /*!40000 ALTER TABLE `product_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +65,7 @@ CREATE TABLE `products` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +74,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (6,'ID Card','id-card',3000000,60,'produk-t3WGRcCm4V-1653495742.jpg','ID Card dengan design modern, cocok digunakan di perusahaan anda.','pcs',NULL,'2022-05-25 18:05:14','2022-05-25 18:27:28'),(7,'Produk Baru 1','produk-baru-1',3000000,50,'produk-HkRJ9fIb1L-1653746427.jpg','Detail produk dummy','pcs',NULL,'2022-05-28 16:00:27','2022-05-28 16:01:32');
+INSERT INTO `products` VALUES (19,'RFID LABEL','rfid-label',3000000,50,'produk-Dp20EoQajs-1654139427.png','RFID labels are used to optimize client’s logistics &amp; provide better visibility of inventory while promoting brand authentication. We print variable data onto the RFID label, use RFID technology to encode electronic data. Electronic QC system is a must to ensure grade-A barcode is printed with accurate data. Printed &amp; encoded data reported back to the clients, which are used for item level inventory management. We are partners with global leading RFID inlay &amp; equipment manufacturers to produce high quality RFID labels.','pcs',NULL,'2022-06-02 05:10:27','2022-06-02 05:10:27'),(20,'VARIABLE DATA','variable-data',3000000,50,'produk-6OTGYJu4eL-1654145060.jpg','We produce price tags, content label, UPC labels for international clients. We use customized software to manage data &amp; use digital printers to produce products. We print variable data ranging from price, 1D barcode, QR code, etc on to client’s smart label. Our QC system ensures all our printed materials have grade-A barcode with accurate data.','pcs',NULL,'2022-06-02 06:44:20','2022-06-02 06:44:20'),(21,'HANG TAG','hang-tag',3000000,50,'produk-caFAlzeCfY-1654145864.jpg','Hangtags enhance brand identity for clients. We produce quality hang tags to embellish international client’s products.','pcs',NULL,'2022-06-02 06:57:44','2022-06-02 06:57:44'),(22,'COLOR ADHESIVES','color-adhesives',3000000,50,'produk-5MmtNPdOc9-1654157153.jpg','Superior quality color adhesives are environmentally friendly way to incorporate brand graphics &amp; other messages onto the products. We produce color adhesives that are supplied to variety of industry ranging from electronics, apparels, f&amp;b to footwear business.','pcs',NULL,'2022-06-02 10:05:53','2022-06-03 11:16:47'),(23,'INSTRUCTION BOOK','instruction-book',3000000,50,'produk-PfAVDREpuF-1654157493.jpg','Instruction books/ manuals are easy to read description of a product in many different languages. We have long history of printing accurate/eco-friendly instruction books for international electronics brands.','pcs',NULL,'2022-06-02 10:11:33','2022-06-02 10:11:33'),(27,'PROTECT VINYL','protect-vinyl',3000000,50,'produk-Ao1u3fSObw-1654221912.jpg','Vinyls engraved with brand logo &amp; other messages are used to protect surfaces of electronic gadgets.','pcs',NULL,'2022-06-03 04:05:12','2022-06-03 04:05:12'),(28,'PRINTED RIGID BOX','printed-rigid-box',3000000,50,'produk-uUigDw5FId-1654222086.jpg','Printed rigid box are commonly associated with luxury good packaging. Rigid box are not only good for item protection, but a symbol of quality &amp; vanity. We produce most sophisticated printed rigid box to our international clients to amplify client’s product value.','pcs',NULL,'2022-06-03 04:08:06','2022-06-03 04:08:06');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,4 +148,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-30 20:35:50
+-- Dump completed on 2022-06-03 16:19:33
