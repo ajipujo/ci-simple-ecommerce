@@ -32,7 +32,11 @@
 						</div>
 					</div>
 					<div class="col-12 mt-3">
-						<button class="btn btn-primary"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>beli sekarang</button>
+						<?php if ($user && $user['userdata']['role_id'] == 3) { ?>
+							<button class="btn btn-primary" id="btnBeliProduk"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>beli sekarang</button>
+						<?php } else { ?>
+							<a href="<?= site_url('authcontroller/login') ?>" class="btn btn-primary"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>beli sekarang</a>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
@@ -41,11 +45,22 @@
 </div>
 
 <script>
+	let statusVarian = false;
+
 	$("input[type=radio][name=produk_type]").change(function() {
 		let name = " - " + $(this).data('name');
 		let harga = $(this).data('price');
 		$('#harga_produk').text(harga);
 		$('#varian_name').text(name);
 		activateCurrencyFormat();
+		statusVarian = true;
+	})
+
+	$("#btnBeliProduk").click(function() {
+		if (statusVarian) {
+			alert('Udah milih!');
+		} else {
+			alert('Belum milih!');
+		}
 	})
 </script>

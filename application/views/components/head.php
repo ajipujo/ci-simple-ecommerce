@@ -16,7 +16,7 @@
 		<script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
 		<script src="<?= base_url('vendor/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js') ?>"></script>
 		<script src="<?= base_url('vendor/jquery-validation-1.19.3/dist/jquery.validate.min.js') ?>"></script>
- 		<script type="text/javascript" src="<?= base_url('vendor/datatables/datatables.min.js') ?>"></script>
+ 		<script src="<?= base_url('vendor/datatables/datatables.min.js') ?>"></script>
     
     <title>Hello, world!</title>
   </head>
