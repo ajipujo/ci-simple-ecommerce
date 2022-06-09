@@ -16,12 +16,12 @@
 				}
 				?>
 				<div class="mb-3">
-					<label for="email" class="form-label">Email address</label>
-					<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+					<label for="email" class="form-label required-label">Email</label>
+					<input type="email" class="form-control" id="email" name="email" placeholder="masukkan email...">
 				</div>
 				<div class="mb-3">
-					<label for="password" class="form-label">Password</label>
-					<input type="password" class="form-control" id="password" name="password" placeholder="your password...">
+					<label for="password" class="form-label required-label">Password</label>
+					<input type="password" class="form-control" id="password" name="password" placeholder="masukkan password...">
 				</div>
 				<div class="d-grid gap-2 mb-2">
 					<button type="submit" id="btnLogin" class="btn btn-primary">Submit</button>

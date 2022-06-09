@@ -58,7 +58,12 @@
 
 .varian-image {
 	float: left;
-    width:  100px;
-    height: 100px;
-    object-fit: cover;
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+}
+
+.required-label:after {
+	content: " *";
+	color: red;
 }

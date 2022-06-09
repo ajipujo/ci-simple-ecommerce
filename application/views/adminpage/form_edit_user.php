@@ -28,37 +28,45 @@ if (isset($_SESSION['message'])) {
 				<div class="row">
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="name" class="form-label">Fullname</label>
+							<label for="name" class="form-label required-label">Nama Lengkap</label>
 							<input type="hidden" name="id" id="id" value="<?= $user_detail->id ?>">
-							<input type="text" class="form-control" id="name" name="name" value="<?= $user_detail->name ?>" placeholder="Must have at least 2 characters">
+							<input type="text" class="form-control" id="name" name="name" value="<?= $user_detail->name ?>" placeholder="masukkan nama lengkap...">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="email" class="form-label">Email</label>
-							<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="<?= $user_detail->email ?>">
+							<label for="email" class="form-label required-label">Email</label>
+							<input type="email" class="form-control" id="email" name="email" placeholder="masukkan email..." value="<?= $user_detail->email ?>">
 						</div>
 					</div>
 					<?php if ($user_detail->is_admin == 1) { ?>
 						<div class="col-md-6">
 							<div class="mb-3">
-								<label for="role" class="form-label">Role</label>
+								<label for="role" class="form-label required-label">Role</label>
 								<select name="role" id="role" class="form-select">
-									<option value="2" <?= $user_detail->role_id == 2 ? 'selected' : '' ?>>Marketing</option>
+									<?php foreach($adminRoles as $role) { ?>
+										<option value="<?= $role->id ?>" <?= $user_detail->role_id == $role->id ? 'selected' : '' ?>><?= $role->role_nm ?></option>
+									<?php } ?>
 								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="no_hp" class="form-label required-label">No. Handphone</label>
+								<input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= $user_detail->no_hp ?>" placeholder="masukkan no. hp...">
 							</div>
 						</div>
 					<?php } else { ?>
 						<div class="col-md-6">
 							<div class="mb-3">
-								<label for="no_hp" class="form-label">No. Handphone</label>
-								<input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= $user_detail->no_hp ?>" placeholder="085896452806">
+								<label for="no_hp" class="form-label required-label">No. Handphone</label>
+								<input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= $user_detail->no_hp ?>" placeholder="masukkan no. hp...">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label for="alamat" class="form-label">Alamat</label>
-								<input type="text" class="form-control" id="alamat" name="alamat" value="<?= $user_detail->alamat ?>" placeholder="Alamat">
+								<input type="text" class="form-control" id="alamat" name="alamat" value="<?= $user_detail->alamat ?>" placeholder="masukkan alamat...">
 							</div>
 						</div>
 					<?php } ?>

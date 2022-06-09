@@ -20,42 +20,29 @@ if (isset($_SESSION['message'])) {
 		<div class="card-body">
 			<div class="row">
 				<div class="col-12">
-					<span class="fw-bold">Tambah Admin</span>
+					<span class="fw-bold">Profile</span>
 				</div>
 			</div>
 			<hr>
-			<form action="<?= site_url('/admincontroller/save_admin') ?>" method="POST" id="formUser">
+			<form action="<?= site_url('/admincontroller/update_admin') ?>" method="POST" id="formUser">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="name" class="form-label required-label">Nama Lengkap</label>
-							<input type="text" class="form-control" id="name" name="name" placeholder="masukkan nama lengkap...">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="role" class="form-label required-label">Role</label>
-							<select name="role" id="role" class="form-select">
-								<option value="2" selected>Marketing</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="no_hp" class="form-label required-label">No. Handphone</label>
-							<input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="masukkan no. hp">
+							<label for="name" class="form-label required-label">Fullname</label>
+							<input type="hidden" name="id" id="id" value="<?= $user_detail->id ?>">
+							<input type="text" class="form-control" id="name" name="name" value="<?= $user_detail->name ?>" placeholder="Must have at least 2 characters" required>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="mb-3">
 							<label for="email" class="form-label required-label">Email</label>
-							<input type="email" class="form-control" id="email" name="email" placeholder="masukkan email...">
+							<input type="email" class="form-control" id="email" name="email" value="<?= $user_detail->email ?>" placeholder="name@example.com" required>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="password" class="form-label required-label">Password</label>
-							<input type="password" class="form-control" id="password" name="password" placeholder="masukkan password...">
+							<label for="no_hp" class="form-label required-label">No. Handphone</label>
+							<input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= $user_detail->no_hp ?>" placeholder="085896452806">
 						</div>
 					</div>
 					<div class="d-flex justify-content-end mt-3">
@@ -79,12 +66,6 @@ if (isset($_SESSION['message'])) {
 				required: true
 			},
 			email: {
-				required: true
-			},
-			role: {
-				required: true
-			},
-			password: {
 				required: true
 			},
 		},

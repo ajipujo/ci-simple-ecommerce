@@ -98,7 +98,8 @@ class AuthController extends CI_Controller
 	public function authregister()
 	{
 		$this->form_validation->set_rules('fullname', 'Username', 'required');
-		$this->form_validation->set_rules('email', 'Username', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('no_hp', 'Handphone', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
@@ -108,11 +109,13 @@ class AuthController extends CI_Controller
 			$fullname = htmlspecialchars($this->input->post('fullname'));
 			$email = htmlspecialchars($this->input->post('email'));
 			$password = htmlspecialchars($this->input->post('password'));
+			$no_hp = htmlspecialchars($this->input->post('no_hp'));
 
 			$data = [
 				'fullname' => $fullname,
 				'email' => $email,
-				'password' => $password
+				'password' => $password,
+				'no_hp' => $no_hp,
 			];
 
 			$user = $this->user_model->getUserByEmail($data);
@@ -127,6 +130,7 @@ class AuthController extends CI_Controller
 					'password' => password_hash($password, PASSWORD_DEFAULT),
 					'is_active' => 1,
 					'role_id' => 3,
+					'no_hp' => $no_hp,
 					'created_at' => date('Y-m-d H:i:s'),
 					'updated_at' => date('Y-m-d H:i:s')
 				];

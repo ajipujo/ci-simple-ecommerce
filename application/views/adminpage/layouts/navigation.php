@@ -37,7 +37,10 @@
 						<i class="fa fa-user-circle me-1" aria-hidden="true"></i> <?= $user['userdata']['name'] ?>
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="#">Profile</a></li>
+						<li>
+							<a class="dropdown-item" href="<?= site_url('admincontroller/admin_profile/' . $user['userdata']['id']) ?>">Profile</a>
+						</li>
+						<!-- <li><a class="dropdown-item" href="<?= site_url('admincontroller/admin_profile') ?>">Profile</a></li> -->
 						<li>
 							<hr class="dropdown-divider">
 						</li>

@@ -10,6 +10,7 @@ class AdminController extends CI_Controller
 		$this->load->model('produk_model');
 		$this->load->model('produk_tipe_model');
 		$this->load->model('user_model');
+		$this->load->model('role_model');
 		$this->load->library('user_agent');
 	}
 
@@ -455,12 +456,14 @@ class AdminController extends CI_Controller
 			$password = htmlspecialchars($this->input->post('password'));
 			$role = htmlspecialchars($this->input->post('role'));
 			$name = htmlspecialchars($this->input->post('name'));
+			$no_hp = htmlspecialchars($this->input->post('no_hp'));
 
 			$data = [
 				'name' => $name,
 				'email' => $email,
 				'password' => $password,
-				'role' => $role
+				'role' => $role,
+				'no_hp' => $no_hp,
 			];
 
 			$existing_email = $this->user_model->getUserByEmail($data);
@@ -475,6 +478,7 @@ class AdminController extends CI_Controller
 					'password' => password_hash($password, PASSWORD_DEFAULT),
 					'is_active' => 1,
 					'role_id' => $role,
+					'no_hp' => $no_hp,
 					'created_at' => date('Y-m-d H:i:s'),
 					'updated_at' => date('Y-m-d H:i:s')
 				];
@@ -502,6 +506,7 @@ class AdminController extends CI_Controller
 
 		if ($id) {
 			$userDtl = $this->user_model->getUserById($id);
+			$adminRoles = $this->role_model->getAdminRoles();
 
 			if (!$userDtl) {
 				redirect('admincontroller/');
@@ -511,12 +516,74 @@ class AdminController extends CI_Controller
 				'title' => 'Update User',
 				'page' => 'adminpage/form_edit_user',
 				'user' => $userdata,
-				'user_detail' => $userDtl
+				'user_detail' => $userDtl,
+				'adminRoles' => $adminRoles
 			];
 
 			$this->load->view('adminpage/layouts/master', $data);
 		} else {
 			redirect('/admincontroller');
+		}
+	}
+
+	public function admin_profile()
+	{
+		$this->isAuthenticated();
+		if ($this->session->userdata('user')['id'] != $this->uri->segment(3)) {
+			redirect('/');
+		}
+		if ($this->session->userdata('loggedIn')) {
+			$userdata = [
+				'loggedIn' => $this->session->userdata('loggedIn'),
+				'userdata' => $this->session->userdata('user')
+			];
+		}
+
+		$id = $this->uri->segment(3);
+
+		if ($id) {
+			$user_detail = $this->user_model->getUserById($id);
+
+			$data = [
+				'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+				'page' => 'adminpage/admin_profile',
+				'user' => $userdata,
+				'user_detail' => $user_detail
+			];
+
+			$this->load->view('adminpage/layouts/master', $data);
+		} else {
+			redirect('/');
+		}
+	}
+
+	public function update_admin()
+	{
+		$this->isAuthenticated();
+		if ($this->session->userdata('user')['id'] != htmlspecialchars($this->input->post('id'))) {
+			redirect('/');
+		}
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect($this->agent->referrer());
+		} else {
+			$id = htmlspecialchars($this->input->post('id'));
+			$name = htmlspecialchars($this->input->post('name'));
+			$email = htmlspecialchars($this->input->post('email'));
+			$no_hp = htmlspecialchars($this->input->post('no_hp'));
+
+			$data = [
+				'name' => $name,
+				'email' => $email,
+				'no_hp' => $no_hp
+			];
+
+			$this->user_model->updateUser($data, $id);
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data berhasil diubah']);
+			redirect($this->agent->referrer());
 		}
 	}
 

@@ -16,19 +16,30 @@
 				}
 				?>
 				<div class="mb-3">
-					<label for="fullname" class="form-label">Fullname</label>
-					<input type="text" name="fullname" class="form-control" id="fullname" placeholder="Must have at least 2 characters">
+					<label for="fullname" class="form-label required-label">Nama Lengkap</label>
+					<input type="text" name="fullname" class="form-control" id="fullname" placeholder="Masukkan nama lengkap...">
 					<?php echo form_error('fullname'); ?>
 				</div>
 				<div class="mb-3">
-					<label for="email" class="form-label">Email address</label>
-					<input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
-					<?php echo form_error('email'); ?>
+					<label for="no_hp" class="form-label required-label">No. Handphone</label>
+					<input type="text" name="no_hp" class="form-control" id="no_hp" placeholder="Masukkan no. hp...">
+					<?php echo form_error('no_hp'); ?>
 				</div>
-				<div class="mb-3">
-					<label for="password" class="form-label">Password</label>
-					<input type="password" name="password" class="form-control" id="password" placeholder="your password...">
-					<?php echo form_error('password'); ?>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="mb-3">
+							<label for="email" class="form-label required-label">Email</label>
+							<input type="email" name="email" class="form-control" id="email" placeholder="masukkan email...">
+							<?php echo form_error('email'); ?>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-3">
+							<label for="password" class="form-label required-label">Password</label>
+							<input type="password" name="password" class="form-control" id="password" placeholder="masukkan password...">
+							<?php echo form_error('password'); ?>
+						</div>
+					</div>
 				</div>
 				<div class="d-grid gap-2 mb-2">
 					<button id="btnRegister" class="btn btn-primary" type="submit">Submit</button>
@@ -53,6 +64,9 @@
 				required: true
 			},
 			email: {
+				required: true
+			},
+			no_hp: {
 				required: true
 			},
 			password: {
