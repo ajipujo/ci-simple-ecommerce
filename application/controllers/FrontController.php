@@ -122,6 +122,24 @@ class FrontController extends CI_Controller
 		}
 	}
 
+	function paycarts()
+	{
+		$this->isAuthenticated();
+		if ($this->session->userdata('loggedIn')) {
+			$userdata = [
+				'loggedIn' => $this->session->userdata('loggedIn'),
+				'userdata' => $this->session->userdata('user')
+			];
+		}
+		$data = [
+			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'page' => 'frontpage/paycarts',
+			'user' => $userdata
+		];
+
+		$this->load->view('frontpage/layouts/master', $data);
+	}
+
 	function isAuthenticated()
 	{
 		if (!$this->session->userdata('loggedIn')) {

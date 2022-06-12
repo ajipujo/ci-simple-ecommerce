@@ -10,7 +10,7 @@
 			<?php if ($user && $user['userdata']['role_id'] == 3) { ?>
 				<ul class="navbar-nav mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link" href="#">
+						<a class="nav-link" href="<?= site_url('frontcontroller/paycarts') ?>">
 							<span class="badge bg-secondary">
 								<i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>
 								<span id="cartCounter">99+</span>
@@ -28,7 +28,7 @@
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a class="dropdown-item" href="<?= site_url('authcontroller/logout') ?>">Logout</a></li>
+							<li><a class="dropdown-item" id="logout-btn" href="<?= site_url('authcontroller/logout') ?>">Logout</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -44,14 +44,22 @@
 	let cart = [];
 	
 	function refreshCart() {
-		if (localStorage.getItem('cart') !== null) {
-			cart = JSON.parse(localStorage.getItem('cart'));
+		if (localStorage.getItem('paycarts') !== null) {
+			cart = JSON.parse(localStorage.getItem('paycarts'));
 		}
 
-		$('#cartCounter').text(cart.length);
+		$('#cartCounter').text(cart.data.length);
 	}
 	
 	$(document).ready(function() {
 		refreshCart();
+	});
+
+	$('#logout-btn').click(function(e) {
+		e.preventDefault();
+		
+		localStorage.removeItem('paycarts');
+
+		window.location.href = $(this).attr('href');
 	});
 </script>

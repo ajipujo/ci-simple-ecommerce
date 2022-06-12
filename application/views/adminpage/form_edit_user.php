@@ -24,7 +24,7 @@ if (isset($_SESSION['message'])) {
 				</div>
 			</div>
 			<hr>
-			<form action="<?= site_url('/admincontroller/update_user') ?>" method="POST">
+			<form action="<?= site_url('/admincontroller/update_user') ?>" method="POST" id="formUser">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="mb-3">
@@ -79,3 +79,36 @@ if (isset($_SESSION['message'])) {
 		</div>
 	</div>
 </div>
+
+<script>
+	$("#btnUser").click(function(e) {
+		e.preventDefault();
+		$("#formUser").submit();
+	})
+	$("#formUser").validate({
+		rules: {
+			name: {
+				required: true
+			},
+			email: {
+				required: true
+			},
+			no_hp: {
+				required: true
+			},
+			role: {
+				required: true
+			},
+		},
+		highlight: function(element, errorClass, validClass) {
+			$(element).addClass('is-invalid').removeClass('is-valid');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).addClass('is-valid').removeClass('is-invalid');
+		},
+		errorPlacement: function(error, element) {
+			error.addClass("invalid-feedback")
+			error.insertAfter(element);
+		},
+	});
+</script>

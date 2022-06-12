@@ -28,20 +28,20 @@ if (isset($_SESSION['message'])) {
 				<div class="row">
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="name" class="form-label">Fullname</label>
+							<label for="name" class="form-label required-label">Fullname</label>
 							<input type="hidden" name="id" id="id" value="<?= $user_detail->id ?>">
 							<input type="text" class="form-control" id="name" name="name" value="<?= $user_detail->name ?>" placeholder="Must have at least 2 characters" required>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="email" class="form-label">Email</label>
+							<label for="email" class="form-label required-label">Email</label>
 							<input type="email" class="form-control" id="email" name="email" value="<?= $user_detail->email ?>" placeholder="name@example.com" required>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="mb-3">
-							<label for="no_hp" class="form-label">No. Handphone</label>
+							<label for="no_hp" class="form-label required-label">No. Handphone</label>
 							<input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= $user_detail->no_hp ?>" placeholder="085896452806">
 						</div>
 					</div>
