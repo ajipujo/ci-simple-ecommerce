@@ -140,6 +140,45 @@ class FrontController extends CI_Controller
 		$this->load->view('frontpage/layouts/master', $data);
 	}
 
+	public function checkout()
+	{
+		$this->isAuthenticated();
+		if ($this->session->userdata('loggedIn')) {
+			$userdata = [
+				'loggedIn' => $this->session->userdata('loggedIn'),
+				'userdata' => $this->session->userdata('user')
+			];
+		}
+		$data = [
+			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'page' => 'frontpage/checkout',
+			'user' => $userdata
+		];
+
+		$this->load->view('frontpage/layouts/master', $data);
+	}
+
+	public function buy()
+	{
+		$this->isAuthenticated();
+		$user = $this->session->userdata('user');
+		$harga = $this->input->post('harga[]');
+		$qty = $this->input->post('qty[]');
+		$produk_id = $this->input->post('produk_id[]');
+		$varian_id = $this->input->post('varian_id[]');
+		$alamat = $this->input->post('alamat');
+
+		$transaction = [
+			'user_id' => $user['id'],
+			'tanggal_transaksi' => date('Y-m-d H:i:s'),
+			'alamat' => $alamat,
+			'status' => 'pending'
+		];
+
+		// var_dump($user['id'], $alamat, $produk_id, $varian_id, $harga, $qty);
+		// die;
+	}
+
 	function isAuthenticated()
 	{
 		if (!$this->session->userdata('loggedIn')) {

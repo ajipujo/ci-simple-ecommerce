@@ -26,6 +26,9 @@
 								<a href="<?= site_url('/frontcontroller/customer_profile/'.$user['userdata']['id']) ?>" class="dropdown-item">Profile</a>
 							</li>
 							<li>
+								<a href="<?= site_url('/frontcontroller/transaction/') ?>" class="dropdown-item">Transaction</a>
+							</li>
+							<li>
 								<hr class="dropdown-divider">
 							</li>
 							<li><a class="dropdown-item" id="logout-btn" href="<?= site_url('authcontroller/logout') ?>">Logout</a></li>
@@ -44,11 +47,20 @@
 	let cart = [];
 	
 	function refreshCart() {
+		let userId = <?= isset($user['userdata']['id']) ? $user['userdata']['id'] : 0 ?>;
+		let textVal = 0;
+
 		if (localStorage.getItem('paycarts') !== null) {
 			cart = JSON.parse(localStorage.getItem('paycarts'));
+			if (userId != cart.user) {
+				cart = [];
+				localStorage.removeItem('paycarts');
+			} else {
+				textVal = cart.data.length;
+			}
 		}
 
-		$('#cartCounter').text(cart.data.length);
+		$('#cartCounter').text(textVal);
 	}
 	
 	$(document).ready(function() {
@@ -58,7 +70,7 @@
 	$('#logout-btn').click(function(e) {
 		e.preventDefault();
 		
-		localStorage.removeItem('paycarts');
+		// localStorage.removeItem('paycarts');
 
 		window.location.href = $(this).attr('href');
 	});

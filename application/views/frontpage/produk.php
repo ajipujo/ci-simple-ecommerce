@@ -11,6 +11,7 @@
 							<div class="row">
 								<div class="col-12">
 									<input type="hidden" id="produk_name" value="<?= $produk->name ?>">
+									<input type="hidden" id="produk_id" value="<?= $produk->id ?>">
 									<h5><?= $produk->name ?><span id="varian_name"></span></h5>
 								</div>
 								<div class="col-12">
@@ -21,7 +22,7 @@
 										<?php foreach ($produk->product_types as $item) { ?>
 											<div class="col-md-auto mb-3">
 												<label>
-													<input class="radio-image varian-produk" type="radio" name="produk_type" value="small" data-name="<?= $item->name ?>" data-price="<?= $item->harga ?>">
+													<input class="radio-image varian-produk" type="radio" name="produk_type" value="<?= $item->id ?>" data-name="<?= $item->name ?>" data-price="<?= $item->harga ?>">
 													<img src="<?= base_url('/upload/varian_produk/' . $item->gambar) ?>" alt="<?= $produk->name ?>" class="varian-image">
 												</label>
 											</div>
@@ -112,9 +113,11 @@
 			let price = varian.data('price');
 			let name = varian.data('name');
 			let qty = $('#jumlah_produk').val();
-			let user_id = <?= $user['userdata']['id'] ?>;
+			let user_id = <?= isset($user['userdata']['id']) ? $user['userdata']['id'] : 0 ?>;
 			let subtotal = price * qty;
 			let produk = $('#produk_name').val();
+			let produk_id = $('#produk_id').val();
+			let varian_id = $("input[type=radio][name=produk_type]:checked").val();
 			
 			let data = {
 				price: price,
@@ -122,6 +125,8 @@
 				produk: produk,
 				qty: qty,
 				subtotal: subtotal,
+				produk_id: produk_id,
+				varian_id: varian_id
 			};
 			
 			if (localStorage.getItem('paycarts')) {

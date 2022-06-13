@@ -11,7 +11,7 @@
 							<span id="subtotal" class="fw-bold currency-format">10</span>
 						</div>
 						<div class="d-grid gap-2 mt-2">
-							<button class="btn btn-primary btn-sm" type="button"><i class="fa fa-shopping-cart me-2" confirm="Are your sure?" aria-hidden="true"></i>Checkout</button>
+							<a href="<?= base_url('frontcontroller/checkout') ?>" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>Checkout</a>
 						</div>
 					</div>
 				</div>
