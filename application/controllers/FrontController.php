@@ -9,6 +9,8 @@ class FrontController extends CI_Controller
 		$this->load->model('produk_model');
 		$this->load->model('produk_tipe_model');
 		$this->load->model('user_model');
+		$this->load->model('transaction_model');
+		$this->load->model('transaction_detail_model');
 		$this->load->library('form_validation');
 		$this->load->library('user_agent');
 	}
@@ -166,17 +168,39 @@ class FrontController extends CI_Controller
 		$qty = $this->input->post('qty[]');
 		$produk_id = $this->input->post('produk_id[]');
 		$varian_id = $this->input->post('varian_id[]');
+		$varian_name = $this->input->post('varian_name[]');
+		$produk_name = $this->input->post('produk_name[]');
 		$alamat = $this->input->post('alamat');
 
 		$transaction = [
 			'user_id' => $user['id'],
 			'tanggal_transaksi' => date('Y-m-d H:i:s'),
-			'alamat' => $alamat,
-			'status' => 'pending'
+			'alamat_pemesanan' => $alamat,
+			'status_transaksi' => 1,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		];
 
-		// var_dump($user['id'], $alamat, $produk_id, $varian_id, $harga, $qty);
-		// die;
+		$id = $this->transaction_model->save($transaction);
+
+		foreach ($produk_id as $key => $value) {
+			$detail = [
+				'transaction_id' => $id,
+				'product_id' => $value,
+				'product_type_id' => $varian_id[$key],
+				'product_name' => $produk_name[$key],
+				'product_type_name' => $varian_name[$key],
+				'product_price' => $harga[$key],
+				'qty' => $qty[$key],
+				'created_at' => date('Y-m-d H:i:s'),
+				'updated_at' => date('Y-m-d H:i:s')
+			];
+
+			$this->transaction_detail_model->save($detail);
+		}
+
+		$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Pembelian berhasil']);
+		redirect('/');
 	}
 
 	function isAuthenticated()

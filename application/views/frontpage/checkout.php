@@ -46,6 +46,8 @@
 						</div>
 						<div class="col-12">
 							<span class="currency-format">` + component.price + `</span> x <span>` + component.qty + ` pcs</span>
+							<input type="hidden" name="produk_name[]" value="` + component.produk + `">
+							<input type="hidden" name="varian_name[]" value="` + component.name + `">
 							<input type="hidden" name="harga[]" value="` + component.price + `">
 							<input type="hidden" name="qty[]" value="` + component.qty + `">
 							<input type="hidden" name="produk_id[]" value="` + component.produk_id + `">
