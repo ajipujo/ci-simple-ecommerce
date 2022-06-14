@@ -175,6 +175,7 @@ class FrontController extends CI_Controller
 		$transaction = [
 			'user_id' => $user['id'],
 			'tanggal_transaksi' => date('Y-m-d H:i:s'),
+			'kode_pemesanan' => 'TRS-' . uniqid(),
 			'alamat_pemesanan' => $alamat,
 			'status_transaksi' => 1,
 			'created_at' => date('Y-m-d H:i:s'),

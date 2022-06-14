@@ -14,10 +14,10 @@
 				</li>
 				<li class="nav-item dropdown <?= $title == 'Transaksi' ? 'active' : '' ?>">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Transaksi
+						Worklist
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="#">Riwayat</a></li>
+						<li><a class="dropdown-item" href="<?= site_url('admincontroller/transaksi') ?>">Transaksi</a></li>
 						<li><a class="dropdown-item" href="#">Bukti Pembayaran</a></li>
 					</ul>
 				</li>

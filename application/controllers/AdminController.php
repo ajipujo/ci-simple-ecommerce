@@ -9,6 +9,7 @@ class AdminController extends CI_Controller
 		$this->load->library('session');
 		$this->load->model('produk_model');
 		$this->load->model('produk_tipe_model');
+		$this->load->model('transaction_model');
 		$this->load->model('user_model');
 		$this->load->model('role_model');
 		$this->load->library('user_agent');
@@ -585,6 +586,26 @@ class AdminController extends CI_Controller
 			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Data berhasil diubah']);
 			redirect($this->agent->referrer());
 		}
+	}
+
+	public function transaksi()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+
+		$transaksi = $this->transaction_model->getAllTransaksi();
+
+		$data = [
+			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'page' => 'adminpage/transaksi',
+			'user' => $userdata,
+			'transaksi' => $transaksi
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
 	}
 
 	public function update_user()
