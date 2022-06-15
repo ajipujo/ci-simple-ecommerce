@@ -31,6 +31,23 @@ class transaction_model extends CI_Model
 		return $datas;
 	}
 
+	public function getTransaksiByKode($kode) {
+		$this->db->select('transactions.*, users.name as user_name, status_transaction.name as status_name');
+		$this->db->from('transactions');
+		$this->db->join('users', 'users.id = transactions.user_id');
+		$this->db->join('status_transaction', 'status_transaction.id = transactions.status_transaksi');
+		$this->db->where('kode_pemesanan', $kode);
+
+		$transaction = $this->db->get()->row();
+
+		if ($transaction) {
+			$transaction->detail_transaction = $this->getDetailByTransactionId($transaction->id);
+			return $transaction;
+		} else {
+			return false;
+		}
+	}
+
 	function getDetailByTransactionId($id) {
 		$this->db->select('detail_transaction.*');
 		$this->db->from('detail_transaction');

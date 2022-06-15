@@ -16,7 +16,7 @@ if (isset($_SESSION['message'])) {
 ?>
 
 <div class="container my-4">
-<div class="card">
+	<div class="card">
 		<div class="card-body">
 			<div class="row">
 				<div class="col-6 d-flex align-items-center">
@@ -40,35 +40,35 @@ if (isset($_SESSION['message'])) {
 				<tbody>
 					<?php foreach ($transaksi as $key => $item) { ?>
 						<tr>
-							<td><?= $key+1 ?></td>
+							<td></td>
 							<td><?= $item->kode_pemesanan ?></td>
 							<td><?= $item->user_name ?></td>
-							<?php 
-								switch ($item->status_transaksi) {
-									case 1:
-										$class = 'badge bg-warning';
-										break;
-									case 2:
-										$class = 'badge bg-warning';
-										break;
-									case 3:
-										$class = 'badge bg-warning';
-										break;
-									case 4:
-										$class = 'badge bg-success';
-										break;
-									case 5:
-										$class = 'badge bg-danger';
-										break;
-									
-									default:
-										$class = 'badge bg-primary';
-										break;
-								}
+							<?php
+							switch ($item->status_transaksi) {
+								case 1:
+									$class = 'badge bg-warning';
+									break;
+								case 2:
+									$class = 'badge bg-warning';
+									break;
+								case 3:
+									$class = 'badge bg-warning';
+									break;
+								case 4:
+									$class = 'badge bg-success';
+									break;
+								case 5:
+									$class = 'badge bg-danger';
+									break;
+
+								default:
+									$class = 'badge bg-primary';
+									break;
+							}
 							?>
 							<td><span class="<?= $class ?>"><?= $item->status_name ?></span></td>
 							<td>
-								<a href="<?= site_url('/admincontroller/edit_produk/' . $item->kode_pemesanan) ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye me-2" aria-hidden="true"></i>View</a>
+								<a href="<?= site_url('/admincontroller/view_transaksi/' . $item->kode_pemesanan) ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye me-2" aria-hidden="true"></i>View</a>
 							</td>
 						</tr>
 					<?php } ?>
@@ -80,6 +80,26 @@ if (isset($_SESSION['message'])) {
 
 <script>
 	$(document).ready(function() {
-		$('#example').DataTable();
+		let t = $('#example').DataTable({
+			columnDefs: [{
+				searchable: false,
+				orderable: false,
+				targets: 0,
+			}, ],
+			order: [
+				[1, 'asc']
+			],
+		});
+
+		t.on('order.dt search.dt', function() {
+			let i = 1;
+
+			t.cells(null, 0, {
+				search: 'applied',
+				order: 'applied'
+			}).every(function(cell) {
+				this.data(i++);
+			});
+		}).draw();
 	});
 </script>

@@ -117,7 +117,7 @@ class AdminController extends CI_Controller
 			unlink(FCPATH . '/upload/produk/' . $old_produk->gambar);
 			if ($this->produk_model->deleteProduk($id)) {
 				$varian = $this->produk_tipe_model->getVarianByProduk($id);
-				foreach($varian as $item) {
+				foreach ($varian as $item) {
 					unlink(FCPATH . '/upload/varian_produk/' . $item->gambar);
 					$this->produk_tipe_model->deleteVarianById($item->id);
 				}
@@ -270,7 +270,7 @@ class AdminController extends CI_Controller
 					$dataDelete = [];
 				}
 
-				foreach($dataDelete as $id) {
+				foreach ($dataDelete as $id) {
 					$old_varian = $this->produk_tipe_model->getVarianById($id);
 					unlink(FCPATH . '/upload/varian_produk/' . $old_varian->gambar);
 					$this->produk_tipe_model->deleteVarianById($id);
@@ -601,6 +601,32 @@ class AdminController extends CI_Controller
 		$data = [
 			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
 			'page' => 'adminpage/transaksi',
+			'user' => $userdata,
+			'transaksi' => $transaksi
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function view_transaksi()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+
+		$kode_pemesanan = $this->uri->segment(3);
+
+		$transaksi = $this->transaction_model->getTransaksiByKode($kode_pemesanan);
+
+		if (!$transaksi) {
+			redirect('/admincontroller/transaksi');
+		}
+
+		$data = [
+			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'page' => 'adminpage/view_transaksi',
 			'user' => $userdata,
 			'transaksi' => $transaksi
 		];

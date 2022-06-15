@@ -30,6 +30,7 @@ if (isset($_SESSION['message'])) {
 			<table id="example" class="table table-striped" style="width:100%">
 				<thead>
 					<tr>
+						<th>No</th>
 						<th>Name</th>
 						<th>Stok</th>
 						<th>Harga</th>
@@ -40,6 +41,7 @@ if (isset($_SESSION['message'])) {
 				<tbody>
 					<?php foreach ($produk as $item) { ?>
 						<tr>
+							<td></td>
 							<td><?= $item->name ?></td>
 							<td><?= $item->stok ?></td>
 							<td><span class="currency-format"><?= $item->harga ?></span></td>
@@ -61,6 +63,26 @@ if (isset($_SESSION['message'])) {
 
 <script>
 	$(document).ready(function() {
-		$('#example').DataTable();
+		let t = $('#example').DataTable({
+			columnDefs: [{
+				searchable: false,
+				orderable: false,
+				targets: 0,
+			}, ],
+			order: [
+				[1, 'asc']
+			],
+		});
+
+		t.on('order.dt search.dt', function() {
+			let i = 1;
+
+			t.cells(null, 0, {
+				search: 'applied',
+				order: 'applied'
+			}).every(function(cell) {
+				this.data(i++);
+			});
+		}).draw();
 	});
 </script>

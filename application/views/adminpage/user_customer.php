@@ -27,6 +27,7 @@ if (isset($_SESSION['message'])) {
 			<table id="tableUser" class="table table-striped" style="width:100%">
 				<thead>
 					<tr>
+						<th>No</th>
 						<th>Name</th>
 						<th>Role</th>
 						<th>Status</th>
@@ -36,6 +37,7 @@ if (isset($_SESSION['message'])) {
 				<tbody>
 					<?php foreach ($users as $user) { ?>
 						<tr>
+							<td></td>
 							<td><?= $user->name ?></td>
 							<td><?= $user->role_nm ?></td>
 							<td><?= $user->is_active == 1 ? 'Active' : 'Non-active' ?></td>
@@ -53,6 +55,26 @@ if (isset($_SESSION['message'])) {
 
 <script>
 	$(document).ready(function() {
-		$('#tableUser').DataTable();
+		let t = $('#tableUser').DataTable({
+			columnDefs: [{
+				searchable: false,
+				orderable: false,
+				targets: 0,
+			}, ],
+			order: [
+				[1, 'asc']
+			],
+		});
+
+		t.on('order.dt search.dt', function() {
+			let i = 1;
+
+			t.cells(null, 0, {
+				search: 'applied',
+				order: 'applied'
+			}).every(function(cell) {
+				this.data(i++);
+			});
+		}).draw();
 	});
 </script>
