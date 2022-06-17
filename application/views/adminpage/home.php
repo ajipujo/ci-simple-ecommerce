@@ -6,7 +6,7 @@
 					Selamat datang <span class="fw-bold"><?= $user['userdata']['name'] ?></span>
 				</div>
 				<div class="col-md-6 d-flex justify-content-end">
-					<span class="text-secondary"><?= date_format(new DateTime(), 'd F Y, H:i') ?></span>
+					<span class="text-secondary"><?= date_format(new DateTime(), 'd F Y, H:i') ?> WIB</span>
 				</div>
 			</div>
 		</div>

@@ -46,13 +46,13 @@ if (isset($_SESSION['message'])) {
 							<?php
 							switch ($item->status_transaksi) {
 								case 1:
-									$class = 'badge bg-warning';
+									$class = 'badge bg-warning text-dark';
 									break;
 								case 2:
-									$class = 'badge bg-warning';
+									$class = 'badge bg-warning text-dark';
 									break;
 								case 3:
-									$class = 'badge bg-warning';
+									$class = 'badge bg-warning text-dark';
 									break;
 								case 4:
 									$class = 'badge bg-success';
@@ -66,7 +66,7 @@ if (isset($_SESSION['message'])) {
 									break;
 							}
 							?>
-							<td><span class="<?= $class ?>"><?= $item->status_name ?></span></td>
+							<td><span class="<?= $class ?> p-2"><?= $item->status_name ?></span></td>
 							<td>
 								<a href="<?= site_url('/admincontroller/view_transaksi/' . $item->kode_pemesanan) ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye me-2" aria-hidden="true"></i>View</a>
 							</td>

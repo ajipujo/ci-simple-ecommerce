@@ -56,4 +56,9 @@ class transaction_model extends CI_Model
 		$detail_transactions = $this->db->get();
 		return $detail_transactions->result();
 	}
+
+	public function updateTransaksi($data, $kode_transaksi) {
+		$this->db->where('kode_pemesanan', $kode_transaksi);
+		$this->db->update('transactions', $data);
+	}
 }

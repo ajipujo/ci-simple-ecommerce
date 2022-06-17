@@ -588,6 +588,44 @@ class AdminController extends CI_Controller
 		}
 	}
 
+	public function update_user()
+	{
+		$this->isAuthenticated();
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect($this->agent->referrer());
+		} else {
+			$id = htmlspecialchars($this->input->post('id'));
+			$email = htmlspecialchars($this->input->post('email'));
+			$name = htmlspecialchars($this->input->post('name'));
+			$role = htmlspecialchars($this->input->post('role'));
+			$no_hp = htmlspecialchars($this->input->post('no_hp'));
+			$alamat = htmlspecialchars($this->input->post('alamat'));
+
+			$data = [
+				'name' => $name,
+				'email' => $email,
+				'no_hp' => $no_hp,
+				'alamat' => $alamat
+			];
+
+			if ($role) {
+				$data['role_id'] = $role;
+			}
+
+			if ($this->user_model->updateUser($data, $id)) {
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully updated']);
+				redirect('/admincontroller/user_admin');
+			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to update']);
+				redirect('/admincontroller/user_admin');
+			}
+		}
+	}
+
 	public function transaksi()
 	{
 		$this->isAuthenticated();
@@ -634,41 +672,24 @@ class AdminController extends CI_Controller
 		$this->load->view('adminpage/layouts/master', $data);
 	}
 
-	public function update_user()
+	public function cancel_order()
 	{
 		$this->isAuthenticated();
-		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required');
 
-		if ($this->form_validation->run() == FALSE) {
-			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
-			redirect($this->agent->referrer());
-		} else {
-			$id = htmlspecialchars($this->input->post('id'));
-			$email = htmlspecialchars($this->input->post('email'));
-			$name = htmlspecialchars($this->input->post('name'));
-			$role = htmlspecialchars($this->input->post('role'));
-			$no_hp = htmlspecialchars($this->input->post('no_hp'));
-			$alamat = htmlspecialchars($this->input->post('alamat'));
+		$kode_transaksi = htmlspecialchars($this->input->post('kode_transaksi'));
 
+		$transaksi = $this->transaction_model->getTransaksiByKode($kode_transaksi);
+
+		if ($transaksi) {
 			$data = [
-				'name' => $name,
-				'email' => $email,
-				'no_hp' => $no_hp,
-				'alamat' => $alamat
+				'status_transaksi' => 5,
+				'updated_at' => date('Y-m-d H:i:s')
 			];
-
-			if ($role) {
-				$data['role_id'] = $role;
-			}
-
-			if ($this->user_model->updateUser($data, $id)) {
-				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Successfully updated']);
-				redirect('/admincontroller/user_admin');
-			} else {
-				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to update']);
-				redirect('/admincontroller/user_admin');
-			}
+			$this->transaction_model->updateTransaksi($data, $kode_transaksi);
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Pembatalan order berhasil dilakukan']);
+			redirect('/admincontroller/transaksi');
+		} else {
+			redirect('/admincontroller/transaksi');
 		}
 	}
 }
