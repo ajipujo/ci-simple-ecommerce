@@ -64,11 +64,11 @@ if (isset($_SESSION['message'])) {
 								default:
 									$class = 'badge bg-primary';
 									break;
-							}
+							};
 							?>
 							<td><span class="<?= $class ?> p-2"><?= $item->status_name ?></span></td>
 							<td>
-								<a href="<?= site_url('/admincontroller/view_transaksi/' . $item->kode_pemesanan) ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye me-2" aria-hidden="true"></i>View</a>
+								<a href="<?= site_url('/frontcontroller/view_transaksi/' . $item->kode_pemesanan) ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye me-2" aria-hidden="true"></i>View</a>
 							</td>
 						</tr>
 					<?php } ?>

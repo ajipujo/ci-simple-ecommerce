@@ -12,8 +12,8 @@
 				<li class="nav-item">
 					<a class="nav-link <?= $title == 'Produk' ? 'active' : '' ?>" aria-current="page" href="<?= site_url('/admincontroller/produk') ?>">Produk</a>
 				</li>
-				<li class="nav-item dropdown <?= $title == 'Transaksi' ? 'active' : '' ?>">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				<li class="nav-item dropdown">
+					<a class="nav-link <?= $title == 'Transaksi' ? 'active' : '' ?> dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Worklist
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -21,15 +21,19 @@
 						<li><a class="dropdown-item" href="#">Bukti Pembayaran</a></li>
 					</ul>
 				</li>
-				<li class="nav-item dropdown <?= $title == 'Manajemen User' ? 'active' : '' ?>">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Manajemen User
-					</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="<?= site_url('admincontroller/user_admin') ?>">Admin</a></li>
-						<li><a class="dropdown-item" href="<?= site_url('admincontroller/user_customer') ?>">Customer</a></li>
-					</ul>
-				</li>
+				<?php
+				if ($user['userdata']['role_id'] == 1) {
+				?>
+					<li class="nav-item dropdown <?= $title == 'Manajemen User' ? 'active' : '' ?>">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Manajemen User
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="<?= site_url('admincontroller/user_admin') ?>">Admin</a></li>
+							<li><a class="dropdown-item" href="<?= site_url('admincontroller/user_customer') ?>">Customer</a></li>
+						</ul>
+					</li>
+				<?php } ?>
 			</ul>
 			<ul class="navbar-nav mb-2 mb-lg-0">
 				<li class="nav-item dropdown">

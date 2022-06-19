@@ -1,6 +1,6 @@
 <div class="container py-3">
 	<div class="col-md-8 mx-auto">
-		<form action="<?= site_url('frontcontroller/buy') ?>" method="post">
+		<form action="<?= site_url('frontcontroller/buy') ?>" method="post" id="checkout">
 			<div id="carts">
 			</div>
 			<div class="card my-2">
@@ -16,19 +16,10 @@
 						<span class="fw-bold">Subtotal</span>
 						<span class="currency-format" id="subtotal">0</span>
 					</div>
-					<!-- <div class="d-flex justify-content-between my-2">
-						<span class="fw-bold">Biaya Ongkir</span>
-						<span class="currency-format" id="biaya_ongkir">15000</span>
-					</div>
-					<hr>
-					<div class="d-flex justify-content-between my-2">
-						<span class="fw-bold">Total</span>
-						<span class="currency-format" id="biaya_ongkir">15000</span>
-					</div> -->
 				</div>
 			</div>
 			<div class="d-grid gap-2">
-				<button class="btn btn-primary" type="submit"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>Pesan sekarang</button>
+				<button class="btn btn-primary" type="submit" id="btnCheckout"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>Pesan sekarang</button>
 			</div>
 		</form>
 	</div>
@@ -42,7 +33,7 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="col-12">
-							<span class="fw-bold">Produk - Varian</span>
+							<span class="fw-bold">`+component.produk+` - `+component.name+`</span>
 						</div>
 						<div class="col-12">
 							<span class="currency-format">` + component.price + `</span> x <span>` + component.qty + ` pcs</span>
@@ -74,5 +65,11 @@
 			$('#subtotal').text(total);
 			activateCurrencyFormat();
 		}
+
+		$('#btnCheckout').click(function(e) {
+			e.preventDefault();
+			localStorage.removeItem('paycarts');
+			$('#checkout').submit();
+		});
 	});
 </script>

@@ -637,7 +637,7 @@ class AdminController extends CI_Controller
 		$transaksi = $this->transaction_model->getAllTransaksi();
 
 		$data = [
-			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'title' => 'Transaksi',
 			'page' => 'adminpage/transaksi',
 			'user' => $userdata,
 			'transaksi' => $transaksi
@@ -663,13 +663,59 @@ class AdminController extends CI_Controller
 		}
 
 		$data = [
-			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'title' => 'Transaksi',
 			'page' => 'adminpage/view_transaksi',
 			'user' => $userdata,
 			'transaksi' => $transaksi
 		];
 
 		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function next_process()
+	{
+		$this->isAuthenticated();
+		$kode_transaksi = htmlspecialchars($this->input->post('kode_transaksi'));
+		$transaksi = $this->transaction_model->getTransaksiByKode($kode_transaksi);
+
+		if ($transaksi) {
+			switch ($transaksi->status_transaksi) {
+				case 1:
+					$next_process = 2;
+					break;
+				case 2:
+					$next_process = 3;
+					break;
+				case 3:
+					$next_process = 4;
+					break;
+				
+				default:
+					$next_process = false;
+					break;
+			}
+
+			if ($next_process) {
+
+				$data = [
+					'status_transaksi' => $next_process,
+					'updated_at' => date('Y-m-d H:i:s')
+				];
+
+				if ($next_process == 4) {
+					$resi = htmlspecialchars($this->input->post('resi_pemesanan'));
+					$data['resi_pemesanan'] = $resi;
+				}
+
+				$this->transaction_model->updateTransaksi($data, $kode_transaksi);
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Status order berhasil diperbarui']);
+				redirect('/admincontroller/transaksi');
+			} else {
+				redirect('/admincontroller/transaksi');
+			}
+		} else {
+			redirect('/admincontroller/transaksi');
+		}
 	}
 
 	public function cancel_order()
@@ -687,6 +733,28 @@ class AdminController extends CI_Controller
 			];
 			$this->transaction_model->updateTransaksi($data, $kode_transaksi);
 			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Pembatalan order berhasil dilakukan']);
+			redirect('/admincontroller/transaksi');
+		} else {
+			redirect('/admincontroller/transaksi');
+		}
+	}
+
+	public function cancel_pembayaran()
+	{
+		$this->isAuthenticated();
+
+		$kode_transaksi = htmlspecialchars($this->input->post('kode_transaksi'));
+
+		$transaksi = $this->transaction_model->getTransaksiByKode($kode_transaksi);
+
+		if ($transaksi) {
+			unlink(FCPATH . '/upload/bukti_pembayaran/' . $transaksi->bukti_pembayaran);
+			$data = [
+				'bukti_pembayaran' => null,
+				'updated_at' => date('Y-m-d H:i:s')
+			];
+			$this->transaction_model->updateTransaksi($data, $kode_transaksi);
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Bukti pembayaran berhasil dicancel']);
 			redirect('/admincontroller/transaksi');
 		} else {
 			redirect('/admincontroller/transaksi');

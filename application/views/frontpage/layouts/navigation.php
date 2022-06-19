@@ -26,7 +26,7 @@
 								<a href="<?= site_url('/frontcontroller/customer_profile/'.$user['userdata']['id']) ?>" class="dropdown-item">Profile</a>
 							</li>
 							<li>
-								<a href="<?= site_url('/frontcontroller/transaction/') ?>" class="dropdown-item">Transaction</a>
+								<a href="<?= site_url('/frontcontroller/transaksi') ?>" class="dropdown-item">Transaction</a>
 							</li>
 							<li>
 								<hr class="dropdown-divider">

@@ -2,15 +2,15 @@
 
 class transaction_model extends CI_Model
 {
-	public function save($data) {
+	public function save($data)
+	{
 		$this->db->insert('transactions', $data);
 		return $this->db->insert_id();
 	}
 
-	public function getAllTransaksi() {
-
+	public function getAllTransaksi()
+	{
 		$datas = [];
-
 		$this->db->select('transactions.*, users.name as user_name, status_transaction.name as status_name');
 		$this->db->from('transactions');
 		$this->db->join('users', 'users.id = transactions.user_id');
@@ -31,7 +31,18 @@ class transaction_model extends CI_Model
 		return $datas;
 	}
 
-	public function getTransaksiByKode($kode) {
+	public function getTransactionsByUserId($id)
+	{
+		$this->db->select('transactions.*, users.name as user_name, status_transaction.name as status_name');
+		$this->db->from('transactions');
+		$this->db->join('users', 'users.id = transactions.user_id');
+		$this->db->join('status_transaction', 'status_transaction.id = transactions.status_transaksi');
+		$this->db->where('user_id', $id);
+		return $this->db->get()->result();
+	}
+
+	public function getTransaksiByKode($kode)
+	{
 		$this->db->select('transactions.*, users.name as user_name, status_transaction.name as status_name');
 		$this->db->from('transactions');
 		$this->db->join('users', 'users.id = transactions.user_id');
@@ -48,7 +59,8 @@ class transaction_model extends CI_Model
 		}
 	}
 
-	function getDetailByTransactionId($id) {
+	function getDetailByTransactionId($id)
+	{
 		$this->db->select('detail_transaction.*');
 		$this->db->from('detail_transaction');
 		$this->db->join('products', 'products.id = detail_transaction.product_id');
@@ -57,7 +69,8 @@ class transaction_model extends CI_Model
 		return $detail_transactions->result();
 	}
 
-	public function updateTransaksi($data, $kode_transaksi) {
+	public function updateTransaksi($data, $kode_transaksi)
+	{
 		$this->db->where('kode_pemesanan', $kode_transaksi);
 		$this->db->update('transactions', $data);
 	}
