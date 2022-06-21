@@ -6,8 +6,8 @@
 			<div class="card my-2">
 				<div class="card-body">
 					<span class="fw-bold">Alamat Pengiriman</span>
-					<p><?= $user['userdata']['alamat']; ?></p>
-					<input type="hidden" name="alamat" value="<?= $user['userdata']['alamat']; ?>">
+					<p><?= $user_detail->alamat ?></p>
+					<input type="hidden" name="alamat" value="<?= $user_detail->alamat ?>">
 				</div>
 			</div>
 			<div class="card my-2">

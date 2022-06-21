@@ -240,10 +240,14 @@ class FrontController extends CI_Controller
 				'userdata' => $this->session->userdata('user')
 			];
 		}
+
+		$user_detail = $this->user_model->getUserById($this->session->userdata('user')['id']);
+
 		$data = [
 			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
 			'page' => 'frontpage/checkout',
-			'user' => $userdata
+			'user' => $userdata,
+			'user_detail' => $user_detail
 		];
 
 		$this->load->view('frontpage/layouts/master', $data);
