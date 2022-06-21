@@ -6,7 +6,7 @@
 			<div class="card my-2">
 				<div class="card-body">
 					<span class="fw-bold">Alamat Pengiriman</span>
-					<p><?= $user_detail->alamat ?></p>
+					<p class="mt-2 m-0"><?= $user_detail->alamat ?></p>
 					<input type="hidden" name="alamat" value="<?= $user_detail->alamat ?>">
 				</div>
 			</div>
