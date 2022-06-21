@@ -1,5 +1,5 @@
 * {
-	font-family: 'Poppins', sans-serif;
+	font-family: "Poppins", sans-serif;
 	font-weight: 400;
 	font-size: 14px;
 }
@@ -10,6 +10,10 @@
 
 .badge {
 	font-weight: 600 !important;
+}
+
+.input-group-append {
+	cursor: pointer;
 }
 
 /* Start - Carousel area styling */

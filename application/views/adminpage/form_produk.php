@@ -56,11 +56,17 @@ if (isset($_SESSION['message'])) {
 							<input class="form-control" type="file" id="gambar" name="gambar">
 						</div>
 					</div>
-					<div class="col-md-12">
+					<!-- <div class="col-md-12">
 						<div class="mb-3">
 							<label for="deskripsi" class="form-label">Deskripsi Produk</label>
 							<textarea name="deskripsi" id="deskripsi" rows="5" class="form-control"></textarea>
 						</div>
+					</div> -->
+					<div class="col-md-12">
+						<label for="deskripsi" class="form-label">Deskripsi Produk</label>
+						<div id="editor">
+						</div>
+						<input type="hidden" name="deskripsi" id="deskripsi" value="">
 					</div>
 				</div>
 				<div class="row mt-5">
@@ -116,6 +122,8 @@ if (isset($_SESSION['message'])) {
 
 <script>
 	let indexVarian = 0;
+
+	CKEDITOR.replace('editor');
 
 	function addVarianForm() {
 		let components = `<div class="row" id="varian_container_` + indexVarian + `">
@@ -183,6 +191,8 @@ if (isset($_SESSION['message'])) {
 		if (validateVarian === false) {
 			alert('Lengkapi form!');
 		} else {
+			let deskripsi = CKEDITOR.instances.editor.getData();
+			$('#deskripsi').val(deskripsi);
 			$("#formProduk").submit();
 		}
 	})
@@ -199,9 +209,6 @@ if (isset($_SESSION['message'])) {
 				required: true
 			},
 			gambar: {
-				required: true
-			},
-			deskripsi: {
 				required: true
 			},
 			satuan: {

@@ -28,6 +28,12 @@ class FrontController extends CI_Controller
 				'loggedIn' => $this->session->userdata('loggedIn'),
 				'userdata' => $this->session->userdata('user')
 			];
+
+			if ($userdata['userdata']['role_id'] == 3) {
+				if (!$userdata['userdata']['alamat']) {
+					$this->session->set_flashdata('message_user', ['status' => 'warning', 'text' => 'Silahkan lengkapi data diri anda terlebih dahulu']);
+				}
+			}
 		}
 
 		$produk = $this->produk_model->getProduk();

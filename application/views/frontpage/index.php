@@ -1,3 +1,35 @@
+<?php
+if (isset($_SESSION['message'])) {
+?>
+	<div class="container my-4">
+
+		<div class="alert alert-<?= isset($_SESSION['message']['status']) ? $_SESSION['message']['status'] : 'success' ?> alert-dismissible fade show" role="alert">
+			<div>
+				<?= isset($_SESSION['message']['text']) ? $_SESSION['message']['text'] : '' ?>
+			</div>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</div>
+
+<?php
+}
+?>
+
+<?php
+if (isset($_SESSION['message_user'])) {
+?>
+	<div class="container my-4">
+
+		<div class="alert alert-<?= isset($_SESSION['message_user']['status']) ? $_SESSION['message_user']['status'] : 'success' ?> alert-dismissible fade show" role="alert">
+			<div>
+				<?= isset($_SESSION['message_user']['text']) ? $_SESSION['message_user']['text'] : '' ?>
+			</div>
+		</div>
+	</div>
+
+<?php
+}
+?>
 <div class="container py-3">
 	<div id="carouselExampleControls" class="carousel carousel-home slide" data-bs-ride="carousel">
 		<div class="carousel-inner rounded">

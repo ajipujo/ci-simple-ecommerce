@@ -74,4 +74,11 @@ class transaction_model extends CI_Model
 		$this->db->where('kode_pemesanan', $kode_transaksi);
 		$this->db->update('transactions', $data);
 	}
+
+	public function getTransaksiByDateRange($startDate, $endDate)
+	{
+		$this->db->where('tanggal_transaksi >=', $startDate);
+		$this->db->where('tanggal_transaksi <=', $endDate);
+		return $this->db->get('transactions')->result();
+	}
 }

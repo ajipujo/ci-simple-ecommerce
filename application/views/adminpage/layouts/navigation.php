@@ -18,7 +18,7 @@
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item" href="<?= site_url('admincontroller/transaksi') ?>">Transaksi</a></li>
-						<li><a class="dropdown-item" href="#">Bukti Pembayaran</a></li>
+						<li><a class="dropdown-item" href="<?= site_url('admincontroller/laporan_keuangan') ?>">Laporan Penjualan</a></li>
 					</ul>
 				</li>
 				<?php

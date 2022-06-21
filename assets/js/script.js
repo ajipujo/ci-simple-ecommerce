@@ -81,6 +81,7 @@ $(".input-number").change(function () {
 		$(this).val($(this).data("oldValue"));
 	}
 });
+
 $(".input-number").keydown(function (e) {
 	// Allow: backspace, delete, tab, escape, enter and .
 	if (

@@ -14,8 +14,8 @@
 									<input type="hidden" id="produk_id" value="<?= $produk->id ?>">
 									<h5><?= $produk->name ?><span id="varian_name"></span></h5>
 								</div>
-								<div class="col-12">
-									<p><?= $produk->deskripsi ?></p>
+								<div class="col-12 my-2">
+									<?php echo $produk->deskripsi ?>
 								</div>
 								<div class="col-12">
 									<div class="row">

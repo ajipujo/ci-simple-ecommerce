@@ -11,6 +11,7 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="<?= base_url('vendor/bootstrap-5.0.2/dist/css/bootstrap.min.css') ?>">
 	<link rel="stylesheet" href="<?= base_url('vendor/font-awesome-4.7.0/css/font-awesome.min.css') ?>">
+	<link rel="stylesheet" href="<?= base_url('vendor/datepicker/datepicker.css') ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('vendor/datatables/datatables.min.css') ?>" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +22,9 @@
 	<script src="<?= base_url('vendor/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js') ?>"></script>
 	<script src="<?= base_url('vendor/jquery-validation-1.19.3/dist/jquery.validate.min.js') ?>"></script>
 	<script src="<?= base_url('vendor/datatables/datatables.min.js') ?>"></script>
-
+	<script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+	<script src="<?= base_url('vendor/datepicker/datepicker.js') ?>"></script>
+	
 	<title>Hello, world!</title>
 </head>
 

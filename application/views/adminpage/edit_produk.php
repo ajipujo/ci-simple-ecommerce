@@ -63,7 +63,10 @@ if (isset($_SESSION['message'])) {
 					<div class="col-md-12">
 						<div class="mb-3">
 							<label for="deskripsi" class="form-label">Deskripsi Produk</label>
-							<textarea name="deskripsi" id="deskripsi" rows="5" class="form-control"><?= $produk->deskripsi ?></textarea>
+							<div id="editor">
+							<?= $produk->deskripsi ?>
+							</div>
+							<input type="hidden" name="deskripsi" id="deskripsi" value="<?= $produk->deskripsi ?>">
 						</div>
 					</div>
 				</div>
@@ -131,6 +134,8 @@ if (isset($_SESSION['message'])) {
 <script>
 	let indexVarian = <?php echo $key + 1 ?>;
 	let arrDeleted = [];
+
+	CKEDITOR.replace('editor');
 
 	function addVarianForm() {
 		let components = `<div class="row" id="varian_container_` + indexVarian + `">
@@ -203,7 +208,10 @@ if (isset($_SESSION['message'])) {
 		});
 
 		if (validateVarian) {
+			let deskripsi = CKEDITOR.instances.editor.getData();
+
 			$("#varian_delete_datas").val(arrDeleted);
+			$('#deskripsi').val(deskripsi);
 			$("#formProduk").submit();
 		} else {
 			alert("Mohon lengkapi data varian");

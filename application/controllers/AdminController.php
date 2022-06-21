@@ -136,6 +136,7 @@ class AdminController extends CI_Controller
 	public function update_produk()
 	{
 		$this->isAuthenticated();
+
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('stok', 'Stok', 'required');
 		$this->form_validation->set_rules('harga', 'Harga', 'required');
@@ -150,7 +151,7 @@ class AdminController extends CI_Controller
 			$name = htmlspecialchars($this->input->post('name'));
 			$harga = htmlspecialchars($this->input->post('harga'));
 			$stok = htmlspecialchars($this->input->post('stok'));
-			$deskripsi = htmlspecialchars($this->input->post('deskripsi'));
+			$deskripsi = $this->input->post('deskripsi');
 			$satuan = htmlspecialchars($this->input->post('satuan'));
 
 			$old_produk = $this->produk_model->getProdukById($id);
@@ -302,7 +303,7 @@ class AdminController extends CI_Controller
 			$name = htmlspecialchars($this->input->post('name'));
 			$harga = htmlspecialchars($this->input->post('harga'));
 			$stok = htmlspecialchars($this->input->post('stok'));
-			$deskripsi = htmlspecialchars($this->input->post('deskripsi'));
+			$deskripsi = $this->input->post('deskripsi');
 			$satuan = htmlspecialchars($this->input->post('satuan'));
 
 			$config['upload_path']          = FCPATH . '/upload/produk/';
@@ -689,7 +690,7 @@ class AdminController extends CI_Controller
 				case 3:
 					$next_process = 4;
 					break;
-				
+
 				default:
 					$next_process = false;
 					break;
@@ -759,5 +760,39 @@ class AdminController extends CI_Controller
 		} else {
 			redirect('/admincontroller/transaksi');
 		}
+	}
+
+	public function laporan_keuangan()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+
+		$data = [
+			'title' => 'Transaksi',
+			'page' => 'adminpage/laporan_keuangan',
+			'user' => $userdata
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function cetak_laporan()
+	{
+		$this->isAuthenticated();
+		$startDate = htmlspecialchars($this->input->post('dateStartInput'));
+		$endDate = htmlspecialchars($this->input->post('dateStartEnd'));
+
+		$startDate = date('Y-m-d H:i:s', strtotime($startDate));
+		$endDate = date('Y-m-d H:i:s', strtotime($endDate . ' +1 day'));
+
+		$transaksi = $this->transaction_model->getTransaksiByDateRange($startDate, $endDate);
+
+		var_dump($startDate);
+		var_dump($endDate);
+		var_dump($transaksi);
+		die;
 	}
 }
