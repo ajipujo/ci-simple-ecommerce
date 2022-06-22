@@ -788,7 +788,7 @@ class AdminController extends CI_Controller
 	{
 		$this->isAuthenticated();
 		$startDate = htmlspecialchars($this->input->post('dateStartInput'));
-		$endDate = htmlspecialchars($this->input->post('dateStartEnd'));
+		$endDate = htmlspecialchars($this->input->post('dateEndInput'));
 
 		$startDate = date('Y-m-d H:i:s', strtotime($startDate));
 		$endDate = date('Y-m-d H:i:s', strtotime($endDate . ' +1 day'));
