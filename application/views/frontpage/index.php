@@ -19,12 +19,13 @@ if (isset($_SESSION['message'])) {
 if (isset($_SESSION['message_user'])) {
 ?>
 	<div class="container my-4">
-
-		<div class="alert alert-<?= isset($_SESSION['message_user']['status']) ? $_SESSION['message_user']['status'] : 'success' ?> alert-dismissible fade show" role="alert">
-			<div>
-				<?= isset($_SESSION['message_user']['text']) ? $_SESSION['message_user']['text'] : '' ?>
+		<a href="<?= site_url('/frontcontroller/customer_profile/' . $user['userdata']['id']) ?>" style="text-decoration: none;">
+			<div class="alert alert-<?= isset($_SESSION['message_user']['status']) ? $_SESSION['message_user']['status'] : 'success' ?> alert-dismissible fade show" role="alert">
+				<div>
+					<?= isset($_SESSION['message_user']['text']) ? $_SESSION['message_user']['text'] : '' ?>
+				</div>
 			</div>
-		</div>
+		</a>
 	</div>
 
 <?php
@@ -58,7 +59,7 @@ if (isset($_SESSION['message_user'])) {
 		<?php foreach ($produk as $key => $item) { ?>
 			<div class="col-6 col-md-3">
 				<div class="card mb-3 card-product">
-					<img class="card-img-top-custom" src="<?= base_url('/upload/produk/'.$item->gambar) ?>" alt="...">
+					<img class="card-img-top-custom" src="<?= base_url('/upload/produk/' . $item->gambar) ?>" alt="...">
 					<div class="card-body">
 						<!-- <div class="col-12 mb-2">
 							<span class="card-product-stock text-danger">Stok tersisa <?= $item->stok ?></span>
@@ -69,7 +70,7 @@ if (isset($_SESSION['message_user'])) {
 						<!-- <div class="col-12 mb-3">
 							<span class="card-product-price fw-bold currency-format"><?= $item->harga ?></span>
 						</div> -->
-						<a href="<?= site_url('frontcontroller/produk_detail/'.$item->slug) ?>" class="stretched-link"></a>
+						<a href="<?= site_url('frontcontroller/produk_detail/' . $item->slug) ?>" class="stretched-link"></a>
 					</div>
 				</div>
 			</div>
