@@ -30,7 +30,8 @@ class FrontController extends CI_Controller
 			];
 
 			if ($userdata['userdata']['role_id'] == 3) {
-				if (!$userdata['userdata']['alamat']) {
+				$user_dtl = $this->user_model->getUserById($userdata['userdata']['id']);
+				if (!$user_dtl->alamat) {
 					$this->session->set_flashdata('message_user', ['status' => 'warning', 'text' => 'Silahkan lengkapi data diri anda terlebih dahulu']);
 				}
 			}
