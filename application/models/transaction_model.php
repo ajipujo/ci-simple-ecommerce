@@ -77,8 +77,26 @@ class transaction_model extends CI_Model
 
 	public function getTransaksiByDateRange($startDate, $endDate)
 	{
+		$datas = [];
+		$this->db->select('transactions.*, users.name as user_name, status_transaction.name as status_name');
+		$this->db->from('transactions');
+		$this->db->join('users', 'users.id = transactions.user_id');
+		$this->db->join('status_transaction', 'status_transaction.id = transactions.status_transaksi');
 		$this->db->where('tanggal_transaksi >=', $startDate);
 		$this->db->where('tanggal_transaksi <=', $endDate);
-		return $this->db->get('transactions')->result();
+
+		$transactions = $this->db->get();
+
+		foreach ($transactions->result() as $transaction) {
+			$details = [];
+			$detail_transaction = $this->getDetailByTransactionId($transaction->id);
+			if ($detail_transaction) {
+				$details = $detail_transaction;
+			}
+			$transaction->detail = $details;
+			$datas[] = $transaction;
+		}
+
+		return $datas;
 	}
 }

@@ -779,6 +779,11 @@ class AdminController extends CI_Controller
 		$this->load->view('adminpage/layouts/master', $data);
 	}
 
+	public function playground()
+	{
+		$this->load->view('documents/laporan_penjualan');
+	}
+
 	public function cetak_laporan()
 	{
 		$this->isAuthenticated();
@@ -788,11 +793,12 @@ class AdminController extends CI_Controller
 		$startDate = date('Y-m-d H:i:s', strtotime($startDate));
 		$endDate = date('Y-m-d H:i:s', strtotime($endDate . ' +1 day'));
 
-		$transaksi = $this->transaction_model->getTransaksiByDateRange($startDate, $endDate);
+		$store['store'] = $this->transaction_model->getTransaksiByDateRange($startDate, $endDate);
 
-		var_dump($startDate);
-		var_dump($endDate);
-		var_dump($transaksi);
-		die;
+		$mpdf = new \Mpdf\Mpdf();
+		$html = $this->load->view('documents/laporan_penjualan', $store, true);
+
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
 	}
 }
