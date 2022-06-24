@@ -19,19 +19,22 @@
 					<label for="email" class="form-label required-label">Email</label>
 					<input type="email" class="form-control" id="email" name="email" placeholder="masukkan email...">
 				</div>
-				<div class="mb-3">
+				<div class="mb-2">
 					<label for="password" class="form-label required-label">Password</label>
 					<input type="password" class="form-control" id="password" name="password" placeholder="masukkan password...">
+				</div>
+				<div class="col-12 d-flex justify-content-end mb-2">
+					<a href="<?= site_url('authcontroller/reset_password') ?>" class="text-danger" style="text-decoration: none;">Lupa password?</a>
 				</div>
 				<div class="d-grid gap-2 mb-2">
 					<button type="submit" id="btnLogin" class="btn btn-primary">Submit</button>
 					<a class="btn btn-outline-secondary" href="<?= site_url('/authcontroller/register') ?>">Register</a>
 				</div>
-				<div class="col-12 d-flex justify-content-center">
-					<a href="<?= site_url('/') ?>">Kembali ke halaman utama</a>
-				</div>
 			</form>
 		</div>
+	</div>
+	<div class="col-12 d-flex justify-content-center mt-3">
+		<a href="<?= site_url('/') ?>">Kembali ke halaman utama</a>
 	</div>
 </div>
 
@@ -43,7 +46,8 @@
 	$("#formLogin").validate({
 		rules: {
 			email: {
-				required: true
+				required: true,
+				email: true
 			},
 			password: {
 				required: true

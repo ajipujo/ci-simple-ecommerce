@@ -79,7 +79,8 @@ if (isset($_SESSION['message'])) {
 				required: true
 			},
 			email: {
-				required: true
+				required: true,
+				email: true
 			},
 			role: {
 				required: true

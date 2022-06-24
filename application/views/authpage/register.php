@@ -64,7 +64,8 @@
 				required: true
 			},
 			email: {
-				required: true
+				required: true,
+				email: true
 			},
 			no_hp: {
 				required: true

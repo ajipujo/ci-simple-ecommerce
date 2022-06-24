@@ -32,6 +32,7 @@ if (isset($_SESSION['message'])) {
 					<tr>
 						<th>No</th>
 						<th>Name</th>
+						<th>Email</th>
 						<th>Role</th>
 						<th>Status</th>
 						<th>Aksi</th>
@@ -43,10 +44,12 @@ if (isset($_SESSION['message'])) {
 							<td></td>
 							<td><?= $user->name ?></td>
 							<td><?= $user->role_nm ?></td>
+							<td><?= $user->email ?></td>
 							<td><?= $user->is_active == 1 ? 'Active' : 'Non-active' ?></td>
 							<td>
-								<a href="<?= site_url('/admincontroller/form_edit_user/' . $user->id) ?>" class="btn btn-primary btn-sm">Edit</a>
-								<a href="<?= site_url('/admincontroller/delete_user/' . $user->id) ?>" class="btn btn-danger btn-sm">Hapus</a>
+								<a href="<?= site_url('admincontroller/form_edit_user/' . $user->id) ?>" class="btn btn-primary btn-sm">Edit</a>
+								<a href="<?= site_url('admincontroller/reset_password/' . $user->email) ?>" class="btn btn-danger btn-sm confirmFirst">Reset Password</a>
+								<a href="<?= site_url('admincontroller/delete_user/' . $user->id) ?>" class="btn btn-danger btn-sm confirmFirst">Hapus</a>
 							</td>
 						</tr>
 					<?php } ?>
@@ -79,5 +82,15 @@ if (isset($_SESSION['message'])) {
 				this.data(i++);
 			});
 		}).draw();
+	});
+
+	$('.confirmFirst').click(e => {
+		e.preventDefault();
+
+		let isExecuted = confirm("Are you sure to execute this action?");
+
+		if (isExecuted === true) {
+			location.href = $(e.currentTarget).attr('href');
+		}
 	});
 </script>

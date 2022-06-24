@@ -10,7 +10,8 @@ class AuthController extends CI_Controller
 		$this->load->model('user_model');
 	}
 
-	function authorized() {
+	function authorized()
+	{
 		if ($this->session->userdata('loggedIn')) {
 			if ($this->session->userdata('user')['role_id'] == 3) {
 				redirect('frontcontroller/index');
@@ -40,6 +41,73 @@ class AuthController extends CI_Controller
 		$this->load->view('authpage/layouts/master', $data);
 	}
 
+	public function reset_password()
+	{
+		$this->authorized();
+		$data = [
+			'title' => 'Reset Password',
+			'page' => 'authpage/reset_password'
+		];
+		$this->load->view('authpage/layouts/master', $data);
+	}
+
+	public function send_password()
+	{
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect($this->agent->referrer());
+		} else {
+			$email = htmlspecialchars($this->input->post('email'));
+
+			$user = $this->user_model->getUserByEmail(["email" => $email], 3);
+
+			if ($user) {
+				$newPassword = $this->generateRandomString(6);
+				$data['password'] = password_hash($newPassword, PASSWORD_DEFAULT);
+
+				$this->user_model->updateUser($data, $user->id);
+
+				$api_key = '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';
+
+				$config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', $api_key);
+
+				$apiInstance = new SendinBlue\Client\Api\TransactionalEmailsApi(
+					new GuzzleHttp\Client(),
+					$config
+				);
+				$sendSmtpEmail = new \SendinBlue\Client\Model\SendSmtpEmail();
+				$sendSmtpEmail['subject'] = 'Testing subject';
+				$sendSmtpEmail['htmlContent'] = '<html><body><span>Email: <b>' . $user->email . '</b></span><br><span>New password: <b>' . $newPassword . '</b></span></body></html>';
+				$sendSmtpEmail['sender'] = array('name' => 'Vavapedia', 'email' => 'ajipujohardiyanto@gmail.com');
+				$sendSmtpEmail['to'] = array(
+					array('email' => 'ajipujo2nd@gmail.com', 'name' => 'Aji Pujo')
+				);
+				$sendSmtpEmail['replyTo'] = array('email' => 'ajipujohardiyanto@gmail.com', 'name' => 'John Doe');
+				$sendSmtpEmail['headers'] = array('Some-Custom-Name' => 'unique-id-1234');
+				$sendSmtpEmail['params'] = array('parameter' => 'My param value', 'subject' => 'New Subject');
+
+				try {
+					$apiInstance->sendTransacEmail($sendSmtpEmail);
+					$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Password has been sent to your email']);
+					redirect('authcontroller/login');
+				} catch (Exception $e) {
+					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to send password']);
+					redirect('authcontroller/reset_password');
+				}
+			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Email tidak ditemukan']);
+				redirect('authcontroller/reset_password');
+			}
+		}
+	}
+
+	function generateRandomString($length = 10)
+	{
+		return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))), 1, $length);
+	}
+
 	public function logout()
 	{
 		$this->session->unset_userdata('loggedIn');
@@ -59,7 +127,7 @@ class AuthController extends CI_Controller
 		} else {
 			$email = htmlspecialchars($this->input->post('email'));
 			$password = htmlspecialchars($this->input->post('password'));
-			
+
 			$data['email'] = $email;
 
 			$user = $this->user_model->getUserByEmail($data);
