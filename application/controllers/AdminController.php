@@ -35,10 +35,14 @@ class AdminController extends CI_Controller
 			'loggedIn' => $this->session->userdata('loggedIn'),
 			'userdata' => $this->session->userdata('user')
 		];
+
+		$statistik_transaksi = $this->transaction_model->getStatistikTransaksiByStatus([]);
+
 		$data = [
 			'title' => 'Dashboard',
 			'page' => 'adminpage/home',
-			'user' => $userdata
+			'user' => $userdata,
+			'statistik_transaksi' => $statistik_transaksi
 		];
 		$this->load->view('adminpage/layouts/master', $data);
 	}
@@ -787,11 +791,11 @@ class AdminController extends CI_Controller
 				case 1:
 					$next_process = 2;
 					break;
-				case 2:
-					$next_process = 3;
-					break;
 				case 3:
 					$next_process = 4;
+					break;
+				case 6:
+					$next_process = 3;
 					break;
 
 				default:

@@ -2,6 +2,11 @@
 
 class transaction_model extends CI_Model
 {
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
 	public function save($data)
 	{
 		$this->db->insert('transactions', $data);
@@ -28,6 +33,17 @@ class transaction_model extends CI_Model
 			$datas[] = $transaction;
 		}
 
+		return $datas;
+	}
+
+	public function getStatistikTransaksiByStatus($status = [])
+	{
+		$this->db->select('status_transaction.id, status_transaction.name, (select count(tr.id) from transactions tr where tr.status_transaksi = status_transaction.id) as total');		
+		$this->db->from('status_transaction');
+		if ($status) {
+			$this->db->where_in('status_transaction.id', $status);
+		}
+		$datas = $this->db->get()->result();
 		return $datas;
 	}
 
