@@ -19,8 +19,9 @@ if (isset($_SESSION['message'])) {
 	<div class="card">
 		<div class="card-body">
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12 d-flex justify-content-between">
 					<span class="fw-bold">Profile</span>
+					<a href="<?= site_url('admincontroller/ganti_password') ?>" class="btn btn-danger btn-sm">Ganti password</a>
 				</div>
 			</div>
 			<hr>

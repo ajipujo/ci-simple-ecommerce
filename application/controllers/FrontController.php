@@ -54,6 +54,60 @@ class FrontController extends CI_Controller
 		$this->load->view('frontpage/layouts/master', $data);
 	}
 
+	public function ganti_password()
+	{
+		$this->isAuthenticated();
+		if ($this->session->userdata('loggedIn')) {
+			$userdata = [
+				'loggedIn' => $this->session->userdata('loggedIn'),
+				'userdata' => $this->session->userdata('user')
+			];
+		}
+		$data = [
+			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'page' => 'frontpage/ganti_password',
+			'user' => $userdata
+		];
+
+		$this->load->view('frontpage/layouts/master', $data);
+	}
+
+	public function update_password()
+	{
+		$this->isAuthenticated();
+		$id = $this->session->userdata('user')['id'];
+
+		$this->form_validation->set_rules('password_lama', 'Password Lama', 'required');
+		$this->form_validation->set_rules('password_baru', 'Password Baru', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect($this->agent->referrer());
+		} else {
+			$password_lama = htmlspecialchars($this->input->post('password_lama'));
+			$password_baru = htmlspecialchars($this->input->post('password_baru'));
+
+			$user = $this->user_model->getUserById($id);
+
+			$password_validity = password_verify($password_lama, $user->password);
+
+			if ($password_validity) {
+				$password_baru = password_hash($password_baru, PASSWORD_DEFAULT);
+
+				$data['password'] = $password_baru;
+				$data['updated_at'] = date('Y-m-d H:i:s');
+
+				$this->user_model->updateUser($data, $id);
+
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Password berhasil diubah']);
+				redirect('frontcontroller/customer_profile/'.$id);
+			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Password lama anda salah']);
+				redirect($this->agent->referrer());
+			}
+		}
+	}
+
 	public function customer_profile()
 	{
 		$this->isAuthenticated();
@@ -108,7 +162,8 @@ class FrontController extends CI_Controller
 				'name' => $name,
 				'email' => $email,
 				'no_hp' => $no_hp,
-				'alamat' => $alamat
+				'alamat' => $alamat,
+				'updated_at' => date('Y-m-d H:i:s')
 			];
 
 			$this->user_model->updateUser($data, $id);
