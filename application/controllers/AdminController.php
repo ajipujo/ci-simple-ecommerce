@@ -855,6 +855,7 @@ class AdminController extends CI_Controller
 			unlink(FCPATH . '/upload/bukti_pembayaran/' . $transaksi->bukti_pembayaran);
 			$data = [
 				'bukti_pembayaran' => null,
+				'status_transaksi' => 2,
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 			$this->transaction_model->updateTransaksi($data, $kode_transaksi);

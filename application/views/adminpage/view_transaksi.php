@@ -18,6 +18,9 @@ switch ($transaksi->status_transaksi) {
 	case 5:
 		$class = 'badge bg-danger';
 		break;
+	case 6:
+		$class = 'badge bg-warning text-dark';
+		break;
 
 	default:
 		$class = 'badge bg-primary';
@@ -107,7 +110,7 @@ switch ($transaksi->status_transaksi) {
 			<?php } ?>
 			<div class="row">
 				<?php if ($transaksi->status_transaksi != 5 && $transaksi->status_transaksi != 4) { ?>
-					<?php if ($transaksi->status_transaksi == 1 || $transaksi->status_transaksi == 3 || ($transaksi->status_transaksi == 2 && $transaksi->bukti_pembayaran)) { ?>
+					<?php if ($transaksi->status_transaksi == 1 || $transaksi->status_transaksi == 3 || $transaksi->status_transaksi == 6) { ?>
 						<?php
 						switch ($transaksi->status_transaksi) {
 							case 1:
@@ -115,7 +118,7 @@ switch ($transaksi->status_transaksi) {
 								$action_class = 'btnKirim';
 								$action_class = 'btnKonfirmasi';
 								break;
-							case 2:
+							case 6:
 								$action_name = 'Konfirmasi Pembayaran';
 								$action_class = 'btnKonfirmasi';
 								break;
@@ -140,17 +143,15 @@ switch ($transaksi->status_transaksi) {
 							</form>
 						</div>
 					<?php } ?>
-					<?php if ($transaksi->status_transaksi == 2) { ?>
-						<?php if ($transaksi->bukti_pembayaran) { ?>
-							<div class="col-8 col-md-3 mb-2">
-								<form action="<?= site_url('admincontroller/cancel_pembayaran') ?>" class="form-inline" method="POST">
-									<input type="hidden" name="kode_transaksi" value="<?= $transaksi->kode_pemesanan ?>">
-									<div class="d-grid gap-2">
-										<button type="submit" class="btn btn-danger">Cancel Pembayaran</button>
-									</div>
-								</form>
-							</div>
-						<?php } ?>
+					<?php if ($transaksi->status_transaksi == 6) { ?>
+						<div class="col-8 col-md-3 mb-2">
+							<form action="<?= site_url('admincontroller/cancel_pembayaran') ?>" class="form-inline" method="POST">
+								<input type="hidden" name="kode_transaksi" value="<?= $transaksi->kode_pemesanan ?>">
+								<div class="d-grid gap-2">
+									<button type="submit" class="btn btn-danger">Cancel Pembayaran</button>
+								</div>
+							</form>
+						</div>
 						<div class="col-8 col-md-3 mb-2">
 							<form action="<?= site_url('admincontroller/cancel_order') ?>" class="form-inline" method="POST">
 								<input type="hidden" name="kode_transaksi" value="<?= $transaksi->kode_pemesanan ?>">

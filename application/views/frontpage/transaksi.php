@@ -47,9 +47,6 @@ if (isset($_SESSION['message'])) {
 									break;
 								case 2:
 									$class = 'badge bg-warning text-dark';
-									if ($item->bukti_pembayaran) {
-										$item->status_name = 'Menunggu konfirmasi Pembayaran';
-									}
 									break;
 								case 3:
 									$class = 'badge bg-warning text-dark';
@@ -59,6 +56,9 @@ if (isset($_SESSION['message'])) {
 									break;
 								case 5:
 									$class = 'badge bg-danger';
+									break;
+								case 6:
+									$class = 'badge bg-warning text-dark';
 									break;
 
 								default:

@@ -248,6 +248,7 @@ class FrontController extends CI_Controller
 			$uploaded_data = $this->upload->data();
 			$data = [
 				'bukti_pembayaran' => $uploaded_data['file_name'],
+				'status_transaksi' => 6,
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 			$this->transaction_model->updateTransaksi($data, $kode_pemesanan);

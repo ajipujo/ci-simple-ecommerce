@@ -20,9 +20,6 @@ switch ($transaksi->status_transaksi) {
 		break;
 	case 2:
 		$class = 'badge bg-warning text-dark';
-		if ($transaksi->bukti_pembayaran) {
-			$transaksi->status_name = 'Menunggu konfirmasi Pembayaran';
-		}
 		break;
 	case 3:
 		$class = 'badge bg-warning text-dark';
@@ -32,6 +29,9 @@ switch ($transaksi->status_transaksi) {
 		break;
 	case 5:
 		$class = 'badge bg-danger';
+		break;
+	case 6:
+		$class = 'badge bg-warning text-dark';
 		break;
 
 	default:
