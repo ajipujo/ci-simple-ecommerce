@@ -35,8 +35,8 @@
 </div>
 
 <script>
-	$('#dateStart').datepicker();
-	$('#dateEnd').datepicker();
+	$('#dateStart').datepicker('update', new Date());
+	$('#dateEnd').datepicker('update', new Date());
 
 	$("#formLaporan").validate({
 		rules: {
