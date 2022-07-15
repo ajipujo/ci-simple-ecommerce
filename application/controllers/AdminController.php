@@ -907,6 +907,9 @@ class AdminController extends CI_Controller
 		$endDate = htmlspecialchars($this->input->post('dateEndInput'));
 		$statusTransaksi = htmlspecialchars($this->input->post('status_transaksi'));
 
+		// var_dump($statusTransaksi);
+		// die;
+
 		$startDate = date('Y-m-d H:i:s', strtotime($startDate));
 		$endDate = date('Y-m-d H:i:s', strtotime($endDate . ' +1 day'));
 

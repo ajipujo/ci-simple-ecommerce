@@ -28,7 +28,7 @@
 					<div class="col-md-4 my-2">
 						<label for="dateEndInput" class="mb-2 required-label">Status transaksi:</label>
 						<select class="form-select" id="status_transaksi" name="status_transaksi">
-							<option selected>-- Pilih Status Transaksi (default: semua) --</option>
+							<option value="" selected>-- Pilih Status Transaksi (default: semua) --</option>
 							<?php foreach($status_transaksi as $key => $status) { ?>
 								<option value="<?= $status->id ?>" class="fw-bold"><?= $status->name ?></option>
 							<?php } ?>
