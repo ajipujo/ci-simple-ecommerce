@@ -177,6 +177,7 @@ CREATE TABLE `transactions` (
   `tanggal_transaksi` datetime NOT NULL,
   `status_transaksi` int(11) NOT NULL,
   `bukti_pembayaran` varchar(500) DEFAULT NULL,
+  `batas_pembayaran` datetime DEFAULT NULL,
   `alamat_pemesanan` text NOT NULL,
   `resi_pemesanan` text,
   `created_at` datetime NOT NULL,
@@ -192,7 +193,7 @@ CREATE TABLE `transactions` (
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (2,6,'TRS-62a8a202edb0c','2022-06-13 19:11:03',5,NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy',NULL,'2022-06-13 19:11:03','2022-06-16 22:00:10',NULL),(3,6,'TRS-62a8af80e6a4c','2022-06-14 17:55:44',4,'bukti-2XR8J5z1G7-1655644123.png','Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-14 17:55:44','2022-06-19 22:36:30',NULL),(4,6,'TRS-62af23e95b892','2022-06-19 20:26:01',4,'bukti-ABwICz29qb-1655653664.png','Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-19 20:26:01','2022-06-19 22:48:29',NULL),(5,6,'TRS-62af262eab08d','2022-06-19 20:35:42',4,'bukti-BjankZy0fT-1655653676.png','Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-19 20:35:42','2022-06-19 22:48:32',NULL),(6,6,'TRS-62b34b480f9b5','2022-06-23 00:03:04',3,'bukti-1MiUSw6Qco-1656143022.png','Jl. Bekasi',NULL,'2022-06-23 00:03:04','2022-06-25 14:45:27',NULL),(7,6,'TRS-62b6bb8ac6152','2022-06-25 14:38:50',1,NULL,'Jl. Bekasi',NULL,'2022-06-25 14:38:50','2022-06-25 14:38:50',NULL),(8,6,'TRS-62b6bbcce6193','2022-06-25 14:39:56',6,'bukti-0dZAHOBqKi-1656143007.png','Jl. Bekasi',NULL,'2022-06-25 14:39:56','2022-06-25 14:43:27',NULL);
+INSERT INTO `transactions` VALUES (2,6,'TRS-62a8a202edb0c','2022-06-13 19:11:03',5,NULL,NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy',NULL,'2022-06-13 19:11:03','2022-06-16 22:00:10',NULL),(3,6,'TRS-62a8af80e6a4c','2022-06-14 17:55:44',4,'bukti-2XR8J5z1G7-1655644123.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-14 17:55:44','2022-06-19 22:36:30',NULL),(4,6,'TRS-62af23e95b892','2022-06-19 20:26:01',4,'bukti-ABwICz29qb-1655653664.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-19 20:26:01','2022-06-19 22:48:29',NULL),(5,6,'TRS-62af262eab08d','2022-06-19 20:35:42',4,'bukti-BjankZy0fT-1655653676.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-19 20:35:42','2022-06-19 22:48:32',NULL),(6,6,'TRS-62b34b480f9b5','2022-06-23 00:03:04',3,'bukti-1MiUSw6Qco-1656143022.png',NULL,'Jl. Bekasi',NULL,'2022-06-23 00:03:04','2022-06-25 14:45:27',NULL),(7,6,'TRS-62b6bb8ac6152','2022-06-25 14:38:50',3,'bukti-cLseb8j0pB-1657875100.jpg',NULL,'Jl. Bekasi',NULL,'2022-06-25 14:38:50','2022-07-15 15:52:26',NULL),(8,6,'TRS-62b6bbcce6193','2022-06-25 14:39:56',2,NULL,'2022-07-16 15:52:23','Jl. Bekasi',NULL,'2022-06-25 14:39:56','2022-07-15 15:52:23',NULL);
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,7 +217,7 @@ CREATE TABLE `users` (
   `updated_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +226,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'superuser',1,'superuser@gmail.com','$2y$10$jTTPiJDgIs1vZ2.vxMYT8.8QqNxpe/yRdAX70vtiw82ySZrhwqUAO','085896452806','',1,'2022-05-19 16:10:44','2022-05-19 16:10:44',NULL),(5,'dummycustomer2',3,'dummycustomer2@iva.com','$2y$10$tAamrtznyxoXjYLkP0SPO.t1kp7pi9cJsOI6xfqpACd0vMTEWq7Ui','','',1,'2022-05-22 12:10:54','2022-05-22 12:10:54',NULL),(6,'Dummy Customer',3,'dummycustomer@gmail.com','$2y$10$2sgB9VHfBR8PpP.YwjMMrO76GKIUb6uPTsV/CNpH0aIy0yeUONgQK','085896452806','Jl. Bekasi',1,'2022-05-23 18:01:57','2022-06-25 13:56:21',NULL),(7,'Marketing 1',2,'marketing1@gmail.com','$2y$10$02zciQ8jqUoHe8GAkuFt2OwU02Wj4aqa.JhC96a1fwBwZ.vu4JELa','085896452806','',1,'2022-05-28 15:31:53','2022-05-28 15:31:53',NULL),(8,'Dummy Customer',3,'dummycustomer@iva.com','$2y$10$.lphoMXYMp4MuhtoxDauseRNY/ucBf0A9oyqZbplr2MDwLd/lJ5w2',NULL,NULL,1,'2022-06-06 10:52:46','2022-06-06 10:52:46',NULL),(9,'Marketing 2',2,'marketing2@gmail.com','$2y$10$run9TEIil.jpOC3obx7Q2O4uoaO9SLiEJrHC07l6nHHI5MYhXsqVy','085896452806',NULL,1,'2022-06-17 18:33:00','2022-06-25 14:08:19',NULL);
+INSERT INTO `users` VALUES (3,'superuser',1,'superuser@gmail.com','$2y$10$jTTPiJDgIs1vZ2.vxMYT8.8QqNxpe/yRdAX70vtiw82ySZrhwqUAO','085896452806','',1,'2022-05-19 16:10:44','2022-05-19 16:10:44',NULL),(5,'dummycustomer2',3,'dummycustomer2@iva.com','$2y$10$tAamrtznyxoXjYLkP0SPO.t1kp7pi9cJsOI6xfqpACd0vMTEWq7Ui','','',1,'2022-05-22 12:10:54','2022-05-22 12:10:54',NULL),(6,'Dummy Customer',3,'dummycustomer@gmail.com','$2y$10$BB2FGNqAozyHvpN3YInXPeBoXfA/xGmZINvc8v6VAUovhVS.cA02i','085896452806','Jl. Bekasi',1,'2022-05-23 18:01:57','2022-07-15 15:42:54',NULL),(7,'Marketing 1',2,'marketing1@gmail.com','$2y$10$02zciQ8jqUoHe8GAkuFt2OwU02Wj4aqa.JhC96a1fwBwZ.vu4JELa','085896452806','',1,'2022-05-28 15:31:53','2022-05-28 15:31:53',NULL),(8,'Dummy Customer',3,'dummycustomer@iva.com','$2y$10$.lphoMXYMp4MuhtoxDauseRNY/ucBf0A9oyqZbplr2MDwLd/lJ5w2',NULL,NULL,1,'2022-06-06 10:52:46','2022-06-06 10:52:46',NULL),(9,'Marketing 2',2,'marketing2@gmail.com','$2y$10$run9TEIil.jpOC3obx7Q2O4uoaO9SLiEJrHC07l6nHHI5MYhXsqVy','085896452806',NULL,1,'2022-06-17 18:33:00','2022-06-25 14:08:19',NULL),(10,'Aji Pujo Hardiyanto',3,'ajipujo2nd@gmail.com','$2y$10$NzjqcleQGXMKkOsiyGfCHOOUDCrxV7rjMriBRQINApb8gj3D0uosa','085896452806',NULL,1,'2022-06-26 21:39:12','2022-06-26 21:39:12',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -238,4 +239,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-26 21:19:32
+-- Dump completed on 2022-07-15 16:18:42
