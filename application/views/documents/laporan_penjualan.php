@@ -14,6 +14,7 @@
 </style>
 
 <h1 class="text-center">Laporan Penjualan</h1>
+<span class="text-center">Periode : <b><?= $startDate ?></b> s/d <b><?= $endDate ?></b></span>
 <hr>
 <div>
 	<table>

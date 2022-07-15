@@ -906,7 +906,12 @@ class AdminController extends CI_Controller
 		$startDate = date('Y-m-d H:i:s', strtotime($startDate));
 		$endDate = date('Y-m-d H:i:s', strtotime($endDate . ' +1 day'));
 
+		$startDateLabel = date('Y-m-d', strtotime($startDate));
+		$endDateLabel = date('Y-m-d', strtotime($endDate));
+
 		$store['store'] = $this->transaction_model->getTransaksiByDateRange($startDate, $endDate);
+		$store['startDate'] = $startDateLabel;
+		$store['endDate'] = $endDateLabel;
 
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
