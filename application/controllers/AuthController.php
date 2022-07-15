@@ -69,7 +69,7 @@ class AuthController extends CI_Controller
 
 				$this->user_model->updateUser($data, $user->id);
 
-				$api_key = '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';
+				$api_key = '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';
 
 				$config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', $api_key);
 
@@ -82,7 +82,7 @@ class AuthController extends CI_Controller
 				$sendSmtpEmail['htmlContent'] = '<html><body><span>Email: <b>' . $user->email . '</b></span><br><span>New password: <b>' . $newPassword . '</b></span></body></html>';
 				$sendSmtpEmail['sender'] = array('name' => 'Vavapedia', 'email' => 'ajipujohardiyanto@gmail.com');
 				$sendSmtpEmail['to'] = array(
-					array('email' => $user->email, 'name' => $user->name)
+					array('email' => 'ajipujo2nd@gmail.com', 'name' => $user->name)
 				);
 				$sendSmtpEmail['replyTo'] = array('email' => 'ajipujohardiyanto@gmail.com', 'name' => 'John Doe');
 				$sendSmtpEmail['headers'] = array('Some-Custom-Name' => 'unique-id-1234');
@@ -93,9 +93,10 @@ class AuthController extends CI_Controller
 					$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Password has been sent to your email']);
 					redirect('authcontroller/login');
 				} catch (Exception $e) {
-					echo 'Exception when calling TransactionalEmailsApi->sendTransacEmail: ', $e->getMessage(), PHP_EOL;
-					// $this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to send password']);
-					// redirect('authcontroller/reset_password');
+					var_dump($e->getMessage());
+					die;
+					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to send password']);
+					redirect('authcontroller/reset_password');
 				}
 			} else {
 				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Email tidak ditemukan']);

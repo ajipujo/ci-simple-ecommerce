@@ -815,6 +815,10 @@ class AdminController extends CI_Controller
 					$data['resi_pemesanan'] = $resi;
 				}
 
+				if ($next_process == 2) {
+					$data ['batas_pembayaran'] = date('Y-m-d H:i:s', strtotime('+1 day'));	
+				}
+
 				$this->transaction_model->updateTransaksi($data, $kode_transaksi);
 				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Status order berhasil diperbarui']);
 				redirect('/admincontroller/transaksi');
@@ -858,6 +862,7 @@ class AdminController extends CI_Controller
 		if ($transaksi) {
 			unlink(FCPATH . '/upload/bukti_pembayaran/' . $transaksi->bukti_pembayaran);
 			$data = [
+				'batas_pembayaran' => date('Y-m-d H:i:s', strtotime('+1 day')),
 				'bukti_pembayaran' => null,
 				'status_transaksi' => 2,
 				'updated_at' => date('Y-m-d H:i:s')

@@ -34,6 +34,17 @@
 	</div>
 </div>
 
+<?php foreach ($invoices as $key => $inv) { ?>
+	<tr>
+		<td>
+			<?= $key + 1 ?>
+		</td>
+		<td><?= $inv['nama'] ?></td>
+		<td></td>
+		<td></td>
+	</tr>
+<?php } ?>
+
 <script>
 	$('#dateStart').datepicker('update', new Date());
 	$('#dateEnd').datepicker('update', new Date());

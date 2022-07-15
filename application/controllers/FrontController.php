@@ -247,6 +247,7 @@ class FrontController extends CI_Controller
 		} else {
 			$uploaded_data = $this->upload->data();
 			$data = [
+				'batas_pembayaran' => null,
 				'bukti_pembayaran' => $uploaded_data['file_name'],
 				'status_transaksi' => 6,
 				'updated_at' => date('Y-m-d H:i:s')
