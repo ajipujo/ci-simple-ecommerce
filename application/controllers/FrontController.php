@@ -364,7 +364,7 @@ class FrontController extends CI_Controller
 			$this->transaction_detail_model->save($detail);
 		}
 
-		$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Pembelian berhasil']);
+		$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Pembelian berhasil, pesanan akan dikonfirmasi oleh admin']);
 		redirect('/');
 	}
 
