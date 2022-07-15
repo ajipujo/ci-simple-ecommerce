@@ -65,7 +65,7 @@
 				}
 				?>
 				<tr>
-					<td colspan="5">
+					<td colspan="9">
 						<b>Total</b>
 					</td>
 					<td><?= "Rp " . number_format($total, 0, ',', '.') ?></td>
