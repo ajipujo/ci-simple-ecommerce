@@ -14,12 +14,18 @@ if (isset($_SESSION['message'])) {
 <?php
 };
 
+$from_db = date("d F Y, H:i", strtotime($transaksi->batas_pembayaran));
+$now = date("d F Y, H:i");
+
+$expired = $from_db < $now;
+
 switch ($transaksi->status_transaksi) {
 	case 1:
 		$class = 'badge bg-warning text-dark';
 		break;
 	case 2:
-		$class = 'badge bg-warning text-dark';
+		$class = $expired ? 'badge bg-danger' : 'badge bg-warning text-dark';
+		$transaksi->status_name = $expired ? 'Pembayaran Kadaluarsa' : $transaksi->status_name;
 		break;
 	case 3:
 		$class = 'badge bg-warning text-dark';
@@ -42,10 +48,12 @@ switch ($transaksi->status_transaksi) {
 
 <div class="container my-4">
 
-	<?php if ($transaksi->status_transaksi != 5 && $transaksi->status_transaksi != 1 && $transaksi->batas_pembayaran) { ?>
+	<?php
+	if ($transaksi->status_transaksi != 5 && $transaksi->status_transaksi != 1 && $transaksi->batas_pembayaran && !$expired) {
+	?>
 		<div class="alert alert-danger col-12 d-flex justify-content-between mt-2">
 			<span>Batas Pembayaran</span>
-			<span class="fw-bold"><?= date("d F Y, h:i", strtotime($transaksi->batas_pembayaran)) ?> WIB</span>
+			<span class="fw-bold"><?= date("d F Y, H:i", strtotime($transaksi->batas_pembayaran)) ?> WIB</span>
 		</div>
 	<?php } ?>
 
@@ -118,7 +126,7 @@ switch ($transaksi->status_transaksi) {
 				</div>
 			</div>
 		</div>
-		<?php if ($transaksi->status_transaksi != 5 && $transaksi->status_transaksi != 1) { ?>
+		<?php if ($transaksi->status_transaksi != 5 && $transaksi->status_transaksi != 1 && !$expired) { ?>
 			<div class="col-md-4">
 				<div class="card mb-3">
 					<div class="card-body">

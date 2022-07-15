@@ -1,13 +1,21 @@
 <?php
+
+$expired = false;
+
+if ($transaksi->batas_pembayaran) {
+	$from_db = date("d F Y, H:i", strtotime($transaksi->batas_pembayaran));
+	$now = date("d F Y, H:i");
+	
+	$expired = $from_db < $now;
+}
+
 switch ($transaksi->status_transaksi) {
 	case 1:
 		$class = 'badge bg-warning text-dark';
 		break;
 	case 2:
-		$class = 'badge bg-warning text-dark';
-		if ($transaksi->bukti_pembayaran) {
-			$transaksi->status_name = 'Menunggu konfirmasi Pembayaran';
-		}
+		$class = $expired ? 'badge bg-danger' : 'badge bg-warning text-dark';
+		$transaksi->status_name = $expired ? 'Pembayaran Kadaluarsa' : $transaksi->status_name;
 		break;
 	case 3:
 		$class = 'badge bg-warning text-dark';

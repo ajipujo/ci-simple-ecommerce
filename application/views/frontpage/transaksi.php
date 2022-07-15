@@ -35,7 +35,16 @@ if (isset($_SESSION['message'])) {
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($transaksi as $key => $item) { ?>
+					<?php foreach ($transaksi as $key => $item) {
+						$expired = false;
+
+						if ($item->batas_pembayaran) {
+							$from_db = date("d F Y, H:i", strtotime($item->batas_pembayaran));
+							$now = date("d F Y, H:i");
+
+							$expired = $from_db < $now;
+						}
+					?>
 						<tr>
 							<td></td>
 							<td><?= $item->kode_pemesanan ?></td>
@@ -46,7 +55,8 @@ if (isset($_SESSION['message'])) {
 									$class = 'badge bg-warning text-dark';
 									break;
 								case 2:
-									$class = 'badge bg-warning text-dark';
+									$class = $expired ? 'badge bg-danger' : 'badge bg-warning text-dark';
+									$item->status_name = $expired ? 'Pembayaran Kadaluarsa' : $item->status_name;
 									break;
 								case 3:
 									$class = 'badge bg-warning text-dark';
