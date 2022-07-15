@@ -908,7 +908,11 @@ class AdminController extends CI_Controller
 
 		$store['store'] = $this->transaction_model->getTransaksiByDateRange($startDate, $endDate);
 
-		$mpdf = new \Mpdf\Mpdf();
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => 'A4-L',
+			'orientation' => 'L'
+		]);
 		$html = $this->load->view('documents/laporan_penjualan', $store, true);
 
 		$mpdf->WriteHTML($html);
