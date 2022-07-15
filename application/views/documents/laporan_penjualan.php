@@ -17,7 +17,7 @@
 <hr>
 <?php foreach ($store as $key => $item) { ?>
 	<div>
-		<div>
+		<!-- <div>
 			Kode Pemesanan : <?= $item->kode_pemesanan ?>
 		</div>
 		<div>
@@ -28,11 +28,15 @@
 		</div>
 		<div>
 			Nama Customer : <?= $item->user_name ?>
-		</div>
+		</div> -->
 		<table>
 			<tbody>
 				<tr>
 					<th>No</th>
+					<th>Kode Pemesanan</th>
+					<th>Tanggal Transaksi</th>
+					<th>Status Transaksi</th>
+					<th>Nama Customer</th>
 					<th>Nama Produk</th>
 					<th>Nama Varian</th>
 					<th>Harga</th>
@@ -46,6 +50,10 @@
 				?>
 					<tr>
 						<td><?= $key2 + 1 ?></td>
+						<td><?= $item->kode_pemesanan ?></td>
+						<td><?= $item->tanggal_transaksi ?></td>
+						<td><?= $item->status_name ?></td>
+						<td><?= $item->user_name ?></td>
 						<td><?= $item2->product_name ?></td>
 						<td><?= $item2->product_type_name ?></td>
 						<td><?= "Rp " . number_format($item2->product_price, 0, ',', '.') ?></td>
