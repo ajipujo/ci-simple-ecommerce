@@ -39,7 +39,16 @@ switch ($transaksi->status_transaksi) {
 		break;
 };
 ?>
+
 <div class="container my-4">
+
+	<?php if ($transaksi->status_transaksi != 5 && $transaksi->status_transaksi != 1 && $transaksi->batas_pembayaran) { ?>
+		<div class="alert alert-danger col-12 d-flex justify-content-between mt-2">
+			<span>Batas Pembayaran</span>
+			<span class="fw-bold"><?= date("d F Y, h:i", strtotime($transaksi->batas_pembayaran)) ?> WIB</span>
+		</div>
+	<?php } ?>
+
 	<div class="row">
 		<div class="col-md-8 mx-auto">
 			<div class="card mb-3">
