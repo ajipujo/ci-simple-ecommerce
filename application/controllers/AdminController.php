@@ -889,6 +889,9 @@ class AdminController extends CI_Controller
 			'user' => $userdata
 		];
 
+		$status_transaksi = $this->db->get('status_transaction')->result();
+		$data['status_transaksi'] = $status_transaksi;
+
 		$this->load->view('adminpage/layouts/master', $data);
 	}
 
@@ -902,6 +905,7 @@ class AdminController extends CI_Controller
 		$this->isAuthenticated();
 		$startDate = htmlspecialchars($this->input->post('dateStartInput'));
 		$endDate = htmlspecialchars($this->input->post('dateEndInput'));
+		$statusTransaksi = htmlspecialchars($this->input->post('status_transaksi'));
 
 		$startDate = date('Y-m-d H:i:s', strtotime($startDate));
 		$endDate = date('Y-m-d H:i:s', strtotime($endDate . ' +1 day'));
@@ -909,7 +913,7 @@ class AdminController extends CI_Controller
 		$startDateLabel = date('Y-m-d', strtotime($startDate));
 		$endDateLabel = date('Y-m-d', strtotime($endDate));
 
-		$store['store'] = $this->transaction_model->getTransaksiByDateRange($startDate, $endDate);
+		$store['store'] = $this->transaction_model->getTransaksiByDateRange($startDate, $endDate, $statusTransaksi);
 		$store['startDate'] = $startDateLabel;
 		$store['endDate'] = $endDateLabel;
 

@@ -3,7 +3,7 @@
 		<div class="card-body">
 			<form action="<?= site_url('admincontroller/cetak_laporan') ?>" method="post" id="formLaporan">
 				<div class="row">
-					<div class="col-md-5 my-2">
+					<div class="col-md-3 my-2">
 						<label for="dateStartInput" class="mb-2 required-label">Tanggal awal:</label>
 						<div class="input-group date" id="dateStart">
 							<span class="input-group-append">
@@ -14,7 +14,7 @@
 							<input type="text" class="form-control" id="dateStartInput" name="dateStartInput" autocomplete="off" />
 						</div>
 					</div>
-					<div class="col-md-5 my-2">
+					<div class="col-md-3 my-2">
 						<label for="dateEndInput" class="mb-2 required-label">Tanggal akhir:</label>
 						<div class="input-group date" id="dateEnd">
 							<span class="input-group-append">
@@ -24,6 +24,15 @@
 							</span>
 							<input type="text" class="form-control" id="dateEndInput" name="dateEndInput" autocomplete="off" />
 						</div>
+					</div>
+					<div class="col-md-4 my-2">
+						<label for="dateEndInput" class="mb-2 required-label">Status transaksi:</label>
+						<select class="form-select" id="status_transaksi" name="status_transaksi">
+							<option selected>-- Pilih Status Transaksi (default: semua) --</option>
+							<?php foreach($status_transaksi as $key => $status) { ?>
+								<option value="<?= $status->id ?>" class="fw-bold"><?= $status->name ?></option>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="col-md-2 d-flex align-items-end my-2">
 						<button type="submit" class="btn btn-primary w-100"><i class="fa fa-print me-2" aria-hidden="true"></i>Cetak</button>

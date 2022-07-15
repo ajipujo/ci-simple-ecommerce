@@ -91,7 +91,7 @@ class transaction_model extends CI_Model
 		$this->db->update('transactions', $data);
 	}
 
-	public function getTransaksiByDateRange($startDate, $endDate)
+	public function getTransaksiByDateRange($startDate, $endDate, $statusTransaksi)
 	{
 		$this->db->select('detail_transaction.*, transactions.kode_pemesanan, transactions.tanggal_transaksi, users.name as user_name, status_transaction.name as status_name');
 		$this->db->from('detail_transaction');
@@ -101,6 +101,9 @@ class transaction_model extends CI_Model
 		$this->db->join('status_transaction', 'status_transaction.id = transactions.status_transaksi');
 		$this->db->where('tanggal_transaksi >=', $startDate);
 		$this->db->where('tanggal_transaksi <=', $endDate);
+		if ($statusTransaksi) {
+			$this->db->where('transactions.status_transaksi', $statusTransaksi);
+		}
 		$this->db->order_by('tanggal_transaksi ASC');
 
 		$transactions = $this->db->get()->result();
