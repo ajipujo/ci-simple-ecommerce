@@ -253,7 +253,7 @@ class FrontController extends CI_Controller
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 			$this->transaction_model->updateTransaksi($data, $kode_pemesanan);
-			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Bukti pembayaran berhasil diupload!']);
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Bukti pembayaran berhasil diupload, silahkan tunggu konfirmasi dari admin']);
 			redirect('frontcontroller/transaksi');
 		}
 	}

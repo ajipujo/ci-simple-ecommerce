@@ -579,7 +579,7 @@ class AdminController extends CI_Controller
 				$this->user_model->updateUser($data, $id);
 
 				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Password berhasil diubah']);
-				redirect('admincontroller/admin_profile/'.$id);
+				redirect('admincontroller/admin_profile/' . $id);
 			} else {
 				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Password lama anda salah']);
 				redirect($this->agent->referrer());
@@ -710,7 +710,7 @@ class AdminController extends CI_Controller
 				];
 
 				$sendMail = send_mail($params);
-				
+
 				if ($sendMail) {
 					$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Password has been sent to your email']);
 					redirect($this->agent->referrer());
@@ -798,7 +798,6 @@ class AdminController extends CI_Controller
 			}
 
 			if ($next_process) {
-
 				$data = [
 					'status_transaksi' => $next_process,
 					'updated_at' => date('Y-m-d H:i:s')
@@ -810,16 +809,73 @@ class AdminController extends CI_Controller
 				}
 
 				if ($next_process == 2) {
-					$data ['batas_pembayaran'] = date('Y-m-d H:i:s', strtotime('+1 day'));	
+					$data['batas_pembayaran'] = date('Y-m-d H:i:s', strtotime('+1 day'));
 				}
 
 				$this->transaction_model->updateTransaksi($data, $kode_transaksi);
+
+				if ($next_process == 2) {
+					$subject = 'Pemesanan dikonfirmasi - ' . $kode_transaksi;
+					$content = '<html> <body> <span>Pemesanan dengan nomor transaksi <b>' . $kode_transaksi . '</b> telah dikonfirmasi. Silahkan lakukan pembayaran (di halaman detail transaksi), batas pembayaran 24 jam setelah transaksi dikonfirmasi.</span> </body> </html>';
+
+					$params = [
+						'subject' => $subject,
+						'content' => $content,
+						'email_recipient' => 'ajipujo2nd@gmail.com',
+						'name_recipient' => $transaksi->user_name,
+					];
+
+					$sendMail = send_mail($params);
+					if (!$sendMail) {
+						$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Notifikasi order gagal dikirim']);
+						redirect('/admincontroller/transaksi');
+					}
+				}
+
+				if ($next_process == 3) {
+					$subject = 'Pembayaran dikonfirmasi - ' . $kode_transaksi;
+					$content = '<html> <body> <span>Pembayaran dengan nomor transaksi <b>' . $kode_transaksi . '</b> telah dikonfirmasi. Pesanan akan segera diproses.</span> </body> </html>';
+
+					$params = [
+						'subject' => $subject,
+						'content' => $content,
+						'email_recipient' => 'ajipujo2nd@gmail.com',
+						'name_recipient' => $transaksi->user_name,
+					];
+
+					$sendMail = send_mail($params);
+					if (!$sendMail) {
+						$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Notifikasi order gagal dikirim']);
+						redirect('/admincontroller/transaksi');
+					}
+				}
+
+				if ($next_process == 4) {
+					$subject = 'Pesanan telah dikirim - ' . $kode_transaksi;
+					$content = '<html> <body> <span>Pesanan dengan nomor transaksi <b>' . $kode_transaksi . '</b> telah dikirim dengan nomor resi: <b>'. htmlspecialchars($this->input->post('resi_pemesanan')) .'<b></span> </body> </html>';
+
+					$params = [
+						'subject' => $subject,
+						'content' => $content,
+						'email_recipient' => 'ajipujo2nd@gmail.com',
+						'name_recipient' => $transaksi->user_name,
+					];
+
+					$sendMail = send_mail($params);
+					if (!$sendMail) {
+						$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Notifikasi order gagal dikirim']);
+						redirect('/admincontroller/transaksi');
+					}
+				}
+
 				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Status order berhasil diperbarui']);
 				redirect('/admincontroller/transaksi');
 			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Status order gagal diperbarui']);
 				redirect('/admincontroller/transaksi');
 			}
 		} else {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Status order gagal diperbarui']);
 			redirect('/admincontroller/transaksi');
 		}
 	}
@@ -838,9 +894,28 @@ class AdminController extends CI_Controller
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 			$this->transaction_model->updateTransaksi($data, $kode_transaksi);
-			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Pembatalan order berhasil dilakukan']);
-			redirect('/admincontroller/transaksi');
+
+			$subject = 'Pemesanan dibatalkan - ' . $kode_transaksi;
+			$content = '<html> <body> <span>Pemesanan dengan nomor transaksi <b>' . $kode_transaksi . '</b> telah dibatalkan.</span> </body> </html>';
+
+			$params = [
+				'subject' => $subject,
+				'content' => $content,
+				'email_recipient' => 'ajipujo2nd@gmail.com',
+				'name_recipient' => $transaksi->user_name,
+			];
+
+			$sendMail = send_mail($params);
+
+			if ($sendMail) {
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Pembatalan order berhasil dilakukan']);
+				redirect('/admincontroller/transaksi');
+			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Pengiriman notifikasi gagal dilakukan']);
+				redirect('/admincontroller/transaksi');
+			}
 		} else {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Pembatalan order gagal dilakukan']);
 			redirect('/admincontroller/transaksi');
 		}
 	}
@@ -862,9 +937,28 @@ class AdminController extends CI_Controller
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 			$this->transaction_model->updateTransaksi($data, $kode_transaksi);
-			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Bukti pembayaran berhasil dicancel']);
-			redirect('/admincontroller/transaksi');
+
+			$subject = 'Bukti Pembayaran Invalid - ' . $kode_transaksi;
+			$content = '<html> <body> <span>Bukti pembayaran untuk transaksi <b>' . $kode_transaksi . '</b> tidak valid. Silahkan upload bukti pembayaran kembali.</span> </body> </html>';
+
+			$params = [
+				'subject' => $subject,
+				'content' => $content,
+				'email_recipient' => 'ajipujo2nd@gmail.com',
+				'name_recipient' => $transaksi->user_name,
+			];
+
+			$sendMail = send_mail($params);
+
+			if ($sendMail) {
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Bukti pembayaran berhasil dicancel']);
+				redirect('/admincontroller/transaksi');
+			} else {
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Notifikasi gagal dikirim']);
+				redirect('/admincontroller/transaksi');
+			}
 		} else {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Bukti pembayaran gagal dicancel']);
 			redirect('/admincontroller/transaksi');
 		}
 	}
