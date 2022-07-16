@@ -13,6 +13,7 @@ class ComposerStaticInit43052d9d87271641f8f97d13fd5f8a21
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -30,6 +31,7 @@ class ComposerStaticInit43052d9d87271641f8f97d13fd5f8a21
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Ctype\\' => 23,
             'SendinBlue\\Client\\' => 18,
         ),
         'P' => 
@@ -39,6 +41,7 @@ class ComposerStaticInit43052d9d87271641f8f97d13fd5f8a21
             'Psr\\Http\\Client\\' => 16,
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
+            'PhpOption\\' => 10,
         ),
         'M' => 
         array (
@@ -56,6 +59,7 @@ class ComposerStaticInit43052d9d87271641f8f97d13fd5f8a21
         ),
         'D' => 
         array (
+            'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
@@ -75,6 +79,10 @@ class ComposerStaticInit43052d9d87271641f8f97d13fd5f8a21
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
         'SendinBlue\\Client\\' => 
         array (
@@ -101,6 +109,10 @@ class ComposerStaticInit43052d9d87271641f8f97d13fd5f8a21
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
+        'PhpOption\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
         'Mpdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
@@ -120,6 +132,10 @@ class ComposerStaticInit43052d9d87271641f8f97d13fd5f8a21
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

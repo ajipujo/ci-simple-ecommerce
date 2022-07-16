@@ -1,5 +1,7 @@
 .DS_Store
 
+application/.env
+
 generate_db.bat
 
 application/cache/*
