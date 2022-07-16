@@ -8,6 +8,7 @@ class AuthController extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->library('session');
 		$this->load->model('user_model');
+		$this->load->helper('send_mail_helper');
 	}
 
 	function authorized()
@@ -69,32 +70,22 @@ class AuthController extends CI_Controller
 
 				$this->user_model->updateUser($data, $user->id);
 
-				$api_key = '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';
+				$subject = 'Reset Password Vavapedia';
+				$content = '<html><body><span>Email: <b>' . $user->email . '</b></span><br><span>New password: <b>' . $newPassword . '</b></span></body></html>';
 
-				$config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', $api_key);
+				$params = [
+					'subject' => $subject,
+					'content' => $content,
+					'email_recipient' => 'ajipujo2nd@gmail.com',
+					'name_recipient' => $user->name,
+				];
 
-				$apiInstance = new SendinBlue\Client\Api\TransactionalEmailsApi(
-					new GuzzleHttp\Client(),
-					$config
-				);
-				$sendSmtpEmail = new \SendinBlue\Client\Model\SendSmtpEmail();
-				$sendSmtpEmail['subject'] = 'Testing subject';
-				$sendSmtpEmail['htmlContent'] = '<html><body><span>Email: <b>' . $user->email . '</b></span><br><span>New password: <b>' . $newPassword . '</b></span></body></html>';
-				$sendSmtpEmail['sender'] = array('name' => 'Vavapedia', 'email' => 'ajipujohardiyanto@gmail.com');
-				$sendSmtpEmail['to'] = array(
-					array('email' => 'ajipujo2nd@gmail.com', 'name' => $user->name)
-				);
-				$sendSmtpEmail['replyTo'] = array('email' => 'ajipujohardiyanto@gmail.com', 'name' => 'John Doe');
-				$sendSmtpEmail['headers'] = array('Some-Custom-Name' => 'unique-id-1234');
-				$sendSmtpEmail['params'] = array('parameter' => 'My param value', 'subject' => 'New Subject');
-
-				try {
-					$apiInstance->sendTransacEmail($sendSmtpEmail);
+				$sendMail = send_mail($params);
+				
+				if ($sendMail) {
 					$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Password has been sent to your email']);
 					redirect('authcontroller/login');
-				} catch (Exception $e) {
-					var_dump($e->getMessage());
-					die;
+				} else {
 					$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Failed to send password']);
 					redirect('authcontroller/reset_password');
 				}

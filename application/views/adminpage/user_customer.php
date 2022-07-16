@@ -45,7 +45,7 @@ if (isset($_SESSION['message'])) {
 							<td><?= $user->is_active == 1 ? 'Active' : 'Non-active' ?></td>
 							<td>
 								<a href="<?= site_url('admincontroller/form_edit_user/'.$user->id) ?>" class="btn btn-primary btn-sm">Edit</a>
-								<a href="<?= site_url('admincontroller/reset_password/' . $user->email) ?>" class="btn btn-danger btn-sm confirmFirst">Reset Password</a>
+								<a href="<?= site_url('admincontroller/reset_password/' . $user->id) ?>" class="btn btn-danger btn-sm confirmFirst">Reset Password</a>
 								<a href="<?= site_url('admincontroller/delete_user/'.$user->id) ?>" class="btn btn-danger btn-sm confirmFirst">Hapus</a>
 							</td>
 						</tr>
