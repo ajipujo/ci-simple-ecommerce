@@ -12,6 +12,10 @@
 	font-weight: 600 !important;
 }
 
+.content-frontpage {
+	margin-top: 50px;
+}
+
 .input-group-append {
 	cursor: pointer;
 }

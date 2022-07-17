@@ -38,7 +38,6 @@
 							Perusahaan
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="<?= site_url('admincontroller/manajemen_banner') ?>">Banner</a></li>
 							<li><a class="dropdown-item" href="<?= site_url('admincontroller/manajemen_compro') ?>">Company Profile</a></li>
 						</ul>
 					</li>
