@@ -983,11 +983,6 @@ class AdminController extends CI_Controller
 		$this->load->view('adminpage/layouts/master', $data);
 	}
 
-	public function playground()
-	{
-		$this->load->view('documents/laporan_penjualan');
-	}
-
 	public function cetak_laporan()
 	{
 		$this->isAuthenticated();
@@ -1014,5 +1009,43 @@ class AdminController extends CI_Controller
 
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+	}
+
+	public function manajemen_compro() {
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+		$compro = $this->db->get('profil_perusahaan')->row();
+
+		$data = [
+			'title' => 'Perusahaan',
+			'page' => 'adminpage/manajemen_compro',
+			'user' => $userdata,
+			'compro' => $compro
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function update_compro() {
+		$this->isAuthenticated();
+		$this->form_validation->set_rules('nama_perusahaan', 'Nama Perusahaan', 'required');
+		$this->form_validation->set_rules('alamat_perusahaan', 'alamat_deskripsi', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect($this->agent->referrer());
+		} else {
+			$data = [
+				'nama_perusahaan' => htmlspecialchars($this->input->post('nama_perusahaan')),
+				'alamat_perusahaan' => htmlspecialchars($this->input->post('alamat_perusahaan')),
+				'deskripsi_perusahaan' => $this->input->post('deskripsi_perusahaan'),
+			];
+			$this->db->update('profil_perusahaan', $data);
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Perusahaan berhasil diperbarui']);
+			redirect($this->agent->referrer());
+		}
 	}
 }

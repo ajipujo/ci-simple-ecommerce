@@ -44,12 +44,14 @@ class FrontController extends CI_Controller
 			}
 		}
 
+		$compro = $this->db->get('profil_perusahaan')->row();
 		$produk = $this->produk_model->getProduk();
 		$data = [
 			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
 			'page' => 'frontpage/index',
 			'user' => $userdata,
-			'produk' => $produk
+			'produk' => $produk,
+			'compro' => $compro
 		];
 		$this->load->view('frontpage/layouts/master', $data);
 	}

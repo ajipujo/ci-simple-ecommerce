@@ -33,6 +33,15 @@
 							<li><a class="dropdown-item" href="<?= site_url('admincontroller/user_customer') ?>">Customer</a></li>
 						</ul>
 					</li>
+					<li class="nav-item dropdown <?= $title == 'Perusahaan' ? 'active' : '' ?>">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Perusahaan
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="<?= site_url('admincontroller/manajemen_banner') ?>">Banner</a></li>
+							<li><a class="dropdown-item" href="<?= site_url('admincontroller/manajemen_compro') ?>">Company Profile</a></li>
+						</ul>
+					</li>
 				<?php } ?>
 			</ul>
 			<ul class="navbar-nav mb-2 mb-lg-0">

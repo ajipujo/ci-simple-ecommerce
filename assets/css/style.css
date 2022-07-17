@@ -85,3 +85,13 @@
 	content: " *";
 	color: red;
 }
+
+/* Company profile styling */
+.about-image {
+	max-height: 300px;
+	overflow: hidden;
+}
+
+.about-image img {
+	object-fit: cover;
+}
