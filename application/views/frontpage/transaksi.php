@@ -78,6 +78,13 @@ if (isset($_SESSION['message'])) {
 							?>
 							<td><span class="<?= $class ?> p-2"><?= $item->status_name ?></span></td>
 							<td>
+								<?php if ($item->status_transaksi == 4) { ?>
+									<form action="<?= site_url('/frontcontroller/paycarts') ?>" method="POST" class="d-inline">
+										<input type="hidden" name="kode_transaksi" value="<?= $item->kode_pemesanan ?>">
+										<button type="submit" class="btn btn-success btn-sm"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>Beli Lagi</button>
+									</form>
+									<!-- <a href="<?= site_url('/frontcontroller/paycarts?kode_transaksi=' . $item->kode_pemesanan) ?>" class="btn btn-success btn-sm"><i class="fa fa-shopping-cart me-2" aria-hidden="true"></i>Beli Lagi</a> -->
+								<?php } ?>
 								<a href="<?= site_url('/frontcontroller/view_transaksi/' . $item->kode_pemesanan) ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye me-2" aria-hidden="true"></i>View</a>
 							</td>
 						</tr>

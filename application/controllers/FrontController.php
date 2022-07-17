@@ -295,10 +295,40 @@ class FrontController extends CI_Controller
 				'userdata' => $this->session->userdata('user')
 			];
 		}
+
+		$kode_transaksi = $this->input->post('kode_transaksi');
+		unset($_POST['kode_transaksi']);
+
+		if ($kode_transaksi) {
+			$transaksi = $this->transaction_model->getTransaksiByKode($kode_transaksi);
+
+			$transactionItems = [];
+
+			foreach ($transaksi->detail_transaction as $key => $detail) {
+				$varian = $this->db->get_where('product_types', ['id' => $detail->product_type_id])->row();
+				$produk = $this->db->get_where('products', ['id' => $detail->product_id])->row();
+
+				$data = [
+					'name' => $varian->name,
+					'price' => $varian->harga,
+					'produk' => $produk->name,
+					'produk_id' => $produk->id,
+					'qty' => $detail->qty,
+					'subtotal' => $varian->harga * $detail->qty,
+					'varian_id' => $varian->id
+				];
+				array_push($transactionItems, $data);
+			}
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Bukti pembayaran berhasil diupload, silahkan tunggu konfirmasi dari admin']);
+		}
+
+		$existTransaction = isset($transactionItems) ? json_encode($transactionItems) : [];
+
 		$data = [
 			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
 			'page' => 'frontpage/paycarts',
-			'user' => $userdata
+			'user' => $userdata,
+			'existTransaction' => $existTransaction
 		];
 
 		$this->load->view('frontpage/layouts/master', $data);

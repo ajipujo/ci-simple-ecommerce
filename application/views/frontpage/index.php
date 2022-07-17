@@ -31,8 +31,8 @@ if (isset($_SESSION['message_user'])) {
 <?php
 }
 ?>
-<div class="container py-3">
-	<div class="mt-3 mb-5">
+<div class="container">
+	<div class="mb-5">
 		<h3 class="text-center">Product</h3>
 		<div class="col-md-8 mx-auto">
 			<p class="text-center">Our raw materials go through numerous tests (MSDS, FSC, soyink, etc) & certification to avoid misrepresenting client’s brand value. We go through rigorous QC system to produce highest quality green label & packaging to all our clients.</p>
