@@ -76,7 +76,7 @@ class AuthController extends CI_Controller
 				$params = [
 					'subject' => $subject,
 					'content' => $content,
-					'email_recipient' => 'ajipujo2nd@gmail.com',
+					'email_recipient' => $user->email,
 					'name_recipient' => $user->name,
 				];
 

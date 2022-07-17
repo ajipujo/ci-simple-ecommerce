@@ -705,7 +705,7 @@ class AdminController extends CI_Controller
 				$params = [
 					'subject' => $subject,
 					'content' => $content,
-					'email_recipient' => 'ajipujo2nd@gmail.com',
+					'email_recipient' => $user->email,
 					'name_recipient' => $user->name,
 				];
 
@@ -821,7 +821,7 @@ class AdminController extends CI_Controller
 					$params = [
 						'subject' => $subject,
 						'content' => $content,
-						'email_recipient' => 'ajipujo2nd@gmail.com',
+						'email_recipient' => $transaksi->user_email,
 						'name_recipient' => $transaksi->user_name,
 					];
 
@@ -839,7 +839,7 @@ class AdminController extends CI_Controller
 					$params = [
 						'subject' => $subject,
 						'content' => $content,
-						'email_recipient' => 'ajipujo2nd@gmail.com',
+						'email_recipient' => $transaksi->user_email,
 						'name_recipient' => $transaksi->user_name,
 					];
 
@@ -857,7 +857,7 @@ class AdminController extends CI_Controller
 					$params = [
 						'subject' => $subject,
 						'content' => $content,
-						'email_recipient' => 'ajipujo2nd@gmail.com',
+						'email_recipient' => $transaksi->user_email,
 						'name_recipient' => $transaksi->user_name,
 					];
 
@@ -901,7 +901,7 @@ class AdminController extends CI_Controller
 			$params = [
 				'subject' => $subject,
 				'content' => $content,
-				'email_recipient' => 'ajipujo2nd@gmail.com',
+				'email_recipient' => $transaksi->user_email,
 				'name_recipient' => $transaksi->user_name,
 			];
 
@@ -944,7 +944,7 @@ class AdminController extends CI_Controller
 			$params = [
 				'subject' => $subject,
 				'content' => $content,
-				'email_recipient' => 'ajipujo2nd@gmail.com',
+				'email_recipient' => $transaksi->user_email,
 				'name_recipient' => $transaksi->user_name,
 			];
 
