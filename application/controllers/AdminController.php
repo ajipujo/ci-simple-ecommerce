@@ -1033,6 +1033,83 @@ class AdminController extends CI_Controller
 		$this->load->view('adminpage/layouts/master', $data);
 	}
 
+	public function banner() {
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+
+		$banners = $this->db->order_by('created_at', 'DESC')->get('banners')->result();
+
+		$data = [
+			'title' => 'Banner',
+			'page' => 'adminpage/banner',
+			'user' => $userdata,
+			'banners' => $banners
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function add_banner() {
+		$this->isAuthenticated();
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect($this->agent->referrer());
+		} else {
+			$keterangan = htmlspecialchars($this->input->post('keterangan'));
+			$config['upload_path']          = FCPATH . '/upload/banner/';
+			$config['allowed_types']        = 'gif|jpg|jpeg|png';
+			$config['file_name']            = 'banner-' . $this->generateRandomString() . '-' . time();
+			$config['overwrite']            = true;
+			$config['max_size']             = 1024; // 1MB
+
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('gambar')) {
+				$data['error'] = $this->upload->display_errors();
+				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => $data['error']]);
+				redirect($this->agent->referrer());
+			} else {
+				$uploaded_data = $this->upload->data();
+
+				$data = [
+					'gambar' => $uploaded_data['file_name'],
+					'keterangan' => $keterangan,
+					'is_active' => 1,
+					'created_at' => date('Y-m-d H:i:s'),
+				];
+
+				$this->db->insert('banners', $data);
+				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Banner berhasil ditambahkan']);
+				redirect('admincontroller/banner');
+			}
+		}
+	}
+
+	public function delete_banner() {
+		$this->isAuthenticated();
+		$id = $this->uri->segment(3);
+
+		if ($id) {
+			$banner = $this->db->get_where('banners', ['id' => $id])->row();
+
+			unlink(FCPATH . '/upload/banner/' . $banner->gambar);
+
+			$this->db->where('id', $id);
+			$this->db->delete('banners');
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Banner berhasil dihapus']);
+			redirect('admincontroller/banner');
+		} else {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Banner tidak ditemukan']);
+			redirect($this->agent->referrer());
+		}
+	}
+
 	public function update_compro() {
 		$this->isAuthenticated();
 		$this->form_validation->set_rules('nama_perusahaan', 'Nama Perusahaan', 'required');

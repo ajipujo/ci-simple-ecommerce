@@ -33,7 +33,7 @@ if (isset($_SESSION['message'])) {
 						<input type="text" class="form-control" id="alamat_perusahaan" name="alamat_perusahaan" value="<?= $compro->alamat_perusahaan ?>" placeholder="masukkan alamat perusahaan...">
 					</div>
 					<div class="mb-3">
-						<label for="deskripsi" class="form-label">Deskripsi Produk</label>
+						<label for="deskripsi" class="form-label">Deskripsi Perusahaan</label>
 						<textarea id="editor" name="deskripsi_perusahaan">
 							<?= $compro->deskripsi_perusahaan ?>
 						</textarea>

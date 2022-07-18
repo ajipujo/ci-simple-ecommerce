@@ -39,6 +39,8 @@
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li><a class="dropdown-item" href="<?= site_url('admincontroller/manajemen_compro') ?>">Company Profile</a></li>
+							<li><a class="dropdown-item" href="<?= site_url('admincontroller/banner') ?>">Banner</a></li>
+							<li><a class="dropdown-item" href="<?= site_url('admincontroller/kontak') ?>">Contact Person</a></li>
 						</ul>
 					</li>
 				<?php } ?>

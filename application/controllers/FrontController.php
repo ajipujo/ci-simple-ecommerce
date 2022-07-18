@@ -17,6 +17,7 @@ class FrontController extends CI_Controller
 		$this->load->model('produk_tipe_model');
 		$this->load->model('user_model');
 		$this->load->model('transaction_model');
+		$this->load->model('banner_model');
 		$this->load->model('transaction_detail_model');
 		$this->load->library('form_validation');
 		$this->load->library('user_agent');
@@ -44,14 +45,16 @@ class FrontController extends CI_Controller
 			}
 		}
 
-		$compro = $this->db->get('profil_perusahaan')->row();
 		$produk = $this->produk_model->getProduk();
+
+		$banners = $this->banner_model->getHomeBanner();
+
 		$data = [
 			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
 			'page' => 'frontpage/index',
 			'user' => $userdata,
 			'produk' => $produk,
-			'compro' => $compro
+			'banners' => $banners
 		];
 		$this->load->view('frontpage/layouts/master', $data);
 	}
