@@ -16,64 +16,70 @@ if (isset($_SESSION['message'])) {
 ?>
 
 <div class="container my-4">
-	<div class="card mb-4">
-		<div class="card-body">
-			<div class="row">
-				<div class="col-12 d-flex align-items-center">
-					<span class="fw-bold">Tambah Banner</span>
-				</div>
-			</div>
-			<hr>
-			<form action="<?= site_url('admincontroller/add_banner') ?>" id="formBanner" method="POST" enctype="multipart/form-data">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="gambar" class="form-label required-label">Gambar Banner</label>
-							<input class="form-control" type="file" id="gambar" name="gambar">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="gambar" class="form-label required-label">Keterangan Banner</label>
-							<input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="masukkan keterangan...">
-						</div>
-					</div>
-					<div class="col-12 d-flex justify-content-end">
-						<button class="btn btn-secondary me-2" type="reset">Reset</button>
-						<button class="btn btn-primary" type="submit">Submit</button>
-					</div>
-				</div>
-			</form>
+	<?php if (count($kontak) > 1) { ?>
+		<div class="alert alert-danger">
+			<span>Jumlah kontak sudah melebihi limit, hapus kontak terlebih dahulu sebelum menambahkan kontak baru.</span>
 		</div>
-	</div>
+	<?php } else { ?>
+		<div class="card mb-4">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-12 d-flex align-items-center">
+						<span class="fw-bold">Tambah Kontak</span>
+					</div>
+				</div>
+				<hr>
+				<form action="<?= site_url('admincontroller/add_kontak') ?>" id="formKontak" method="POST">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="no_hp" class="form-label required-label">No. Handphone</label>
+								<input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="masukkan nomor...">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="nama" class="form-label required-label">Nama Kontak</label>
+								<input type="text" class="form-control" id="nama" name="nama" placeholder="masukkan nama...">
+							</div>
+						</div>
+						<div class="col-12 d-flex justify-content-end">
+							<button class="btn btn-secondary me-2" type="reset">Reset</button>
+							<button class="btn btn-primary" type="submit">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	<?php } ?>
 	<div class="card">
 		<div class="card-body">
 			<div class="row">
 				<div class="col-12 d-flex align-items-center">
-					<span class="fw-bold">Daftar Banner</span>
+					<span class="fw-bold">Daftar Kontak</span>
 				</div>
 			</div>
 			<hr>
-			<table id="tableBanner" class="table table-striped" style="width:100%">
+			<table id="tableKontak" class="table table-striped" style="width:100%">
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Gambar</th>
-						<th>Deskripsi</th>
+						<th>Telp/Handphone</th>
+						<th>Nama</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($banners as $key => $item) { ?>
+					<?php foreach ($kontak as $key => $item) { ?>
 						<tr>
 							<td></td>
-							<td><img src="<?= base_url('upload/banner/' . $item->gambar) ?>" alt="banner-<?= $item->id ?>" width="200px"></td>
-							<td><?= $item->keterangan ?></td>
+							<td><?= $item->no_hp ?></td>
+							<td><?= $item->nama ?></td>
 							<td>
-								<a href="<?= site_url('admincontroller/delete_banner/' . $item->id) ?>" class="btn btn-danger btn-sm confirmFirst">Delete</a>
+								<a href="<?= site_url('admincontroller/delete_kontak/' . $item->id) ?>" class="btn btn-danger btn-sm">Delete</a>
 							</td>
 						</tr>
-						<?php } ?>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -82,7 +88,7 @@ if (isset($_SESSION['message'])) {
 
 <script>
 	$(document).ready(function() {
-		let t = $('#tableBanner').DataTable({
+		let t = $('#tableKontak').DataTable({
 			columnDefs: [{
 				searchable: false,
 				orderable: false,
@@ -104,12 +110,12 @@ if (isset($_SESSION['message'])) {
 			});
 		}).draw();
 
-		$("#formBanner").validate({
+		$("#formKontak").validate({
 			rules: {
-				gambar: {
+				no_hp: {
 					required: true
 				},
-				keterangan: {
+				nama: {
 					required: true
 				},
 			},

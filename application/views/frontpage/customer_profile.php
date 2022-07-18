@@ -53,7 +53,7 @@ if (isset($_SESSION['message'])) {
 						</div>
 					</div>
 					<div class="d-flex justify-content-end mt-3">
-						<button class="btn btn-outline-secondary me-2" type="button">Kembali</button>
+						<a href="javascript:history.go(-1)" class="btn btn-outline-secondary me-2">Kembali</a>
 						<button class="btn btn-primary" type="submit" id="btnUser">Simpan</button>
 					</div>
 				</div>

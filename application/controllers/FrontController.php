@@ -61,7 +61,7 @@ class FrontController extends CI_Controller
 
 	public function company_profile()
 	{
-		$this->isAuthenticated();
+		$userdata = null;
 		if ($this->session->userdata('loggedIn')) {
 			$userdata = [
 				'loggedIn' => $this->session->userdata('loggedIn'),

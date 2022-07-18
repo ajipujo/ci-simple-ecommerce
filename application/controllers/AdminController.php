@@ -856,7 +856,7 @@ class AdminController extends CI_Controller
 
 				if ($next_process == 4) {
 					$subject = 'Pesanan telah dikirim - ' . $kode_transaksi;
-					$content = '<html> <body> <span>Pesanan dengan nomor transaksi <b>' . $kode_transaksi . '</b> telah dikirim dengan nomor resi: <b>'. htmlspecialchars($this->input->post('resi_pemesanan')) .'<b></span> </body> </html>';
+					$content = '<html> <body> <span>Pesanan dengan nomor transaksi <b>' . $kode_transaksi . '</b> telah dikirim dengan nomor resi: <b>' . htmlspecialchars($this->input->post('resi_pemesanan')) . '<b></span> </body> </html>';
 
 					$params = [
 						'subject' => $subject,
@@ -1015,7 +1015,8 @@ class AdminController extends CI_Controller
 		$mpdf->Output();
 	}
 
-	public function manajemen_compro() {
+	public function manajemen_compro()
+	{
 		$this->isAuthenticated();
 		$userdata = [
 			'loggedIn' => $this->session->userdata('loggedIn'),
@@ -1033,7 +1034,8 @@ class AdminController extends CI_Controller
 		$this->load->view('adminpage/layouts/master', $data);
 	}
 
-	public function banner() {
+	public function banner()
+	{
 		$this->isAuthenticated();
 		$userdata = [
 			'loggedIn' => $this->session->userdata('loggedIn'),
@@ -1052,7 +1054,8 @@ class AdminController extends CI_Controller
 		$this->load->view('adminpage/layouts/master', $data);
 	}
 
-	public function add_banner() {
+	public function add_banner()
+	{
 		$this->isAuthenticated();
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 
@@ -1091,7 +1094,8 @@ class AdminController extends CI_Controller
 		}
 	}
 
-	public function delete_banner() {
+	public function delete_banner()
+	{
 		$this->isAuthenticated();
 		$id = $this->uri->segment(3);
 
@@ -1110,7 +1114,65 @@ class AdminController extends CI_Controller
 		}
 	}
 
-	public function update_compro() {
+	public function kontak()
+	{
+		$this->isAuthenticated();
+		$userdata = [
+			'loggedIn' => $this->session->userdata('loggedIn'),
+			'userdata' => $this->session->userdata('user')
+		];
+		$kontak = $this->db->order_by('created_at', 'DESC')->get('kontak_perusahaan')->result();
+		$data = [
+			'title' => 'Kontak',
+			'page' => 'adminpage/kontak',
+			'user' => $userdata,
+			'kontak' => $kontak
+		];
+
+		$this->load->view('adminpage/layouts/master', $data);
+	}
+
+	public function add_kontak()
+	{
+		$this->isAuthenticated();
+		$this->form_validation->set_rules('no_hp', 'No. Handphone', 'required');
+		$this->form_validation->set_rules('nama', 'Nama', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => validation_errors()]);
+			redirect($this->agent->referrer());
+		} else {
+			$no_hp = htmlspecialchars($this->input->post('no_hp'));
+			$nama = htmlspecialchars($this->input->post('nama'));
+			$data = [
+				'no_hp' => $no_hp,
+				'nama' => $nama,
+				'created_at' => date('Y-m-d H:i:s'),
+			];
+			$this->db->insert('kontak_perusahaan', $data);
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Kontak berhasil ditambahkan']);
+			redirect('admincontroller/kontak');
+		}
+	}
+
+	public function delete_kontak()
+	{
+		$this->isAuthenticated();
+		$id = $this->uri->segment(3);
+
+		if ($id) {
+			$this->db->where('id', $id);
+			$this->db->delete('kontak_perusahaan');
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Kontak berhasil dihapus']);
+			redirect('admincontroller/kontak');
+		} else {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Kontak tidak ditemukan']);
+			redirect($this->agent->referrer());
+		}
+	}
+
+	public function update_compro()
+	{
 		$this->isAuthenticated();
 		$this->form_validation->set_rules('nama_perusahaan', 'Nama Perusahaan', 'required');
 		$this->form_validation->set_rules('alamat_perusahaan', 'alamat_deskripsi', 'required');

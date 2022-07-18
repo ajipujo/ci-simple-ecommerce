@@ -123,7 +123,7 @@ if (isset($_SESSION['message'])) {
 				</div>
 				<div class="d-flex justify-content-end mt-3">
 					<input type="hidden" id="varian_delete_datas" name="varian_delete_datas">
-					<button class="btn btn-outline-secondary me-2" type="button">Kembali</button>
+					<a href="<?= site_url('admincontroller/produk') ?>" class="btn btn-outline-secondary me-2">Kembali</a>
 					<button class="btn btn-primary" type="submit" id="btnProduk">Simpan</button>
 				</div>
 			</form>
