@@ -1,15 +1,17 @@
 <?php if ($existTransaction) { ?>
 	<script>
-		if (localStorage.getItem('paycarts')) {
-			let paycarts = JSON.parse(localStorage.getItem('paycarts'));
-			paycarts.data = [...paycarts.data, ...<?= $existTransaction ?>];
-			localStorage.setItem('paycarts', JSON.stringify(paycarts));
-		} else {
-			let paycarts = {
-				data: <?= $existTransaction ?>
-			};
-			localStorage.setItem('paycarts', JSON.stringify(paycarts));
-		}
+		$(function() {
+			if (localStorage.getItem('paycarts')) {
+				let paycarts = JSON.parse(localStorage.getItem('paycarts'));
+				paycarts.data = [...paycarts.data, ...<?= $existTransaction ?>];
+				localStorage.setItem('paycarts', JSON.stringify(paycarts));
+			} else {
+				let paycarts = {
+					data: <?= $existTransaction ?>
+				};
+				localStorage.setItem('paycarts', JSON.stringify(paycarts));
+			}
+		})
 	</script>
 <?php } ?>
 
