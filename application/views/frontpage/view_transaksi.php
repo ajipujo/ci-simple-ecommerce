@@ -14,10 +14,14 @@ if (isset($_SESSION['message'])) {
 <?php
 };
 
-$from_db = date("d F Y, H:i", strtotime($transaksi->batas_pembayaran));
-$now = date("d F Y, H:i");
+$expired = false;
 
-$expired = $from_db < $now;
+if ($transaksi->batas_pembayaran) {
+	$from_db = date("d F Y, H:i", strtotime($transaksi->batas_pembayaran));
+	$now = date("d F Y, H:i");
+
+	$expired = $from_db > $now;
+}
 
 switch ($transaksi->status_transaksi) {
 	case 1:

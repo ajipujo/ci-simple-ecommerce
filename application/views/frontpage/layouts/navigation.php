@@ -6,6 +6,11 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link" href="<?= site_url('/frontcontroller/company_profile') ?>">
+						About us
+					</a>
+				</li>
 			</ul>
 			<?php if ($user && $user['userdata']['role_id'] == 3) { ?>
 				<ul class="navbar-nav mb-2 mb-lg-0">
@@ -23,7 +28,7 @@
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li>
-								<a href="<?= site_url('/frontcontroller/customer_profile/'.$user['userdata']['id']) ?>" class="dropdown-item">Profile</a>
+								<a href="<?= site_url('/frontcontroller/customer_profile/' . $user['userdata']['id']) ?>" class="dropdown-item">Profile</a>
 							</li>
 							<li>
 								<a href="<?= site_url('/frontcontroller/transaksi') ?>" class="dropdown-item">Transaction</a>
@@ -45,7 +50,7 @@
 
 <script>
 	let cart = [];
-	
+
 	function refreshCart() {
 		let userId = <?= isset($user['userdata']['id']) ? $user['userdata']['id'] : 0 ?>;
 		let textVal = 0;
@@ -62,14 +67,14 @@
 
 		$('#cartCounter').text(textVal);
 	}
-	
+
 	$(document).ready(function() {
 		refreshCart();
 	});
 
 	$('#logout-btn').click(function(e) {
 		e.preventDefault();
-		
+
 		// localStorage.removeItem('paycarts');
 
 		window.location.href = $(this).attr('href');

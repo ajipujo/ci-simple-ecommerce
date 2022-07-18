@@ -56,6 +56,28 @@ class FrontController extends CI_Controller
 		$this->load->view('frontpage/layouts/master', $data);
 	}
 
+	public function company_profile()
+	{
+		$this->isAuthenticated();
+		if ($this->session->userdata('loggedIn')) {
+			$userdata = [
+				'loggedIn' => $this->session->userdata('loggedIn'),
+				'userdata' => $this->session->userdata('user')
+			];
+		}
+
+		$compro = $this->db->get('profil_perusahaan')->row();
+
+		$data = [
+			'title' => 'Situs Jual Beli Termurah dan Terpercaya',
+			'page' => 'frontpage/about',
+			'user' => $userdata,
+			'compro' => $compro
+		];
+
+		$this->load->view('frontpage/layouts/master', $data);
+	}
+
 	public function ganti_password()
 	{
 		$this->isAuthenticated();
@@ -102,7 +124,7 @@ class FrontController extends CI_Controller
 				$this->user_model->updateUser($data, $id);
 
 				$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Password berhasil diubah']);
-				redirect('frontcontroller/customer_profile/'.$id);
+				redirect('frontcontroller/customer_profile/' . $id);
 			} else {
 				$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Password lama anda salah']);
 				redirect($this->agent->referrer());
@@ -297,7 +319,6 @@ class FrontController extends CI_Controller
 		}
 
 		$kode_transaksi = $this->input->post('kode_transaksi');
-		unset($_POST['kode_transaksi']);
 
 		if ($kode_transaksi) {
 			$transaksi = $this->transaction_model->getTransaksiByKode($kode_transaksi);

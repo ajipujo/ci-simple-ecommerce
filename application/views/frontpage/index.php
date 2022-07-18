@@ -31,8 +31,32 @@ if (isset($_SESSION['message_user'])) {
 <?php
 }
 ?>
+<div class="container py-3">
+	<div id="carouselExampleControls" class="carousel carousel-home slide" data-bs-ride="carousel">
+		<div class="carousel-inner rounded">
+			<div class="carousel-item carousel-item-home active">
+				<img src="https://images.remotehub.com/d42c62669a7711eb91397e038280fee0/original_thumb/ec1eb042.jpg?version=1618112516" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item carousel-item-home">
+				<img src="https://images.remotehub.com/ace0aaa09a7711eb8e999a0aaf11a20e/original_thumb/ce972803.jpg?version=1618112444" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item carousel-item-home">
+				<img src="https://images.remotehub.com/966718189a7711ebaff39a0aaf11a20e/original_thumb/e2fee7de.jpg?version=1618112414" class="d-block w-100" alt="...">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+</div>
+
 <div class="container">
-	<div class="mb-5">
+	<div class="my-5">
 		<h3 class="text-center">Product</h3>
 		<div class="col-md-8 mx-auto">
 			<p class="text-center">Our raw materials go through numerous tests (MSDS, FSC, soyink, etc) & certification to avoid misrepresenting client’s brand value. We go through rigorous QC system to produce highest quality green label & packaging to all our clients.</p>
@@ -52,21 +76,5 @@ if (isset($_SESSION['message_user'])) {
 				</div>
 			</div>
 		<?php } ?>
-	</div>
-</div>
-<div class="bg-light py-4">
-	<div class="container">
-		<div class="col-md-8 mx-auto">
-			<h3 class="text-center">Tentang <span class="h3 fw-bold"><?= $compro->nama_perusahaan ?></span></h3>
-			<div class="my-4 about-image">
-				<img src="<?= base_url('/assets/img/default-about-company.jpg') ?>" class="w-100">
-			</div>
-			<div class="col-12">
-				<span class="fw-bold">Alamat:</span>
-				<p><?= $compro->alamat_perusahaan ?></p>
-			</div>
-			<hr>
-			<p><?= $compro->deskripsi_perusahaan ?></p>
-		</div>
 	</div>
 </div>

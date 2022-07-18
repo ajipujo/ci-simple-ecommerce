@@ -7,13 +7,16 @@
 				localStorage.setItem('paycarts', JSON.stringify(paycarts));
 			} else {
 				let paycarts = {
-					data: <?= $existTransaction ?>
+					data: <?= $existTransaction ?>,
+					user: <?= $user['userdata']['id'] ?>
 				};
 				localStorage.setItem('paycarts', JSON.stringify(paycarts));
 			}
 		})
 	</script>
-<?php } ?>
+<?php
+}
+?>
 
 
 <div class="container py-3">
@@ -90,7 +93,7 @@
 			let paycarts = JSON.parse(localStorage.getItem('paycarts'));
 			paycarts.data.splice(id, 1);
 			localStorage.setItem('paycarts', JSON.stringify(paycarts));
-			location.reload();
+			window.location.href = '<?= base_url('frontcontroller/paycarts') ?>';
 		});
 	})
 </script>

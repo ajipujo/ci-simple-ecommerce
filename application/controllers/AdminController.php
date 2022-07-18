@@ -812,6 +812,10 @@ class AdminController extends CI_Controller
 					$data['batas_pembayaran'] = date('Y-m-d H:i:s', strtotime('+1 day'));
 				}
 
+				if ($next_process == 3) {
+					$data['batas_pembayaran'] = null;
+				}
+
 				$this->transaction_model->updateTransaksi($data, $kode_transaksi);
 
 				if ($next_process == 2) {
