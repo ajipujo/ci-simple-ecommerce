@@ -16,6 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `banners`
+--
+
+DROP TABLE IF EXISTS `banners`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `banners` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gambar` varchar(255) NOT NULL,
+  `keterangan` varchar(300) NOT NULL,
+  `is_active` int(11) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `banners`
+--
+
+LOCK TABLES `banners` WRITE;
+/*!40000 ALTER TABLE `banners` DISABLE KEYS */;
+INSERT INTO `banners` VALUES (1,'banner-2N9RrL1cEC-1658166533.jpg','Banner 1',1,'2022-07-19 00:48:53',NULL),(2,'banner-UN6f2aPKoZ-1658166614.jpg','Banner 2',1,'2022-07-19 00:50:14',NULL),(3,'banner-QI6yfk7vL3-1658166664.jpg','Banner 3',1,'2022-07-19 00:51:04',NULL);
+/*!40000 ALTER TABLE `banners` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `detail_transaction`
 --
 
@@ -46,6 +74,33 @@ LOCK TABLES `detail_transaction` WRITE;
 /*!40000 ALTER TABLE `detail_transaction` DISABLE KEYS */;
 INSERT INTO `detail_transaction` VALUES (1,2,19,10,'RFID LABEL','varian 1',1000000,3,'2022-06-13 19:11:03','2022-06-13 19:11:03','0000-00-00 00:00:00'),(2,2,20,14,'VARIABLE DATA','varian 2',1000000,1,'2022-06-13 19:11:03','2022-06-13 19:11:03','0000-00-00 00:00:00'),(3,3,28,37,'PRINTED RIGID BOX','varian 1',1000000,1,'2022-06-14 17:55:44','2022-06-14 17:55:44','0000-00-00 00:00:00'),(4,3,23,29,'INSTRUCTION BOOK','varian 4',1000000,3,'2022-06-14 17:55:44','2022-06-14 17:55:44','0000-00-00 00:00:00'),(5,4,22,24,'COLOR ADHESIVES','varian 3',1000000,2,'2022-06-19 20:26:01','2022-06-19 20:26:01','0000-00-00 00:00:00'),(6,5,22,24,'COLOR ADHESIVES','varian 3',1000000,2,'2022-06-19 20:35:42','2022-06-19 20:35:42','0000-00-00 00:00:00'),(7,5,27,35,'PROTECT VINYL','varian 2',1000000,2,'2022-06-19 20:35:42','2022-06-19 20:35:42','0000-00-00 00:00:00'),(8,6,27,34,'PROTECT VINYL','varian 1',1000000,2,'2022-06-23 00:03:04','2022-06-23 00:03:04','0000-00-00 00:00:00'),(9,7,21,18,'HANG TAG','varian 1',1000000,2,'2022-06-25 14:38:50','2022-06-25 14:38:50','0000-00-00 00:00:00'),(10,8,23,28,'INSTRUCTION BOOK','varian 3',1000000,2,'2022-06-25 14:39:56','2022-06-25 14:39:56','0000-00-00 00:00:00'),(11,8,22,23,'COLOR ADHESIVES','varian 2',1000000,1,'2022-06-25 14:39:56','2022-06-25 14:39:56','0000-00-00 00:00:00'),(12,9,19,11,'RFID LABEL','varian 2',2000000,2,'2022-07-17 00:23:03','2022-07-17 00:23:03','0000-00-00 00:00:00'),(13,10,21,20,'HANG TAG','varian 3',1000000,3,'2022-07-17 00:41:28','2022-07-17 00:41:28','0000-00-00 00:00:00'),(14,11,19,11,'RFID LABEL','varian 2',2000000,2,'2022-07-17 00:44:55','2022-07-17 00:44:55','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `detail_transaction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `kontak_perusahaan`
+--
+
+DROP TABLE IF EXISTS `kontak_perusahaan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kontak_perusahaan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_hp` varchar(50) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `kontak_perusahaan`
+--
+
+LOCK TABLES `kontak_perusahaan` WRITE;
+/*!40000 ALTER TABLE `kontak_perusahaan` DISABLE KEYS */;
+INSERT INTO `kontak_perusahaan` VALUES (3,'085896777555','Iva 1','2022-07-19 01:37:52',NULL),(4,'089555333445','Iva 2','2022-07-19 01:38:04',NULL);
+/*!40000 ALTER TABLE `kontak_perusahaan` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -220,7 +275,7 @@ CREATE TABLE `transactions` (
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (2,6,'TRS-62a8a202edb0c','2022-06-13 19:11:03',5,NULL,NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy',NULL,'2022-06-13 19:11:03','2022-06-16 22:00:10',NULL),(3,6,'TRS-62a8af80e6a4c','2022-06-14 17:55:44',4,'bukti-2XR8J5z1G7-1655644123.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-14 17:55:44','2022-06-19 22:36:30',NULL),(4,6,'TRS-62af23e95b892','2022-06-19 20:26:01',4,'bukti-ABwICz29qb-1655653664.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-19 20:26:01','2022-06-19 22:48:29',NULL),(5,6,'TRS-62af262eab08d','2022-06-19 20:35:42',4,'bukti-BjankZy0fT-1655653676.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-19 20:35:42','2022-06-19 22:48:32',NULL),(6,6,'TRS-62b34b480f9b5','2022-06-23 00:03:04',5,'bukti-1MiUSw6Qco-1656143022.png',NULL,'Jl. Bekasi',NULL,'2022-06-23 00:03:04','2022-07-17 00:19:54',NULL),(7,6,'TRS-62b6bb8ac6152','2022-06-25 14:38:50',5,'bukti-cLseb8j0pB-1657875100.jpg',NULL,'Jl. Bekasi',NULL,'2022-06-25 14:38:50','2022-07-17 00:20:00',NULL),(8,6,'TRS-62b6bbcce6193','2022-06-25 14:39:56',5,NULL,'2022-07-15 15:52:23','Jl. Bekasi',NULL,'2022-06-25 14:39:56','2022-07-17 00:14:47',NULL),(9,6,'TRS-62d2f3f7dd342','2022-07-17 00:23:03',4,'bukti-u3NjcAPqtx-1657992843.png',NULL,'Jl. Bekasi','6327167313','2022-07-17 00:23:03','2022-07-17 00:39:59',NULL),(10,6,'TRS-62d2f84863aed','2022-07-17 00:41:28',4,'bukti-jKbOlcwN2o-1657993316.png',NULL,'Jl. Bekasi','1331313131','2022-07-17 00:41:28','2022-07-17 00:43:50',NULL),(11,6,'TRS-62d2f9171814e','2022-07-17 00:44:55',6,'bukti-Z0YizWhsuT-1657993542.png',NULL,'Jl. Bekasi',NULL,'2022-07-17 00:44:55','2022-07-17 00:45:42',NULL);
+INSERT INTO `transactions` VALUES (2,6,'TRS-62a8a202edb0c','2022-06-13 19:11:03',5,NULL,NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy',NULL,'2022-06-13 19:11:03','2022-06-16 22:00:10',NULL),(3,6,'TRS-62a8af80e6a4c','2022-06-14 17:55:44',4,'bukti-2XR8J5z1G7-1655644123.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-14 17:55:44','2022-06-19 22:36:30',NULL),(4,6,'TRS-62af23e95b892','2022-06-19 20:26:01',4,'bukti-ABwICz29qb-1655653664.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-19 20:26:01','2022-06-19 22:48:29',NULL),(5,6,'TRS-62af262eab08d','2022-06-19 20:35:42',4,'bukti-BjankZy0fT-1655653676.png',NULL,'Jl. Dummy No. 99, Kec. Dummy, Kota Dummy','JS1320967817','2022-06-19 20:35:42','2022-06-19 22:48:32',NULL),(6,6,'TRS-62b34b480f9b5','2022-06-23 00:03:04',5,'bukti-1MiUSw6Qco-1656143022.png',NULL,'Jl. Bekasi',NULL,'2022-06-23 00:03:04','2022-07-17 00:19:54',NULL),(7,6,'TRS-62b6bb8ac6152','2022-06-25 14:38:50',5,'bukti-cLseb8j0pB-1657875100.jpg',NULL,'Jl. Bekasi',NULL,'2022-06-25 14:38:50','2022-07-17 00:20:00',NULL),(8,6,'TRS-62b6bbcce6193','2022-06-25 14:39:56',5,NULL,'2022-07-15 15:52:23','Jl. Bekasi',NULL,'2022-06-25 14:39:56','2022-07-17 00:14:47',NULL),(9,6,'TRS-62d2f3f7dd342','2022-07-17 00:23:03',4,'bukti-u3NjcAPqtx-1657992843.png',NULL,'Jl. Bekasi','6327167313','2022-07-17 00:23:03','2022-07-17 00:39:59',NULL),(10,6,'TRS-62d2f84863aed','2022-07-17 00:41:28',4,'bukti-jKbOlcwN2o-1657993316.png',NULL,'Jl. Bekasi','1331313131','2022-07-17 00:41:28','2022-07-17 00:43:50',NULL),(11,6,'TRS-62d2f9171814e','2022-07-17 00:44:55',4,'bukti-tS6hrdDgop-1658163152.png',NULL,'Jl. Bekasi','123456789','2022-07-17 00:44:55','2022-07-18 23:56:48',NULL);
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +308,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'superuser',1,'superuser@gmail.com','$2y$10$jTTPiJDgIs1vZ2.vxMYT8.8QqNxpe/yRdAX70vtiw82ySZrhwqUAO','085896452806','',1,'2022-05-19 16:10:44','2022-05-19 16:10:44',NULL),(5,'dummycustomer2',3,'dummycustomer2@iva.com','$2y$10$tAamrtznyxoXjYLkP0SPO.t1kp7pi9cJsOI6xfqpACd0vMTEWq7Ui','','',1,'2022-05-22 12:10:54','2022-05-22 12:10:54',NULL),(6,'Jessie',3,'dummycustomer@gmail.com','$2y$10$nHP7i/zSBeHwize.sEc2EO0bO3vZx0rizX9sUg90Bp0wXdZcET5mW','085896452806','Jl. Bekasi',1,'2022-05-23 18:01:57','2022-07-17 00:22:21',NULL),(7,'Marketing 1',2,'marketing1@gmail.com','$2y$10$02zciQ8jqUoHe8GAkuFt2OwU02Wj4aqa.JhC96a1fwBwZ.vu4JELa','085896452806','',1,'2022-05-28 15:31:53','2022-05-28 15:31:53',NULL),(8,'Dummy Customer',3,'dummycustomer@iva.com','$2y$10$.lphoMXYMp4MuhtoxDauseRNY/ucBf0A9oyqZbplr2MDwLd/lJ5w2',NULL,NULL,1,'2022-06-06 10:52:46','2022-06-06 10:52:46',NULL),(9,'Marketing 2',2,'marketing2@gmail.com','$2y$10$run9TEIil.jpOC3obx7Q2O4uoaO9SLiEJrHC07l6nHHI5MYhXsqVy','085896452806',NULL,1,'2022-06-17 18:33:00','2022-06-25 14:08:19',NULL),(10,'Aji Pujo Hardiyanto',3,'ajipujo2nd@gmail.com','$2y$10$NzjqcleQGXMKkOsiyGfCHOOUDCrxV7rjMriBRQINApb8gj3D0uosa','085896452806',NULL,1,'2022-06-26 21:39:12','2022-06-26 21:39:12',NULL);
+INSERT INTO `users` VALUES (3,'superuser',1,'superuser@gmail.com','$2y$10$jTTPiJDgIs1vZ2.vxMYT8.8QqNxpe/yRdAX70vtiw82ySZrhwqUAO','085896452806','',1,'2022-05-19 16:10:44','2022-05-19 16:10:44',NULL),(5,'dummycustomer2',3,'dummycustomer2@iva.com','$2y$10$tAamrtznyxoXjYLkP0SPO.t1kp7pi9cJsOI6xfqpACd0vMTEWq7Ui','','',1,'2022-05-22 12:10:54','2022-05-22 12:10:54',NULL),(6,'Jessie',3,'dummycustomer@gmail.com','$2y$10$nHP7i/zSBeHwize.sEc2EO0bO3vZx0rizX9sUg90Bp0wXdZcET5mW','085896452806','Jl. Bekasi',1,'2022-05-23 18:01:57','2022-07-17 00:22:21',NULL),(7,'Marketing 1',2,'marketing1@gmail.com','$2y$10$02zciQ8jqUoHe8GAkuFt2OwU02Wj4aqa.JhC96a1fwBwZ.vu4JELa','085896452806','',1,'2022-05-28 15:31:53','2022-05-28 15:31:53',NULL),(8,'Dummy Customer',3,'dummycustomer@iva.com','$2y$10$.lphoMXYMp4MuhtoxDauseRNY/ucBf0A9oyqZbplr2MDwLd/lJ5w2',NULL,NULL,1,'2022-06-06 10:52:46','2022-06-06 10:52:46',NULL),(9,'Marketing 2',2,'marketing2@gmail.com','$2y$10$run9TEIil.jpOC3obx7Q2O4uoaO9SLiEJrHC07l6nHHI5MYhXsqVy','085896452806',NULL,1,'2022-06-17 18:33:00','2022-06-25 14:08:19',NULL),(10,'Aji Pujo Hardiyanto',3,'ajipujo2nd@gmail.com','$2y$10$6Q5CWbKcFANJzCrv/CRI6eRYNwHPjV3ErMyz2U0YB8Hb4lwXwMh0C','085896452806','Randugunting',1,'2022-06-26 21:39:12','2022-07-18 23:59:37',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -266,4 +321,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-18 20:16:58
+-- Dump completed on 2022-07-19  1:58:25
