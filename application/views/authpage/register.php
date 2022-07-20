@@ -25,20 +25,22 @@
 					<input type="text" name="no_hp" class="form-control" id="no_hp" placeholder="Masukkan no. hp...">
 					<?php echo form_error('no_hp'); ?>
 				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="email" class="form-label required-label">Email</label>
-							<input type="email" name="email" class="form-control" id="email" placeholder="masukkan email...">
-							<?php echo form_error('email'); ?>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="password" class="form-label required-label">Password</label>
-							<input type="password" name="password" class="form-control" id="password" placeholder="masukkan password...">
-							<?php echo form_error('password'); ?>
-						</div>
+				<div class="mb-3">
+					<label for="email" class="form-label required-label">Email</label>
+					<input type="email" name="email" class="form-control" id="email" placeholder="masukkan email...">
+					<?php echo form_error('email'); ?>
+				</div>
+				<div class="mb-3">
+					<label for="password" class="form-label required-label">Password</label>
+					<input type="password" name="password" class="form-control" id="password" placeholder="masukkan password...">
+					<?php echo form_error('password'); ?>
+				</div>
+				<div class="col-12 d-flex justify-content-between mb-2">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="passwordAvailability">
+						<label class="form-check-label" for="passwordAvailability">
+							Lihat password
+						</label>
 					</div>
 				</div>
 				<div class="d-grid gap-2 mb-2">
@@ -58,6 +60,15 @@
 		e.preventDefault();
 		$("#formRegister").submit();
 	})
+
+	$("#passwordAvailability").change(function() {
+		if ($(this).is(":checked")) {
+			$("#password").attr("type", "text");
+		} else {
+			$("#password").attr("type", "password");
+		}
+	});
+	
 	$("#formRegister").validate({
 		rules: {
 			fullname: {

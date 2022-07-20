@@ -23,7 +23,13 @@
 					<label for="password" class="form-label required-label">Password</label>
 					<input type="password" class="form-control" id="password" name="password" placeholder="masukkan password...">
 				</div>
-				<div class="col-12 d-flex justify-content-end mb-2">
+				<div class="col-12 d-flex justify-content-between mb-2">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="passwordAvailability">
+						<label class="form-check-label" for="passwordAvailability">
+							Lihat password
+						</label>
+					</div>
 					<a href="<?= site_url('authcontroller/reset_password') ?>" class="text-danger" style="text-decoration: none;">Lupa password?</a>
 				</div>
 				<div class="d-grid gap-2 mb-2">
@@ -43,6 +49,15 @@
 		e.preventDefault();
 		$("#formLogin").submit();
 	})
+
+	$("#passwordAvailability").change(function() {
+		if ($(this).is(":checked")) {
+			$("#password").attr("type", "text");
+		} else {
+			$("#password").attr("type", "password");
+		}
+	});
+
 	$("#formLogin").validate({
 		rules: {
 			email: {
