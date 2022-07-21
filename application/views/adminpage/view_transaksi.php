@@ -213,9 +213,11 @@ switch ($transaksi->status_transaksi) {
 							</form>
 						</div>
 					<?php } ?>
-					<div class="col-4 col-md-2 mb-2">
-						<button type="submit" class="btn btn-success w-100"><i class="fa fa-whatsapp" aria-hidden="true"></i></button>
-					</div>
+					<?php if ($transaksi->no_hp) { ?>
+						<div class="col-4 col-md-2 mb-2">
+							<a href="https://api.whatsapp.com/send?phone=<?= $transaksi->no_hp ?>" class="btn btn-success w-100"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+						</div>
+					<?php } ?>
 				<?php } ?>
 			</div>
 		</div>

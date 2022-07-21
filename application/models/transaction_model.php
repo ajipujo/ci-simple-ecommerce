@@ -59,7 +59,7 @@ class transaction_model extends CI_Model
 
 	public function getTransaksiByKode($kode)
 	{
-		$this->db->select('transactions.*, users.name as user_name, users.email as user_email, status_transaction.name as status_name');
+		$this->db->select('transactions.*, users.name as user_name, users.no_hp as no_hp, users.email as user_email, status_transaction.name as status_name');
 		$this->db->from('transactions');
 		$this->db->join('users', 'users.id = transactions.user_id');
 		$this->db->join('status_transaction', 'status_transaction.id = transactions.status_transaksi');
