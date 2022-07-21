@@ -1191,4 +1191,26 @@ class AdminController extends CI_Controller
 			redirect($this->agent->referrer());
 		}
 	}
+
+	public function update_resi()
+	{
+		$this->isAuthenticated();
+		$resi = htmlspecialchars($this->input->post('input_resi'));
+		$kode_pemesanan = htmlspecialchars($this->input->post('kode_pemesanan'));
+		$transaksi = $this->transaction_model->getTransaksiByKode($kode_pemesanan);
+
+		if ($transaksi) {
+			$data = [
+				'resi_pemesanan' => $resi,
+				'updated_at' => date('Y-m-d H:i:s')
+			];
+
+			$this->transaction_model->updateTransaksi($data, $kode_pemesanan);
+			$this->session->set_flashdata('message', ['status' => 'success', 'text' => 'Resi pemesanan berhasil diperbarui']);
+			redirect($this->agent->referrer());
+		} else {
+			$this->session->set_flashdata('message', ['status' => 'danger', 'text' => 'Status order gagal diperbarui']);
+			redirect($this->agent->referrer());
+		}		
+	}
 }

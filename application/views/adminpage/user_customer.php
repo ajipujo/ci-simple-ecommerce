@@ -40,8 +40,8 @@ if (isset($_SESSION['message'])) {
 						<tr>
 							<td></td>
 							<td><?= $user->name ?></td>
-							<td><?= $user->role_nm ?></td>
 							<td><?= $user->email ?></td>
+							<td><?= $user->role_nm ?></td>
 							<td><?= $user->is_active == 1 ? 'Active' : 'Non-active' ?></td>
 							<td>
 								<a href="<?= site_url('admincontroller/form_edit_user/'.$user->id) ?>" class="btn btn-primary btn-sm">Edit</a>

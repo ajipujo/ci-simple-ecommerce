@@ -1,11 +1,28 @@
 <?php
+if (isset($_SESSION['message'])) {
+?>
+	<div class="container my-4">
+
+		<div class="alert alert-<?= isset($_SESSION['message']['status']) ? $_SESSION['message']['status'] : 'success' ?> alert-dismissible fade show" role="alert">
+			<div>
+				<?= isset($_SESSION['message']['text']) ? $_SESSION['message']['text'] : '' ?>
+			</div>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</div>
+
+<?php
+}
+?>
+
+<?php
 
 $expired = false;
 
 if ($transaksi->batas_pembayaran) {
 	$from_db = date("d F Y, H:i", strtotime($transaksi->batas_pembayaran));
 	$now = date("d F Y, H:i");
-	
+
 	$expired = $from_db < $now;
 }
 
@@ -111,6 +128,24 @@ switch ($transaksi->status_transaksi) {
 							<div class="mb-3">
 								<label for="input_resi" class="form-label required-label fw-bold">Resi Pembayaran</label>
 								<input type="text" class="form-control" id="input_resi" name="input_resi" placeholder="masukkan no. resi...">
+							</div>
+						</div>
+					</div>
+				</form>
+			<?php } ?>
+			<?php if ($transaksi->status_transaksi == 4) { ?>
+				<form action="<?= site_url('admincontroller/update_resi') ?>" id="form_resi" method="post">
+					<div class="card mb-3">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-8 mb-3">
+									<label for="input_resi" class="form-label required-label fw-bold">Resi Pembayaran</label>
+									<input type="text" class="form-control" id="input_resi" name="input_resi" placeholder="masukkan no. resi..." value="<?= $transaksi->resi_pemesanan ?>">
+								</div>
+								<div class="col-md-4 mb-3 d-flex align-items-end">
+									<input type="hidden" name="kode_pemesanan" value="<?= $transaksi->kode_pemesanan ?>">
+									<button class="btn btn-primary w-100" type="submit">Update Resi</button>
+								</div>
 							</div>
 						</div>
 					</div>
