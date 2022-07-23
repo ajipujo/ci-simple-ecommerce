@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
 	<div class="container">
-		<a class="navbar-brand fw-bold text-success" href="<?= site_url('admincontroller/index') ?>">VavaPedia</a>
+		<a class="navbar-brand fw-bold text-success" href="<?= site_url('admincontroller/index') ?>">
+			<img src="<?= base_url('/assets/img/logo.png') ?>" alt="" width="150px" class="d-inline-block align-text-top">
+		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
