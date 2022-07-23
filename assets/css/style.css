@@ -12,8 +12,13 @@
 	font-weight: 600 !important;
 }
 
+.about-wrapper-image img {
+	object-fit: cover !important;
+	height: 150px;
+}
+
 .content-frontpage {
-	margin-top: 80px;
+	margin-top: 120px;
 }
 
 .input-group-append {
